@@ -1,0 +1,52 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<div style="background-color:  #31353d !important" class="row   wrap-slide">
+    <div class="col-md-12 d-flex flex-row">
+        <div>
+            <button *ngIf="createAdvertisments" type="button" (click)="add_edit(AE_modal, '')" class="btn ml-4 btn-outline-danger" data-toggle="modal" data-target="#jobs">
+             اضافه إعلان
+        </button>
+
+            <button disabled *ngIf="!createAdvertisments" type="button" class="btn  ml-4 btn-danger">
+          اضافه إعلان
+      </button>
+
+        </div>
+        <p class="h5 text-light ml-auto"> </p>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+
+<div class="container">
+    <div class="row">
+        <div *ngFor="let slider of sliderLists" class="col-md-6 col-lg-4 my-3 shadow-lg">
+            <div class="post position-relative  overflow-hidden rounded-sm">
+                <img class="img-fluid" src="{{slider.image_path}}" alt="">
+                <div class="info  d-flex justify-content-center align-items-center flex-row text-center">
+                    <button disabled *ngIf="!updateAdvertisments" class="visit btn btn-outline-dark  mx-1 text-primary font-weight-bold">تعديل </button>
+                    <button *ngIf="updateAdvertisments" data-toggle="modal" (click)="add_edit(AE_modal , slider)" title="تعديل " class=" visit btn btn-outline-dark  mx-1 text-primary font-weight-bold">تعديل</button>
+                    <button *ngIf="!updateAdvertisments" disabled class=" visit btn btn-outline-dark mx-1  text-danger font-weight-bold">حذف</button>
+                    <button *ngIf="updateAdvertisments" data-toggle="modal" (click)="deleteItem(slider)" title="حذف " class=" visit btn btn-outline-dark mx-1  text-danger font-weight-bold">حذف</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> صور الإعلانات </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-slider [Catchobj]='catch_obj' (updated)="update($event)"> </app-edit-add-slider>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->

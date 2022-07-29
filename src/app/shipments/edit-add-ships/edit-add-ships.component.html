@@ -1,0 +1,306 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<mat-horizontal-stepper #stepper>
+    <mat-step [stepControl]="myform1">
+        <form [formGroup]="myform1">
+            <ng-template matStepLabel>البيانات الأساسيه لإنشاء شحنه(إجباري)<i class="fas fa-truck"></i></ng-template>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span> الراسل(التاجر) </label>
+                        <ng-select name="sender_id" formControlName="sender_id">
+                            <ng-option *ngFor="let item of users" [value]="item.user_id"> {{item?.name}} </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span>  المرسل اليه </label>
+                        <input type="text" class="form-control" formControlName="name" name="name" id="name">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="cod"> إجمالي سعر المنتجات</label>
+                        <input type="number" class="form-control" formControlName="product_price" name="product_price" id="product_price">
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="address" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span>  العنوان </label>
+                        <textarea class="form-control" name="address" formControlName="address" id="address"></textarea>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label for="" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span>المحافظه</label>
+                        <ng-select (change)="onProvinceChange($event)" [(ngModel)]="provinces_id" [ngModelOptions]="{standalone: true}" formControlname="province_id">
+                            <ng-option *ngFor="let item of provinces" [value]="item.id"> {{item?.name}} </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="area_id" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span> المنطقه </label>
+                    <div class="form-group">
+                        <ng-select name="area_id" formControlName="area_id" id="area_id">
+                            <ng-option [value]="area.id" *ngFor="let area of allareas">{{area.name}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name_shipment"> اسم  المنتج  </label>
+                        <textarea class="form-control" formControlName="name_shipment" name="name_shipment" id="name_shipment"></textarea>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="employeeTel">الموبايل</label>
+                        <input type="tel" name='phone' formControlName='phone' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.phone.errors }">
+                        <div *ngIf='submited && f.phone.errors' style="color : #F00 " class="alert alert-light">
+                            <div *ngIf='f.phone.errors.required'> * يرجي إدخال الموبايل </div>
+                            <div *ngIf='f.phone.errors.pattern'> رقم الموبايل غير صالح </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span> حاله الشحنه  </label>
+                        <ng-select name="shipment_status_id" formControlName="shipment_status_id">
+                            <ng-option *ngFor="let item of shipmentStatus" [value]="item.id"> {{item?.name}} </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for=""> نوع الخدمه </label>
+                        <ng-select name="service_type_id" formControlName="service_type_id">
+                            <ng-option *ngFor="let item of serviceTypes" [value]="item.id"> {{item?.type}} </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+
+                <!-- <div class="col-md-6">
+                    <label for="from_area_id">من منطقه <span class="text-danger font-weight-bold star">*</span> </label>
+                    <div class="form-group">
+                        <ng-select (change)="onProvince1Change($event)" [(ngModel)]="from_area" [ngModelOptions]="{standalone: true}" name="from_area_id" id="from_area_id">
+                            <ng-option [value]="province.id" *ngFor="let province of allareas">{{province.name}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="to_area_id"> الي منطقه <span class="text-danger font-weight-bold star">*</span> </label>
+                    <div class="form-group">
+                        <ng-select (change)="onProvince2Change($event)" [(ngModel)]="to_area" [ngModelOptions]="{standalone: true}" name="to_area_id" id="to_area_id">
+                            <ng-option [value]="province.id" *ngFor="let province of toAreaLists">{{province.area}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div> -->
+
+                <!-- تاريخ الاستلام -->
+                <!-- <div class="col-6">
+                    <div class="form-group bg-black">
+                        <label class="d-block" for="icon">تاريخ الاستلام<span
+                                class="text-danger font-weight-bold star">*</span></label>
+                        <input type="date" name="date_of_receipt" formControlName="date_of_receipt" class="form-control">
+                    </div>
+                </div> -->
+
+            </div>
+            <div>
+                <button class="btn btn-primary text-dark" mat-button matStepperNext [disabled]="myform1.invalid">التالي</button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="myform2">
+        <form [formGroup]="myform2">
+            <ng-template matStepLabel>تكمله (إختياري)<i class="fas fa-truck"></i></ng-template>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="order_number"> رقم الطلب من سيستم التاجر</label>
+                        <input type="number" class="form-control" formControlName="order_number" name="order_number" id="order_number">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="employeeTel"> البريد الالكتروني </label>
+                        <input type="email2" name='email2' formControlName='email2' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.email2.errors }">
+                        <!-- <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.email2.errors'> * البريد الالكتروني غير صالح</div> -->
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="customer_code">  كود العميل من سيستم التاجر</label>
+                        <input type="number" class="form-control" formControlName="customer_code" name="customer_code" id="customer_code">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="weight"> الوزن</label>
+                        <input type="number" class="form-control" formControlName="weight" name="weight" id="weight">
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="size"> الحجم</label>
+                        <input type="number" class="form-control" formControlName="size" name="size" id="size">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="count"> العدد</label>
+                        <input type="number" class="form-control" formControlName="count" name="count" id="count">
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for=""> خدمات إضافيه </label>
+                        <ng-select name="additional_service_id" formControlName="additional_service_id">
+                            <ng-option *ngFor="let item of additionalServiceTypes" [value]="item.id"> {{item?.type}} - {{item?.price}} <span>جنيه</span></ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+
+
+
+                <!-- <div class="col-md-6">
+                    <div class="form-group">
+                        <label for=""> نوع التوصيل </label>
+                        <ng-select formControlName="transport_type_id" [ngClass]="{'is-invalid' : submited && f.transport_type_id.errors}">
+                            <ng-option *ngFor="let item of transports" [value]="item.id"> {{item?.name}} </ng-option>
+                        </ng-select>
+
+                    </div>
+                </div> -->
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <textarea class="w-100 form-control" placeholder="وصف المنتج" formControlName="description" name="description" id="description" cols="30" rows="5"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <textarea class="w-100 form-control" placeholder="ملاحظات" formControlName="notes" name="notes" id="notes" cols="30" rows="5"></textarea>
+                    </div>
+                </div>
+
+                <!-- <div class="wrapper d-flex justify-content-between w-100 px-3">
+                    <h5 style="    padding-top: 4px;font-size: 1rem">قابل للكسر</h5>
+                    <p-inputSwitch name="is_breakable" formControlName="is_breakable"></p-inputSwitch>
+                </div> -->
+            </div>
+            <div style="display : flex !important ; justify-content  : space-between !important ">
+                <button mat-button matStepperPrevious>السابق</button>
+                <button mat-button matStepperNext (click)="submit()">حفظ</button>
+            </div>
+        </form>
+    </mat-step>
+
+</mat-horizontal-stepper>
+
+
+<ng-template #receiverData let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> اضافه مستلم جديد </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <form [formGroup]='myfrom5'>
+            <div class="row" dir="rtl">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for=""> الاسم الاول </label>
+                        <input type="text" name="first_name" formControlName="first_name" class="form-control">
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for=""> الاسم الاخير </label>
+                        <input type="text" name="last_name" formControlName="last_name" class="form-control">
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for=""> ارقم التليفون </label>
+                        <input type="number" name="phone" formControlName="phone" class="form-control">
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for=""> العنوان </label>
+                        <input type="text" name="address" formControlName="address" class="form-control">
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for=""> المدينه </label>
+                        <input type="text" name="city" formControlName="city" class="form-control">
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for=""> المنطقه </label>
+                        <input type="text" name="distinct" formControlName="distinct" class="form-control">
+
+                    </div>
+                </div>
+
+            </div>
+            <!--- -->
+            <button class='btn btn-primary' [disabled]="myfrom5.invalid" (click)="sendDataReceiver()"> اضافه
+                مستلم</button>
+        </form>
+        <!-- /render form here -->
+    </div>
+</ng-template>

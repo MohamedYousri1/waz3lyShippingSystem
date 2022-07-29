@@ -1,0 +1,259 @@
+<p-toast position="top-letf" key="Key1"></p-toast>
+<p-toast position="top-left" key="Key2"></p-toast>
+
+<div class="width-85">
+    <div class="row bg-dark">
+        <div class="col-md-12 d-flex flex-row">
+            <!-- New Employee Modal Button  -->
+            <div class="pt-3">
+                <button *ngIf="createemployee" type="button" (click)="add_edit(AE_modal, '')" class="adding-btn" data-toggle="modal" data-target="#NewEmployeeModal">
+          <i class="fas fa-user-plus"></i>
+          اضافة موظف
+      </button>
+                <button disabled *ngIf="!createemployee" type="button" class="btn btn-danger">
+        <i class="fas fa-user-plus"></i>
+        غير مسموح
+    </button>
+            </div>
+
+            <p class="h5 text-light py-3 ml-auto"> إداره الموطفين </p>
+        </div>
+    </div>
+</div>
+<!-- PrimeNg Table -->
+
+<!-- ==============empList============ -->
+<!-- For Get Request -->
+<p-table #empsTbl [value]="employees_List" [globalFilterFields]="['name', 'salary' ,'allSal' , 'user.phone_number','user.email' , 'department.name' , 'job.name' ]" [paginator]="true" [rows]="7" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber"
+    [pageLinks]="7">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(empsTbl)"></button>
+                <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input class="search-textbox" pInputText type="text"
+                    (input)="empsTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+                </span>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <!-- <th>اكونت للموظف </th> -->
+            <th> حالة الحساب</th>
+            <th> الصلاحيه</th>
+            <th pSortableColumn="job.name"> الوظفية
+                <p-sortIcon field="job.name"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="department.name"> الإداره التابع لها
+                <p-sortIcon field="department.name"></p-sortIcon>
+            </th>
+            <!-- <th pSortableColumn="allSal"> العمولة
+                <p-sortIcon field="allSal"></p-sortIcon>
+            </th> -->
+            <th pSortableColumn="salary" class="salary">المرتب
+                <p-sortIcon field="salary"></p-sortIcon>
+            </th>
+            <th pSortableColumn="user.email"> الايميل
+                <p-sortIcon field="user.email"></p-sortIcon>
+            </th>
+            <th pSortableColumn="user.phone_number"> التليفون
+                <p-sortIcon field="user.phone_number"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name"> الاسم
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <!--
+            <th> صوره
+            </th> -->
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <a (click)="add_edit_change(changeRole, obj )" class="btn btn-outline-success" data-id="18" name="btnChangeRole" title="Change Role">
+                    <i class="fa fa-user"></i>
+                </a>
+                <a *ngIf="updateemployee" data-toggle="modal" (click)="add_edit(AE_modal, obj )" data-target="#NewEmployeeModal" title="تعديل بيانات " class="edit-emp-btn btn btn-outline-primary btn-sm m-2 "><i class="fas fa-user-edit"></i></a> &nbsp;
+                <a *ngIf="obj.cv != null" href="{{obj.image_cv}}" target="_blank" title="عرض السيره الذاتيه" class="edit-emp-btn btn btn-outline-info btn-sm m-2">
+                  CV
+              </a>
+                <a *ngIf="obj.photo != null" href="{{obj.image_photo}}" target="_blank" title="رؤيه الصوره بشكل أوضح" class="edit-emp-btn btn btn-outline-success btn-sm m-2 ">
+                  photo
+                </a>
+                <a data-toggle="modal" (click)="add_edit(turnClients, obj)" title="  تغيير كلمة السر " class="edit-emp-btn btn btn-primary btn-sm mx-2">
+                    <i class="fas fa-key"></i></a>
+                <!-- <a class="edit-emp-btn btn btn-primary btn-sm mx-2" (click)="changePassword()" >
+                    <i class="fas fa-unlock-alt"></i>
+                   تغيير كلمة السر
+                </a>
+                 -->
+                <button disabled *ngIf="!updateemployee" class="btn-outline-danger">غير مسموح لك</button>
+            </td>
+            <!-- <td> <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal">تسجيل</button> </td> -->
+            <td>{{(obj.user?.roles[0].display_name) ? obj.user?.roles[0].display_name : ''}}</td>
+            <td>
+                <div class="custom-control custom-switch">
+                    <input [checked]="obj.user?.is_active" (click)="toggleButton(obj)" type="checkbox" class="custom-control-input" id="customSwitches_{{obj.id}}">
+                    <label class="custom-control-label" for="customSwitches_{{obj.id}}"></label>
+                </div>
+            </td>
+            <td>{{obj.job?.name}}</td>
+            <td>{{obj.department?.name}}</td>
+            <!-- <td>{{obj.branch?.name}}</td> -->
+            <!-- <td>{{(obj.commission ? obj.commission : '')}}</td> -->
+            <td>{{obj.salary}}</td>
+            <td>{{obj.user?.email}}</td>
+            <td>{{obj.user?.phone_number}}</td>
+            <td> {{(obj.name) ? obj.name : ''}} </td>
+            <!-- <td><img [src]="obj?.user?.profile_pic_url" alt="" style="width:70px; height:70px;border-radius : 50% "></td> -->
+
+        </tr>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                    </div>
+                    <div class="modal-body py-2">
+                        <!-- <h5>   تغيير كلمة السر</h5>  -->
+                        <div>
+                            <label for="">تغيير كلمة السر</label>
+                            <input type="password" class="form-control" [(ngModel)]="newPassword">
+                        </div>
+                        <div>
+                            <label for="">تاكيد كلمة السر</label>
+                            <input type="password" class="form-control" [(ngModel)]="changePass">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">رجوع</button>
+                        <button type="button" class="btn btn-primary" (click)="delete(obj)" data-dismiss="modal">
+                      <a >حذف</a>
+                      </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </ng-template>
+
+</p-table>
+<!-- End-PrimeNg Table -->
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss" class="modal-lg">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> إدارة الموظفين </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <edit-add-emp [Catchobj]='Catch_obj' (newData)="after($event)"> </edit-add-emp>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->
+
+<ng-template #turnClients let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> تغيير كلمة السر </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body " style="direction: rtl;">
+        <!-- Modal Form Start -->
+        <div class="border"></div>
+        <form [formGroup]="formData" (submit)="turnClient()" class="p-2">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <label for="password">  كلمة السر الجديده</label>
+                    <div class="form-group">
+                        <input type="password" class="form-control" formControlName="password" name="password">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="password_confirmation"> تأكيد كلمة السر </label>
+                    <div class="form-group">
+                        <input type="password" class="form-control" formControlName="password_confirmation" name="password_confirmation">
+                        <!-- <div *ngIf='submited && f.branch_id.errors'>
+                    <div *ngIf="submited && f.branch_id.errors.required" style="color: red;"> * مطلوب </div>
+                </div> -->
+                    </div>
+                </div>
+                <div class="bg-light p-2 w-100">
+                    <button class="btn btn-primary btn-block text-center"> موافق </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</ng-template>
+
+
+<ng-template #changeRole let-c="close" let-d="dismiss">
+    <div class="modal-header ">
+        <h4 class="modal-title">تغيير الصلاحيه</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <!-- <div class="panel panel-dark">
+            <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+            </div>
+        </div> -->
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="form-body">
+                    <form [formGroup]="roleForm">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row d-flex align-items-center flex-row-reverse">
+                                        <label class="control-label col-md-2">صلاحيه الموظف</label>
+                                        <div class="col-md-8">
+                                            <p-dropdown [options]="allActivatedRoles" name="role_id" formControlName="role_id" optionValue="id" optionLabel="display_name" [filter]="true" filterBy="display_name" [showClear]="true" placeholder="إختر صلاحيه الموظف">
+                                                <ng-template let-role pTemplate="item">
+                                                    <div class="role-item">
+                                                        <div> {{role.display_name}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-md-3 pull-right" style="display : flex !important ">
+                                    <input type="submit" (click)="changeUserRole()" [disabled]="roleForm.invalid" value="Save" id="btnAddEmployeeAccount" data-id="0" tabindex="17" class="btn btn-success">
+                                    <input type="button" (click)="cancelRoleForm()" value="Cancel" id="btnCancelEmployeeAccount" tabindex="18" class="btn btn-default">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

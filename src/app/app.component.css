@@ -1,0 +1,100 @@
+.notification {
+    color: #FFF;
+    position: fixed;
+    text-align: center;
+    background-color: transparent;
+    bottom: 10px;
+    left: 5px;
+    z-index: 999;
+}
+
+.bell {
+    width: 34px;
+}
+
+.msg-content {
+    background-color: #ffff;
+    width: 350px;
+    position: relative !important;
+    z-index: 999999;
+    display: none;
+    min-height: 500px;
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-X: hidden;
+    box-shadow: #DDD 0px 5px 15px;
+    border-radius: 10px;
+}
+
+.iswatched .active,
+.notwatched .active {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.notwatched .active {
+    background-color: #4B0082;
+}
+
+.iswatched .active {
+    background-color: #777;
+}
+
+.msg-content img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.msg-content h3 {
+    font-size: 1.1rem !important;
+}
+
+.bell i {
+    color: #282828;
+    cursor: pointer;
+}
+
+.notwatched,
+.iswatched {
+    color: #000;
+    padding: 20px 10px;
+    border-radius: 10px;
+    min-height: 92px;
+    transition: all .3s;
+    margin: 10px;
+    background-color: #F7F7F7;
+}
+
+.iswatched {
+    color: #999
+}
+
+.notwatched:hover,
+.iswatched:hover {
+    background-color: #eaeaea;
+}
+
+
+/* .single-img:hover {
+    background-color: #eaeaea;
+} */
+
+.not-number {
+    background-color: #ff5827;
+    color: #FFF;
+    position: absolute;
+    top: 0%;
+    font-size: 1.1rem;
+    left: 26%;
+    width: 20px;
+    transform: translate(-50%);
+    height: 20px;
+    text-align: center !important;
+    border-radius: 50%;
+}
+
+.teble-details tr:nth-of-type(even) {
+    background-color: #FCBD49 !important;
+}

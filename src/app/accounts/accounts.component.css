@@ -1,0 +1,31 @@
+.table td,
+.table th {
+    text-align: center !important;
+}
+
+.p-component {
+    direction: rtl !important;
+}
+
+.show-profit {
+    background-color: #16314d;
+    margin: 35px auto !important;
+    padding-top: 1rem!important;
+    color: #FFF;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .formres.w-25 {
+        width: 50% !important
+    }
+    .show-profit.w-50 {
+        width: 75% !important
+    }
+}
+
+h2{
+    text-align: center !important;
+    font-weight: bold;
+    margin: 10px 10px 20px;
+}

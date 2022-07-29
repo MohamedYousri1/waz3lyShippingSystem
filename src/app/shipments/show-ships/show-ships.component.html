@@ -1,0 +1,1177 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{ width: '50vw' }"></p-confirmDialog>
+
+<!--********************    start header  ********************************-->
+<p-toast position="top-center" key="Key2"></p-toast>
+<div class="width-85">
+    <div class="row bg-dark">
+        <div class="col-md-12 d-flex flex-row">
+            <div class="pt-3">
+                <button *ngIf="createshipments" type="button" (click)="add_edit(AE_modal, '')" class="adding-btn" data-toggle="modal">
+          اضافة
+        </button>
+                <!-- <button disabled *ngIf="!createshipments" type="button" class="btn btn-danger">
+            غير مسموح
+        </button> -->
+            </div>
+            <p class="h5 text-light py-3 ml-auto">الشحنات</p>
+        </div>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+<div class="icon_box shadow py-5">
+    <div class="d-flex" style="width: 80%; margin-right: auto">
+        <div class="mx-2">
+            <!-- <i class="fas fa-box mx-2" style="color: #f2c869;" title="عدد الشحنات"></i>
+          <span>{{(totalOfShipments) ? totalOfShipments: '0'}}</span> -->
+            <a class="icon-desc">
+                <img src="../../../assets/Icons/noun-inventory-3377901.svg" title="عدد الشحنات" style="width: 50px; height: 50px; display: block; margin: 0 auto 10px" alt="" />
+                <span *ngIf="dataInfo" class="d-block" style="margin-top: 18px; padding: 10px 0">
+          ({{ dataInfo?.count_shipment ? dataInfo?.count_shipment : "0" }}) عدد الشحنات</span
+        >
+      </a>
+    </div>
+    <div class="mx-2">
+      <!-- <i class="fa fa-folder mx-2" style="color: #a37d25;" title="COD" aria-hidden="true"></i>
+            <span>{{(shipmentsPrices) ? shipmentsPrices :'0'}}</span> -->
+                <a class="icon-desc">
+                    <img src="../../../assets/Icons/noun-cod-3282485.svg" title="إجمالي المتحصلات" style="width: 50px; height: 50px; display: block; margin: 0 auto 10px" alt="" />
+                    <span *ngIf="dataInfo" class="d-block" style="margin-top: 18px; padding: 10px 0">
+          ({{ dataInfo?.total_cod ? dataInfo?.total_cod : "0" }}) COD إجمالي
+          المتحصلات</span
+        >
+      </a>
+    </div>
+
+    <div class="mx-2">
+      <a (click)="add_edit(AE_modal, '')">
+        <!-- <i class="fa fa-shopping-bag mx-2" style="color: #f2c869;" title="اضافة شحنة" aria-hidden="true"></i> -->
+        <img
+          src="../../assets/Icons/noun-shipping-3484992.svg"
+          title="اضافة شحنة"
+          style="width: 50px; height: 50px; display: block; margin: 0 auto 10px"
+          alt=""
+        />
+        <span class="d-block learn-more">إضافه شحنه جديده</span>
+                </a>
+        </div>
+        <div class="mx-2">
+            <!-- <i class="fas fa-file-excel mx-2"  style="color: #042507;" title="اضافة شيت اكسل"></i> -->
+            <a class="icon-desc">
+                <img src="../../../assets/Icons/noun-excel-2788108.svg" title="اضافة شحنات" style="width: 50px; height: 50px; display: block; margin: 0 auto 10px" alt="" />
+                <span class="d-block learn-more" (click)="addExceclSheet(excelPop)">اضافة شحنات بالاكسل</span
+        >
+      </a>
+    </div>
+
+    <!-- <div class="mx-2">
+            <i class="fa fa-reply-all mx-2" style="color: rgb(45, 45, 207);" title="توجية شحنات للمندوب" aria-hidden="true"></i>
+        </div> -->
+    <div class="mx-2">
+      <img
+        src="../../../assets/Icons/shuffle-svgrepo-com.svg"
+        (click)="changeShipment_status(changeShip)"
+        title="تغيير حالة الشحنه"
+        style="width: 50px; height: 50px; display: block; margin: 0 auto 10px"
+        alt=""
+      />
+      <span
+        class="d-block learn-more"
+        (click)="changeShipment_status(changeShip)"
+        >تغيير حالة الشحنه</span
+      >
+    </div>
+    <!-- <div class="mx-2">
+            <i class="fa fa-reply-all mx-2" style="color: rgb(45, 45, 207);" title="توجية شحنات للمندوب" aria-hidden="true"></i>
+        </div> -->
+    <!-- <div class="mx-2">
+            <i class="fas fa-exchange-alt mx-2" (click)="changeShipment_status(changeShip)" style="color: #f2c869;" title="تغيير حالة الشحنه"></i>
+        </div> -->
+    <div class="mx-2">
+      <a routerLink="/shipmentDetails">
+        <!-- <i class="fa fa-barcode mx-2" routerLink="/shipmentDetails" style="color: rgb(212, 138, 138);width : 50px;  height : 50px ;display: block;margin: 0 auto 10px;" title="scan by barcode" aria-hidden="true"></i> -->
+        <img
+          src="../../../assets/images/barcode.png"
+          routerLink="/shipmentDetails"
+          title="اضافة شحنات"
+          style="
+            width: 50px;
+            height: 50px;
+            display: block !important;
+            margin: 0 auto 10px !important;
+          "
+          alt=""
+        />
+        <span class="learn-more">Scan By barcode</span>
+            </a>
+        </div>
+        <div class="mx-2">
+            <!-- <i class="fa fa-print mx-2" style="color: rgb(123, 123, 235);" title="طباعه بوليصه شحن" (click)="printBolisa(bolisa)" aria-hidden="true"></i> -->
+            <a class="icon-desc">
+                <img src="../../../assets/Icons/print.svg" routerLink="/shipmentDetails" title="طباعه بوليصه شحن" style="width: 50px; height: 50px; display: block; margin: 0 auto 10px" alt="" />
+                <span class="learn-more" (click)="printBolisa(bolisa)">طباعه بوليصه شحن</span
+        >
+      </a>
+    </div>
+    <div class="mx-2">
+      <!-- <i class="fas fa-file-export mx-2" title="تصدير شيت اكسل "></i> -->
+      <a class="icon-desc">
+        <img
+          src="../../../assets/Icons/noun-csv-file-305198.svg"
+          title="تصدير شيت اكسل"
+          style="width: 50px; height: 50px; display: block; margin: 0 auto 10px"
+          alt=""
+        />
+        <span class="d-block learn-more" (click)="exportexcel()"
+          >تصدير شيت اكسل</span
+        >
+      </a>
+    </div>
+    <!-- <div class="mx-2">
+            <i class="fas fa-analytics mx-2" style="color: #a37d25;" title="حالة الشحنة"></i>
+        </div> -->
+  </div>
+
+  <!-- filtering on sjipments  -->
+  <div class="d-flex" style="width: 80%; margin-right: auto; margin-top: 20px">
+    <div class="mx-2">
+      <img
+        src="../../../assets/Icons/calendar-svgrepo-com.svg"
+        title="البحث بين فترتين"
+        style="width: 50px; height: 50px; display: block; margin: 0 auto 10px"
+        alt=""
+      />
+      <span class="d-block learn-more" (click)="filterDate(filteringDate)"
+        >البحث بين فترات زمنيه
+      </span>
+        </div>
+
+        <div class="mx-2">
+            <img src="../../../assets/Icons/delivery-man.svg" title="شحنات علي مستوي المندوب" style="width: 50px; height: 50px; display: block; margin: 0 auto 10px" alt="" />
+            <span class="d-block learn-more" (click)="filterDate(filteringRepresentative)">شحنات علي مستوي المندوب</span
+      >
+    </div>
+
+    <div class="mx-2">
+      <img
+        src="../../../assets/Icons/noun-inventory-3377901.svg"
+        title="شحنات علي مستوي حالة الشحنه "
+        style="width: 50px; height: 50px; display: block; margin: 0 auto 10px"
+        alt=""
+      />
+      <span class="d-block learn-more" (click)="filterDate(filteringStatus)"
+        >شحنات علي مستوي حالة الشحنه
+      </span>
+        </div>
+
+        <!-- <div class="mx-2">
+            <p-toggleButton style="width: 50px; height: 50px; display: block; margin: 10px auto 5px" #todayShips id="todayChecked" [(ngModel)]="checked" (onChange)="handleChange($event)" onLabel="" offLabel="" onIcon="pi pi-check" offIcon="pi pi-times" iconPos="right"
+                [(ngModel)]="checked"></p-toggleButton>
+            <span class="d-block learn-more" (click)="getToday()">شحنات اليوم </span>
+        </div> -->
+    </div>
+</div>
+
+<!--*******************    start tabel  body   *********************-->
+
+<p-table #depTb7 [value]="filteredShipments" [globalFilterFields]="[
+    'service_type.type',
+    'user.user_data.name',
+    'client.phone',
+    'product_price',
+    'area.name',
+    'name_shipment',
+    'client.name',
+    'user.second_name',
+    'user.last_name',
+    'storage.name',
+    'branch.name',
+    'shipment_type.type',
+    'name'
+  ]" [paginator]="false" [rows]="7" [rowsPerPageOptions]="[25]" [totalRecords]="this.recourdNumber" [pageLinks]="7">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex" style="
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+      ">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTb7)"></button>
+                <span class="p-input-icon-left p-ml-auto">
+          <i (click)="searchDate()" class="pi pi-search"></i>
+          <input
+            class="search-textbox"
+            pInputText
+            type="text"
+            placeholder="بحث"
+            [(ngModel)] = "searchWord"
+          />
+        </span>
+            </div>
+
+
+            <div class="refresh">
+                <a>
+                    <img src="../../../assets/Icons/refresh-svgrepo-com.svg" (click)="getAll(true)" title="جميع الشحنات" style="
+              width: 40px;
+              height: 40px;
+              cursor: pointer !important;
+              margin: 0 auto 10px;
+            " alt="" />
+                </a>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th>ألاجراءات</th>
+            <th>اخر تغيير بالحاله</th>
+            <th>نوع الخدمه</th>
+            <th>حالة الشحنه</th>
+            <th>موبايل</th>
+            <th>مبلغ التحصيل COD</th>
+            <th>المنطقه</th>
+            <th>اسم المنتج</th>
+            <th>المرسل اليه</th>
+            <th>الراسل</th>
+            <th>تاريخ</th>
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox (click)="SelectAllRow($event)"></p-tableHeaderCheckbox>
+            </th>
+            <!-- <th>رقم البوليصه</th> -->
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td class="d-flex justify-content-center align-items-center flex-wrap">
+                <a *ngIf="updateshipments" data-toggle="modal" (click)="add_edit(AE_modal, obj)" title="تعديل  " class="edit-emp-btn btn btn-outline-primary my-1 btn-sm"><i class="fas fa-edit"></i
+        ></a> &nbsp;
+                <a data-toggle="modal" (click)="moreDetailsFun(details, obj)" title="معلومات اكثر" class="edit-emp-btn btn btn-outline-danger my-1 btn-sm m-1">
+                    <i class="fas fa-info-circle"></i>
+                </a>
+
+                <a data-toggle="modal" (click)="openShipStatus(shipStatus, obj)" title="تتبع الشحنه" class="edit-emp-btn btn btn-outline-info my-1 btn-sm m-1">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <button disabled *ngIf="!updateshipments" class="btn-outline-danger mx-2">
+          تعديل
+        </button>
+            </td>
+            <td>{{ obj.updated_at | date: "short" }}</td>
+            <td>{{ obj.service_type?.type ? obj.service_type?.type : "" }}</td>
+            <td>{{ obj.shipmentstatu?.name ? obj.shipmentstatu?.name : "" }}</td>
+            <td>{{ obj.client?.phone ? obj.client?.phone : "" }}</td>
+            <td>{{ obj.product_price ? obj.product_price : "" }}</td>
+            <td>{{ obj.area?.name ? obj.area?.name : "" }}</td>
+            <td>{{ obj.name_shipment ? obj.name_shipment : "" }}</td>
+            <td>{{ obj.client?.name ? obj.client?.name : "" }}</td>
+            <td>{{ obj.user?.user_data?.name ? obj.user?.user_data?.name : "" }}</td>
+            <td>{{ obj.created_at | date: "short" }}</td>
+            <td>
+                <p-tableCheckbox (click)="SelectRow($event, obj)" [value]="obj"></p-tableCheckbox>
+            </td>
+            <!-- <td> {{obj?.user?.first_name}} {{obj?.user?.second_name}} {{obj?.user?.last_name}} </td> -->
+        </tr>
+    </ng-template>
+</p-table>
+
+<div class="p-paginator-bottom p-paginator p-component ng-star-inserted" ng-reflect-ng-class="p-paginator p-component">
+    <!--bindings={}-->
+    <!--bindings={}--><button (click)="firstPage()" type="button" [ngClass]="{'p-disabled' : prevDisabled == true }" pripple="" class="p-paginator-first p-paginator-element p-link p-ripple ng-star-inserted" ng-reflect-ng-class="[object Object]">
+    <span class="p-paginator-icon pi pi-angle-double-left"></span>
+  </button>
+    <!--bindings={
+"ng-reflect-ng-if": "true"
+}--><button type="button" (click)="previousPage()" [ngClass]="{'p-disabled' : prevDisabled == true }" pripple="" class="p-paginator-prev p-paginator-element p-link  p-ripple" ng-reflect-ng-class="[object Object]">
+    <span class="p-paginator-icon pi pi-angle-left"></span></button
+  ><span class="p-paginator-pages ng-star-inserted"
+    ><button
+      type="button"
+      pripple=""
+      class="p-paginator-page p-paginator-element p-link p-highlight p-ripple ng-star-inserted"
+      ng-reflect-ng-class="[object Object]"
+    >
+      {{this.allData?.current_page}}</button
+    ><!--bindings={
+"ng-reflect-ng-for-of": "1"
+}--></span
+  >
+  <!--bindings={
+"ng-reflect-ng-if": "true"
+}-->
+  <!--bindings={}--><button
+    type="button"
+    pripple=""
+    class="p-paginator-next p-paginator-element p-link p-ripple "
+    ng-reflect-ng-class="[object Object]"
+    (click)=" nextPgae()"
+    [ngClass]="{'p-disabled' : nextDisabled == true }"
+  >
+    <span class="p-paginator-icon pi pi-angle-right"></span></button
+  ><button
+    type="button"
+    pripple=""
+    class="p-paginator-last p-paginator-element p-link p-ripple ng-star-inserted "
+    ng-reflect-ng-class="[object Object]"
+    (click) = "lastPage()"
+    [ngClass]="{'p-disabled' : nextDisabled == true }"
+
+  >
+    <span class="p-paginator-icon pi pi-angle-double-right"></span>
+  </button>
+    <!--bindings={
+"ng-reflect-ng-if": "true"
+}-->
+
+    <!--bindings={
+"ng-reflect-ng-if": "10,25,50"
+}-->
+    <!--bindings={}-->
+</div>
+<!--********************    end  tabel  body   ********************************-->
+
+<ng-template #changeShip let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color: #f1f1f1 !important" id="modal-basic-title">
+            تغيير حاله الشحنات
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formData" (submit)="changeShipment()" class="p-2">
+            <div class="row">
+                <div class="w-100">
+                    <div class="form-group">
+                        <label for="" dir="ltr">
+              <span style="font-size: 1.2rem; color: #f00"> * </span> حاله
+              الشحنه
+            </label>
+                        <ng-select (change)="onChangeStatus($event)" name="shipment_status_id" formControlName="shipment_status_id">
+                            <ng-option *ngFor="let item of shipmentStatus" [value]="item.id">
+                                {{ item?.name }}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+
+                    <div class="form-group my-2" *ngIf="this.showRepresentative == true">
+                        <label for="" dir="ltr">
+              <span style="font-size: 1.2rem; color: #f00"> * </span>
+              المندوب</label
+            >
+            <ng-select
+              name="representative_id"
+              formControlName="representative_id"
+            >
+              <ng-option
+                *ngFor="let item of allRepresentatives"
+                [value]="item.id"
+              >
+                {{ item?.name }}
+              </ng-option>
+            </ng-select>
+          </div>
+
+          <div class="form-group" *ngIf="this.showStore == true">
+            <label for="" dir="ltr">
+              <span style="font-size: 1.2rem; color: #f00"> * </span>
+              المخزن</label
+            >
+            <ng-select name="store_id" formControlName="store_id">
+              <ng-option *ngFor="let item of stores" [value]="item.id">
+                {{ item?.name }}
+              </ng-option>
+            </ng-select>
+          </div>
+
+          <div class="form-group" *ngIf="this.showReturnPrice == true">
+            <label for="" dir="ltr">
+              <span style="font-size: 1.2rem; color: #f00"> * </span> قيمه
+              الإسترجاع</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="return_price"
+              formControlName="return_price"
+            />
+          </div>
+        </div>
+
+        <div class="bg-light p-2 w-100">
+          <button class="btn btn-primary btn-block text-center">موافق</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-d="dismiss">
+  <div class="modal-header">
+    <h4
+      class="modal-title"
+      style="color: #f1f1f1 !important"
+      id="modal-basic-title"
+    >
+      مرحبا
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- render form here -->
+    <app-edit-add-ships [Catchobj]="catch_obj" (newData)="update($event)">
+    </app-edit-add-ships>
+    <!-- /render form here -->
+  </div>
+</ng-template>
+
+<!--********************   end add-edit modal   *********************-->
+
+
+
+
+<ng-template #bolisa let-d="dismiss">
+  <div class="modal-header">
+      <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> بوليصه شحن </h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="main-page" id="bynat3omla">
+          <div *ngFor="let bolisaShipment  of shipmentsArr" class="tb--wrapper my-4">
+              <div class="testing mb-3 ">
+                  <div class="header-img">
+                      <img class="w-50" src="../../../assets/images/waz3ly gray logo.png" alt="">
+                  </div>
+                  <ngx-barcode [bc-value]="bolisaShipment.id" [bc-display-value]="true"></ngx-barcode>
+                  <ngx-qrcode [elementType]="elementType" value='اسم الشحنه : {{bolisaShipment.name_shipment}} , الوزن : {{bolisaShipment?.weight}} , المستلم : {{(bolisaShipment?.client?.name)}} ,  تاريخ الاستلام : {{bolisaShipment.delivery_date }}' cssClass="aclass">
+                  </ngx-qrcode>
+                  <!-- <h3 style="float : left ; line-height : 80px ">Waz3ly Shipping</h3> -->
+              </div>
+
+              <table class="table table-bordered bolisaShipment">
+                  <thead>
+                      <tr class="text-center">
+                          <th scope="col">Origin</th>
+                          <th scope="col">Destination</th>
+                          <th scope="col">Docked No.</th>
+                          <th scope="col">Booking Date</th>
+                          <th scope="col">Booking Person</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr class="text-center">
+                          <td> Waz3ly</td>
+                          <td>{{(bolisaShipment.area?.name) ? bolisaShipment.area?.name : ''}}</td>
+                          <td>{{bolisaShipment.id}}</td>
+                          <td>{{bolisaShipment.created_at | date :'shortDate' }}</td>
+                          <td>{{(bolisaShipment.client?.name) ? bolisaShipment.client?.name : ''}}</td>
+                      </tr>
+
+                      <tr>
+                          <td style = "width : 40% !important "  colspan="1">
+                              <p><span class="text-uppercase">Shipper : </span> <span class="font-weight-bold">{{bolisaShipment.user?.user_data?.name}}</span></p>
+                              <!-- <p><span> ADDRESS : </span> <span>البحيرة دمنهور شارع عبدالسلام الشاذلي أمام النساجون الشرقيون </span></p> -->
+                              <!-- <p><span>Mobile No.</span> <span>  01032336644 | 0453190701</span></p> -->
+                              <p><span>Mobile No.</span> <span> {{bolisaShipment.user?.phone_number}}</span></p>
+
+
+                          </td>
+                          <td colspan="4">
+                              <p><span class="text-uppercase">RECEIVER : </span> <span class="font-weight-bold">{{(bolisaShipment.client?.name) ? bolisaShipment.client?.name :''}} </span></p>
+                              <p><span> ADDRESS : </span> <span>{{bolisaShipment.client?.address}}</span></p>
+                              <p><span>Mobile No.</span> <span>{{bolisaShipment.client?.phone}}</span></p>
+                          </td>
+                      </tr>
+                  </tbody>
+
+                  <thead>
+                      <tr class="text-center">
+                          <th scope="col">Actual Weight</th>
+                          <th scope="col">Mode Of Packaging</th>
+                          <!-- <th scope="col">Mode Of Payment</th> -->
+                          <!-- <th scope="col">date_of_receipt</th> -->
+                          <th scope="col">delivery_date</th>
+                      </tr>
+                  </thead>
+
+                  <tbody>
+                      <tr class="text-center">
+                          <td>{{bolisaShipment.weight}}</td>
+                          <td>{{bolisaShipment.shipment_type?.type}}</td>
+                          <!-- <td>طريقه الدفع هنا</td> -->
+                          <!-- <td>{{bolisaShipment.date_of_receipt | date :'shortDate' }}</td> -->
+                          <td>{{bolisaShipment.delivery_date | date :'shortDate' }}</td>
+                      </tr>
+                  </tbody>
+
+                  <thead class="w-100">
+                      <tr class="text-center">
+                          <th colspan="3">Description</th>
+                          <th colspan="2">Products Value + Shipping Price </th>
+                      </tr>
+                  </thead>
+
+                  <tbody>
+                      <tr class="text-center">
+                          <td colspan="3">
+                            <span  style="display : block"  class="font-weight-bold text-center">{{bolisaShipment.name_shipment}}</span>
+                            {{bolisaShipment.description}}
+                          </td>
+                          <td colspan="2">{{(bolisaShipment.product_price) ? bolisaShipment.product_price : '0'}}</td>
+                      </tr>
+                  </tbody>
+
+                  <thead>
+                      <tr class="text-center">
+                          <th class="remark" colspan="3">Remarks:</th>
+                          <th colspan="3">
+                              <div class="wrapper remark d-flex justify-content-between flex-column"><span    style="text-align : center !important" class="font-weight-bold text-center">COD Amount</span> <span style="text-align : center !important;font-size :  1.2rem !important" class="font-weight-bold text-center">{{(bolisaShipment.product_price) ? bolisaShipment.product_price : '0'}}</span></div>
+                          </th>
+                      </tr>
+                  </thead>
+                  <thead>
+                      <tr class="text-center">
+                          <th colspan="2" class="remark">REGIsTERED OFFICE:</th>
+                          <th colspan="3">RECEIVED IN GOOD CONDITION</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr class="text-center">
+                          <td colspan="2">ع / 18 ش الحجاز المهندسين
+                               <span  style="display:block ; margin : 10px 0  "  class=" text-center">   01063331134 | 01063338551</span>
+                          </td>
+                          <td colspan="3">
+                              <p>Name:</p>
+                              <p>Date:</p>
+                              <p>SIGNATURE:</p>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <div class="print">
+          <button (click)="printIt()" id="print_btn" class="pritnBtn btn mx-2 text-white-50">طباعه <i class="fas fa-print ml-2 text-primary"></i></button>
+      </div>
+      <!-- /render form here -->
+  </div>
+</ng-template>
+
+<div class="hiddenTable" style="display: none !important">
+  <p-table
+    #depTbl2
+    [value]="shipmentsArr"
+    [globalFilterFields]="[
+      'service_type.type',
+      'client.phone',
+      'product_price',
+      'area.name',
+      'name_shipment',
+      'client.name',
+      'user.second_name',
+      'user.last_name',
+      'storage.name',
+      'branch.name',
+      'shipment_type.type',
+      'name'
+    ]"
+    [paginator]="true"
+    [rows]="7"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [totalRecords]="this.recourdNumber"
+    [pageLinks]="7"
+  >
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex">
+        <div class="search-warpper">
+          <button
+            pButton
+            label="Clear"
+            class="p-button-outlined"
+            icon="pi pi-filter-slash"
+            (click)="clear(depTbl)"
+          ></button>
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input
+              class="search-textbox"
+              pInputText
+              type="text"
+              (input)="depTbl.filterGlobal($event.target.value, 'contains')"
+              placeholder="بحث"
+            />
+          </span>
+        </div>
+      </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ألاجراءات</th>
+        <th>اخر تغيير بالحاله</th>
+        <th>نوع الخدمه</th>
+        <th>حالة الشحنه</th>
+        <th>موبايل</th>
+        <th>مبلغ التحصيل COD</th>
+        <th>المنطقه</th>
+        <th>اسم المنتج</th>
+        <th>المرسل اليه</th>
+        <th>الراسل</th>
+        <th>تاريخ</th>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox
+            (click)="SelectAllRow($event)"
+          ></p-tableHeaderCheckbox>
+        </th>
+        <!-- <th>رقم البوليصه</th> -->
+      </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+      <tr>
+        <td class="d-flex justify-content-center align-items-center flex-wrap">
+          <a
+            *ngIf="updateshipments"
+            data-toggle="modal"
+            (click)="add_edit(AE_modal, obj)"
+            title="تعديل  "
+            class="edit-emp-btn btn btn-outline-primary btn-sm"
+            ><i class="fas fa-edit"></i
+          ></a>
+          &nbsp;
+          <!-- <a *ngIf="updateshipments" data-toggle="modal" (click)="add_edit(changeShip, obj )" title="تغيير حالة الشحنه  " class="edit-emp-btn btn btn-primary btn-sm ">
+                    <i class="fas fa-exchange-alt"></i>
+                </a> &nbsp; -->
+          <button
+            disabled
+            *ngIf="!updateshipments"
+            class="btn-outline-danger mx-2"
+          >
+            تعديل
+          </button>
+          <!-- <a [routerLink]="['/shipment-product' , obj.id]" title="الذهاب الي المنتجات " class="btn btn-success btn-sm "> <i class="fas fa-database"></i></a>
+                <a title="طباعه بوليصه شحن" (click)="add_edit(bolisaShipment, obj )" class="btn btn-success btn-sm  mx-1"> <i class="fas fa-print"></i></a> -->
+          <!-- <a title="حاله الشحنه" (click)="add_edit(shipment_status, obj )" class="btn btn-success btn-sm my-1  mx-1"> <i class="fas fa-info-circle"></i></a> -->
+        </td>
+        <td>{{ obj.updated_at | date: "short" }}</td>
+        <td>{{ obj.service_type?.type ? obj.service_type?.type : "" }}</td>
+        <td>{{ obj.shipmentstatu?.name ? obj.shipmentstatu?.name : "" }}</td>
+        <td>{{ obj.client?.phone ? obj.client?.phone : "" }}</td>
+        <td>{{ obj.product_price ? obj.product_price : "" }}</td>
+        <td>{{ obj.area?.name ? obj.area?.name : "" }}</td>
+        <td>{{ obj.name_shipment ? obj.name_shipment : "" }}</td>
+        <td>{{ obj.client?.name ? obj.client?.name : "" }}</td>
+        <td>
+          {{ obj.user?.user_data?.name ? obj.user?.user_data?.name : "" }}
+        </td>
+        <td>{{ obj.created_at | date: "short" }}</td>
+        <td>
+          <p-tableCheckbox
+            (click)="SelectRow($event, obj)"
+            [value]="obj"
+          ></p-tableCheckbox>
+        </td>
+        <!-- <td> {{obj?.user?.first_name}} {{obj?.user?.second_name}} {{obj?.user?.last_name}} </td> -->
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<table
+  id="excel-table"
+  class="hiddenTable"
+  style="display: none !important"
+  class="table"
+>
+  <thead>
+    <tr>
+      <th>تاريخ إنشاء الشحنه</th>
+      <th>الراسل</th>
+      <th>المرسل اليه</th>
+      <th>اسم المنتج</th>
+      <th>المنطقه</th>
+      <th>مبلغ التحصيل COD</th>
+      <th>موبايل</th>
+      <th>حالة الشحنه</th>
+      <th>نوع الخدمه</th>
+      <th>اخر تغيير بالحاله</th>
+      <th style="text-align: center !important">العنوان</th>
+      <th style="text-align: center !important">البريد الالكتروني</th>
+      <th style="text-align: center !important">رقم الطلب من سيستم التاجر</th>
+      <th style="text-align: center !important">كود العميل من سيستم التاجر</th>
+      <th style="text-align: center !important">وصف المنتج</th>
+      <th style="text-align: center !important">الوزن</th>
+      <th style="text-align: center !important">الحجم</th>
+      <th style="text-align: center !important">العدد</th>
+      <th style="text-align: center !important">الملاحظات</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ship of filteredvalue">
+      <td>{{ ship.created_at | date: "short" }}</td>
+      <td>
+        {{ ship.user?.user_data?.name ? ship.user?.user_data?.name : "" }}
+      </td>
+      <td>{{ ship.client?.name ? ship.client?.name : "" }}</td>
+      <td>{{ ship.name_shipment ? ship.name_shipment : "" }}</td>
+      <td>{{ ship.area?.name ? ship.area?.name : "" }}</td>
+      <td>{{ ship.product_price ? ship.product_price : "" }}</td>
+      <td>{{ ship.client?.phone ? ship.client?.phone : "" }}</td>
+      <td>{{ ship.shipmentstatu?.name ? ship.shipmentstatu?.name : "" }}</td>
+      <td>{{ ship.service_type?.type ? ship.service_type?.type : "" }}</td>
+      <td>{{ ship.updated_at | date: "short" }}</td>
+
+      <td style="text-align: center !important">
+        {{ ship?.client?.address ? ship?.client?.address : "" }}
+      </td>
+      <td style="text-align: center !important">
+        {{ ship?.client?.email_2 ? ship?.client?.email_2 : "" }}
+      </td>
+      <td style="text-align: center !important">
+        {{ ship?.order_number ? ship?.order_number : "" }}
+      </td>
+      <td style="text-align: center !important">
+        {{ ship?.customer_code ? ship?.customer_code : "" }}
+      </td>
+      <td style="text-align: center !important">
+        {{ ship?.description ? ship?.description : "" }}
+      </td>
+      <td style="text-align: center !important">
+        {{ ship?.weight ? ship?.weight : "" }}
+      </td>
+      <td style="text-align: center !important">
+        {{ ship?.size ? ship?.size : "" }}
+      </td>
+      <td style="text-align: center !important">
+        {{ ship?.count ? ship?.count : "" }}
+      </td>
+      <td style="text-align: center !important">
+        {{ ship?.notes ? ship?.notes : "" }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- adding The Excel Sheet of Shipments  -->
+<ng-template #excelPop let-d="dismiss">
+  <div class="modal-header">
+    <h4
+      class="modal-title"
+      style="color: #f1f1f1 !important"
+      id="modal-basic-title"
+    >
+      إضافه شحنات من خلال ملف اكسيل
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for=""></label>
+                    </div>
+                    <div style="
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+      " class="form-group excel">
+                        <p style="font-size: 1.3rem; font-family: revert">
+                            ملف الإكسيل الإرشادي
+                            <i class="fas fa-file-excel mx-2" style="color: #042507" title="اضافة شيت اكسل"></i>
+                        </p>
+                        <!-- <button pButton pRipple type="button" label="تحميل" class="p-button-help"></button> -->
+                        <a class="d-none" #excelLink href="https://download1491.mediafire.com/jhzvoiwdlcqg/izait7jhh4bz59w/Bookali+-+Sheet.xlsx"></a>
+                        <a style="cursor : pointer " href="https://waz3ly.net/dashboard/api/getDownload" pButton pRipple type="button" label="تحميل" download class="p-button-raised p-button-help"></a>
+                    </div>
+
+                    <!-- <div style="width : 100% ; height : 50vh ; display : flex  ; justify-content : center  ; align-items : center " class="upload-btn">
+            <a (click)="uploadClient()" class="animated-button1">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span> رفع ملف إكسيل للشحنات
+            </a>
+        </div>
+        <input (change)="onImageChange($event.target)" id="userPic" type="file" hidden accept=".xlsx, .xls, .csv" /> -->
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <ng-container class="my-5">
+                                <angular-file-uploader #fileUpload1 (fileSelected)="fileSelected($event)" (ApiResponse)="DocUpload($event)" [config]="afuConfig">
+                                </angular-file-uploader>
+                            </ng-container>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="">إختر الشركه</label>
+                            <ng-select [(ngModel)]="company_id" (change)="oncompanyChange($event)">
+                                <ng-option *ngFor="let item of allCompanies" [value]="item.user?.id">
+                                    {{ item?.name }}
+                                </ng-option>
+                            </ng-select>
+
+                        </div>
+                    </div>
+                </div>
+</ng-template>
+
+<!-- filtering with date  -->
+<ng-template #filteringDate let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color: #f1f1f1 !important" id="modal-basic-title">
+            مرحبا
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="start_date">من تاريخ</label>
+            <input type="date" [(ngModel)]="start_date" class="form-control" name="start_date" id="start_date" />
+        </div>
+
+        <div class="form-group">
+            <label for="end_date">الي تاريخ</label>
+            <input type="date" [(ngModel)]="end_date" class="form-control" name="end_date" id="end_date" />
+        </div>
+
+        <div class="form-group my-3">
+            <button (click)="searchDate()" class="btn btn-outline-info">بحث</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #filteringRepresentative let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color: #f1f1f1 !important" id="modal-basic-title">
+            مرحبا
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <label for="representative_id" dir="ltr">
+      <span style="font-size: 1.2rem; color: #f00"> * </span> المندوب</label
+    >
+    <ng-select
+      name="representative_id"
+      [(ngModel)]="representativeId"
+      id="representative_id"
+    >
+      <ng-option *ngFor="let item of allRepresentatives" [value]="item.id">
+        {{ item?.name }}
+      </ng-option>
+    </ng-select>
+
+    <div class="form-group my-3">
+      <button (click)="searchDate()" class="btn btn-outline-info">
+        بحث
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Filtering With status  -->
+<ng-template #filteringStatus let-d="dismiss">
+  <div class="modal-header">
+    <h4
+      class="modal-title"
+      style="color: #f1f1f1 !important"
+      id="modal-basic-title"
+    >
+      مرحبا
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="" dir="ltr"> حاله الشحنه </label>
+        <ng-select name="shipment_status_id" [(ngModel)]="statusShipmentId">
+            <ng-option *ngFor="let item of shipmentStatus" [value]="item.id">
+                {{ item?.name }}
+            </ng-option>
+        </ng-select>
+    </div>
+
+    <div class="form-group my-3">
+        <button (click)="searchDate()" class="btn btn-outline-info">بحث</button>
+    </div>
+    </div>
+</ng-template>
+<!-- shipment Today  -->
+
+<!-- more details about the shipment  -->
+<ng-template #details let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color: #f1f1f1 !important" id="modal-basic-title">
+            More Details
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <table [width]="100" class="w-100 table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <!-- <th>طريقه الدفع</th> -->
+                    <th style="text-align: center !important">العنوان</th>
+                    <th style="text-align: center !important">البريد الالكتروني</th>
+                    <th style="text-align: center !important">
+                        رقم الطلب من سيستم التاجر
+                    </th>
+                    <!-- <th style="text-align : center !important"> الوزن المسموح (بالكجم)</th> -->
+                    <th style="text-align: center !important">
+                        كود العميل من سيستم التاجر
+                    </th>
+                    <th style="text-align: center !important">وصف المنتج</th>
+                    <th style="text-align: center !important">الوزن</th>
+                    <th style="text-align: center !important">الحجم</th>
+                    <th style="text-align: center !important">العدد</th>
+                    <th style="text-align: center !important">الملاحظات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <!-- <td>{{(moreDetails) ? moreDetails : '' }}</td> -->
+                    <td style="text-align: center !important">
+                        {{ moreDetails?.client?.address ? moreDetails?.client?.address : "" }}
+                    </td>
+                    <td style="text-align: center !important">
+                        {{ moreDetails?.client?.email_2 ? moreDetails?.client?.email_2 : "" }}
+                    </td>
+                    <td style="text-align: center !important">
+                        {{ moreDetails?.order_number ? moreDetails?.order_number : "" }}
+                    </td>
+                    <!-- <td style="text-align : center !important">{{(moreDetails?.allowed_weight) ? moreDetails?.allowed_weight : '' }}</td> -->
+                    <td style="text-align: center !important">
+                        {{ moreDetails?.customer_code ? moreDetails?.customer_code : "" }}
+                    </td>
+                    <td style="text-align: center !important">
+                        {{ moreDetails?.description ? moreDetails?.description : "" }}
+                    </td>
+                    <td style="text-align: center !important">
+                        {{ moreDetails?.weight ? moreDetails?.weight : "" }}
+                    </td>
+                    <td style="text-align: center !important">
+                        {{ moreDetails?.size ? moreDetails?.size : "" }}
+                    </td>
+                    <td style="text-align: center !important">
+                        {{ moreDetails?.count ? moreDetails?.count : "" }}
+                    </td>
+                    <!-- <td style="text-align : center !important">{{(moreDetails?.count) ? moreDetails?.count : '' }}</td> -->
+
+                    <td style="text-align: center !important">
+                        {{ moreDetails?.notes ? moreDetails?.notes : "" }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+
+<!-- show the status of shipment  -->
+<ng-template #shipStatus let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color: #f1f1f1 !important" id="modal-basic-title">
+            تتبع الشحنه
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+    <div class="modal-body shipmentStatus">
+        <p-card header="" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
+            <ng-container [ngSwitch]="item.shipment_status_id">
+                <p-steps *ngSwitchCase="1" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index1" [readonly]="true">
+                </p-steps>
+
+
+                <p-steps *ngSwitchCase="2" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index2" [readonly]="true">
+                </p-steps>
+
+
+                <p-steps *ngSwitchCase="3" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index3" [readonly]="true">
+                </p-steps>
+
+
+                <p-steps *ngSwitchCase="4" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index4" [readonly]="true">
+                </p-steps>
+
+                <p-steps *ngSwitchCase="5" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index5" [readonly]="true">
+                </p-steps>
+
+                <p-steps *ngSwitchCase="6" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index6" [readonly]="true">
+                </p-steps>
+
+                <p-steps *ngSwitchCase="7" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index7" [readonly]="true">
+                </p-steps>
+
+                <p-steps *ngSwitchCase="8" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index8" [readonly]="true">
+                </p-steps>
+
+                <p-steps *ngSwitchCase="9" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index9" [readonly]="true">
+                </p-steps>
+
+                <p-steps *ngSwitchCase="10" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index10" [readonly]="true">
+                </p-steps>
+
+                <p-steps *ngSwitchCase="11" [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index11" [readonly]="true">
+                </p-steps>
+
+                <p-steps *ngSwitchDefault [model]="[
+    { label: 'طلب جديد' },
+    { label: 'الإستلام من المندوب' },
+    { label: 'التغليف' },
+    { label: 'في الطريق للعميل' } ,
+    { label: 'تم الأستلام' }
+  ]" [(activeIndex)]="index1" [readonly]="true">
+                </p-steps>
+            </ng-container>
+
+            <br />
+            <ul class="list-unstyled shipping-ul position-relative">
+                <img class="cover" src="../../assets/images/login2.jpg" alt="">
+                <li class="shipping-item">
+                    <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{(item.id) ? item.id : ''}}</span> :</span>
+                    <span style="display  : inline-block ;  width : 30%">رقم بوليصة الشحن</span>
+                    <i class="fa fa-check"></i>
+                </li>
+
+                <li class="shipping-item">
+                    <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{(item.name_shipment) ? item.name_shipment : ''}}</span> :</span>
+                    <span style="display  : inline-block ;  width : 30%">إسم الشحنه</span>
+                    <i class="fa fa-check"></i>
+                </li>
+
+                <li class="shipping-item">
+                    <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{(item.product_price) ? item.product_price  : ''}} جنية </span> :</span>
+                    <span style="display  : inline-block ;  width : 30%">السعر الاجمالي
+            </span> <i class="fa fa-check"></i>
+                </li>
+
+                <!-- <li class="shipping-item">
+              <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">8X8X 8</span> :</span>
+              <span style="display  : inline-block ;  width : 30%"> أبعاد الشحنة
+             </span> <i class="fa fa-check"></i>
+          </li> -->
+
+                <li class="shipping-item">
+                    <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{(item.shipmentstatu?.name)  ? item.shipmentstatu?.name  : ''}}</span> :</span>
+                    <span style="display  : inline-block ;  width : 30%"> حالة الشحنة
+           </span> <i class="fa fa-check"></i>
+                </li>
+
+                <li class="shipping-item">
+                    <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{item.created_at | date:'short'}}</span> :</span>
+                    <span style="display  : inline-block ;  width : 30%"> تاريخ طلب الشحنة
+         </span> <i class="fa fa-check"></i>
+                </li>
+
+                <li class="shipping-item">
+                    <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{(item.delivery_date) ? (item.delivery_date | date:'short') : ''}}</span> :</span>
+                    <span style="display  : inline-block ;  width : 30%"> تاريخ توصيل الشحنة
+       </span> <i class="fa fa-check"></i>
+                </li>
+            </ul>
+
+        </p-card>
+    </div>
+</ng-template>

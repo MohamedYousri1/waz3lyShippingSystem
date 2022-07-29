@@ -1,0 +1,14 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form [formGroup]="myform" (submit)="onsubmit(id)">
+
+    <div class="col-md-12 slider m-auto branchImg d-flex flex-column">
+        <img *ngIf="!Catchobj.img" src="{{img_path}}" alt="">
+        <img *ngIf="Catchobj.img" class="img-fluid rounded" src="https://wasela.innovations-eg.com//public/uploads/sliders/{{Catchobj.photo}}">
+        <label for="branchImg" class="text-center">اختر صوره</label>
+        <input (change)="onImageChange($event.target)" type="file">
+    </div>
+
+
+    <button class="btn btn-outline-danger"> {{id===""? 'اضافة':'تعديل'}} </button>
+</form>

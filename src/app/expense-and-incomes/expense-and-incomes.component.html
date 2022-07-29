@@ -1,0 +1,272 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<div style="width : 85% !important">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="container">
+                <div class="page-content-inner">
+                    <div class="form-horizontal">
+                        <div class="panel panel-dark">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="panel-title text-right  col-md-12">المصروفات و الإيرادات</h3>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <form style="font-size: 0.9rem !important ;" class="expesneIncome" [formGroup]="formData">
+                                    <div class="form-group flex-group">
+                                        <label class="control-label col-md-4 text-left">مصروفات ؟ </label>
+                                        <div class="col-md-4">
+                                            <p-toggleButton (onChange)="checkIncomeFalse($event)" onLabel="نعم" offLabel="لا" name="type"></p-toggleButton>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="expenseCheck == false " class="form-group flex-group">
+                                        <label class="col-md-4 control-label" for="ddlItem" id="lblItem">سند إيراد</label>
+                                        <div class="col-md-4">
+                                            <p-dropdown [options]="allIncomes" (onChange)="onIncomeChange($event.value)" optionValue="id" name="comission_management_id" optionLabel="label" [filter]="true" filterBy="label" [showClear]="true" placeholder="بتد">
+                                                <ng-template let-Income pTemplate="item">
+                                                    <div class="Income-item">
+                                                        <div> {{Income.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="expenseCheck == true" class="form-group flex-group">
+                                        <label class="col-md-4 control-label" for="ddlItem" id="lblItem">سند صرف </label>
+                                        <div class="col-md-4">
+                                            <p-dropdown [options]="allExpenses" (onChange)="onExpenseChange($event.value)" optionValue="id" name="comission_management_id" optionLabel="label" [filter]="true" filterBy="label" [showClear]="true" placeholder="بند">
+                                                <ng-template let-expense pTemplate="item">
+                                                    <div class="expense-item">
+                                                        <div> {{expense.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group flex-group">
+                                        <label class="col-md-4 control-label" for="ddlItem" id="lblItem">إختر خزنه الرئيسيه</label>
+                                        <div class="col-md-4">
+                                            <p-dropdown [options]="alltreasuries" (onChange)="onTreasuryChange($event.value)" optionValue="id" name="treasury_name" optionLabel="label" [filter]="true" filterBy="label" [showClear]="true" placeholder="خزائن ">
+                                                <ng-template let-treasury pTemplate="item">
+                                                    <div class="treasury-item">
+                                                        <div> {{treasury.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group flex-group">
+                                        <label class="col-md-4 control-label" for="ddlItem" id="lblItem">إختر خزنه</label>
+                                        <div class="col-md-4">
+                                            <p-dropdown [options]="alltreasuriesMain" optionValue="id" name="treasury_name" [(ngModel)]="treasuryId" [ngModelOptions]="{standalone: true}" optionLabel="label" [filter]="true" filterBy="label" [showClear]="true" placeholder="خزائن ">
+                                                <ng-template let-treasury pTemplate="item">
+                                                    <div class="treasury-item">
+                                                        <div> {{treasury.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group flex-group">
+                                        <label class="control-label col-md-4" for="txtprice">المبلغ</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group bootstrap-touchspin"><span class="input-group-addon bootstrap-touchspin-prefix">EGP</span><input formControlName="price" type="number" name="txtprice" id="txtprice" class="form-control" title="price" placeholder="المبلغ" tabindex="4"
+                                                    style="display: block;">
+                                                <span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group flex-group">
+                                        <label class="control-label col-md-4" for="txtNotes">ملاحظات</label>
+                                        <div class="col-md-4">
+                                            <textarea formControlName="notes" name="txtNotes" id="txtNotes" class="form-control" title="price" rows="4" cols="3" placeholder="Notes" tabindex="5"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group flex-group">
+                                        <label class="control-label col-md-4">تاريخ الدفع</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group date date-picker">
+                                                <input formControlName="payment_date" type="date" class="form-control" id="txtDate" tabindex="6" name="txtDate" placeholder="التاريخ" title="Date">
+                                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button"><i class="fa fa-calendar"></i></button>
+                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="expenseCheck == true" class="form-group flex-group">
+                                        <label class="control-label col-md-4" for="recipient">إسم المستلم</label>
+                                        <div class="col-md-4">
+                                            <input formControlName="recipient" name="recipient" id="recipient" class="form-control" title="recipient" rows="4" cols="3" placeholder="Recipient Name" tabindex="5">
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="expenseCheck == false" class="form-group flex-group">
+                                        <label class="control-label col-md-4" for="name">إسم مسلم المبلغ</label>
+                                        <div class="col-md-4">
+                                            <input formControlName="name" name="name" id="name" class="form-control" title="name" rows="4" cols="3" placeholder="name Name" tabindex="5">
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div class="panel-footer">
+                                    <div class="row">
+                                        <div class="pull-right">
+                                            <div class="col-md-12 ">
+                                                <button type="button" (click)="addData()" id="btnSaveTreasury" data-id="0" class="pull-right btn btn-sm btn-success">حفظ</button>
+                                                <button type="button" (click)="cancelForm()" id="btnCancelTreasury" class="btn default btn-sm pull-right" data-dismiss="modal">إلغاء</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-horizontal">
+                        <div class="panel panel-dark">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{(expenseCheck == true ) ? "نتائج المصروفات" : "نتائج الإيرادات" }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-container">
+                                    <div id="DivIncomeExpenseData">
+                                        <div id="DivIncomeExpenseDatatable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                            <div class="PrintPaper2"></div>
+
+
+
+                                            <p-table *ngIf="this.expenseCheck == false " #depTbl [value]="allDataIncomes" [globalFilterFields]="['income.label' , 'created_at' , 'code' ,  'payment_date' , 'price']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber"
+                                                [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+
+                                                <ng-template pTemplate="caption">
+                                                    <div class="p-d-flex">
+                                                        <div class="search-warpper">
+                                                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)"></button>
+                                                            <span class="p-input-icon-left p-ml-auto">
+                                            <i class="pi pi-search"></i>
+                                            <input class="search-textbox" pInputText type="text"
+                                              (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث " />
+                                          </span>
+                                                        </div>
+
+                                                    </div>
+                                                </ng-template>
+
+                                                <ng-template pTemplate="header">
+                                                    <tr>
+                                                        <th> ألاجراءات </th>
+                                                        <th>تاريخ العمليه</th>
+                                                        <th>تاريخ الدفع</th>
+                                                        <th>إسم مسلم المبلغ</th>
+                                                        <th>الكميه</th>
+                                                        <th>ملاحظات </th>
+                                                        <th> البند</th>
+                                                        <!--
+                                                        <th pSortableColumn="code"> الكود
+                                                            <p-sortIcon field="code"></p-sortIcon>
+                                                        </th> -->
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template pTemplate="body" let-income>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="btn-group btn-group-sm btn-group-justified">
+                                                                <a (click)="confirm(income)" id="btnDeleteIncome-3" type="button" class="btn btn-xs red-thunderbird" name="btnDeleteIncome" data-id="3" title="Delete Expense" style="width: 100%;">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{income.created_at | date:'short'}}</td>
+                                                        <td>{{income.payment_date}}</td>
+                                                        <td>{{(income.name) ? income.name : 'Null'}}</td>
+                                                        <td>{{income.price}} EGP</td>
+                                                        <td>{{income.notes}}</td>
+                                                        <td tabindex="0">{{income.income.label}}</td>
+                                                        <!-- <td tabindex="0">{{income.code}}</td> -->
+
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+
+                                            <p-table *ngIf="this.expenseCheck == true " #depTb2 [value]="allDataExpense" [globalFilterFields]="['expenseDate' , 'created_at' , 'price' , 'expense.label' , 'code']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber"
+                                                [pageLinks]="8" [scrollable]="true">
+                                                <ng-template pTemplate="caption">
+                                                    <div class="p-d-flex">
+                                                        <div class="search-warpper">
+                                                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)"></button>
+                                                            <span class="p-input-icon-left p-ml-auto">
+                                        <i class="pi pi-search"></i>
+                                        <input class="search-textbox" pInputText type="text"
+                                          (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث " />
+                                      </span>
+                                                        </div>
+
+                                                    </div>
+                                                </ng-template>
+
+                                                <ng-template pTemplate="header">
+                                                    <tr>
+                                                        <th> ألاجراءات </th>
+                                                        <th>تاريخ العمليه</th>
+                                                        <th>صادر بتاريخ</th>
+                                                        <th>ملاحظات</th>
+                                                        <th>إسم المستلم</th>
+                                                        <th>الكميه</th>
+                                                        <th pSortableColumn="expense.label">إسم البند</th>
+                                                        <!-- <th pSortableColumn="code">كود
+                                                            <p-sortIcon field="code"></p-sortIcon>
+                                                        </th> -->
+                                                    </tr>
+
+                                                </ng-template>
+
+
+                                                <ng-template pTemplate="body" let-expense>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="btn-group btn-group-sm btn-group-justified">
+                                                                <a (click)="confirm(expense)" id="btnDeleteIncome-3" type="button" class="btn btn-xs red-thunderbird" name="btnDeleteIncome" data-id="3" title="Delete Expense">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
+
+                                                                <!-- <a (click)="printExpense(expensepop , expense)" id="btnDeleteIncome-3" type="button" class="btn btn-xs dark-thunderbird" name="btnDeleteIncome" data-id="3" title="">
+                                                                    <i class="fa fa-print"></i>
+                                                                </a> -->
+
+                                                            </div>
+                                                        </td>
+                                                        <td>{{expense.created_at | date:'short'}}</td>
+                                                        <td>{{expense.payment_date}}</td>
+                                                        <td>{{expense.notes}}</td>
+                                                        <td>{{(expense.recipient) ? expense.recipient : 'Null'}}</td>
+                                                        <td>{{expense.price}} EGP</td>
+                                                        <td tabindex="0">{{expense.expense.label}}</td>
+                                                        <!-- <td tabindex="0">{{expense.code}}</td> -->
+
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

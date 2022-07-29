@@ -1,0 +1,125 @@
+<form [formGroup]="myform" (submit)="onsubmit(id)">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for=""> الاسم الاخير </label>
+                <input type="text" name="last_name" formControlName="last_name" class="form-control" [ngClass]="{'is-invalid' : submited && f.last_name.errors}">
+                <div *ngIf='submited && f.last_name.errors'>
+                    <div *ngIf="submited && f.last_name.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for=""> التليفون </label>
+                <input type="number" name="phone_number" formControlName="phone_number" class="form-control" [ngClass]="{'is-invalid' : submited && f.phone_number.errors}">
+                <div *ngIf='submited && f.phone_number.errors'>
+                    <div *ngIf="submited && f.phone_number.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="">  المدينه </label> <br>
+                <input type="text" name="city" formControlName="city" class="form-control" name='اختر المحافظة' [ngClass]="{'is-invalid' : submited && f.city.errors}">
+                <div *ngIf='submited && f.city.errors'>
+                    <div *ngIf="submited && f.city.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+            <!--
+            <div class="form-group">
+                <label for=""> الايميل </label>
+                <input type="email" name="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid' : submited && f.email.errors}">
+                <div *ngIf='submited && f.email.errors'>
+                    <div *ngIf="submited && f.email.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div> -->
+
+
+
+            <!--
+            <div class="form-group">
+                <label for="">    نوع التعامل    </label>
+                <input name="deal_type" type="text" formControlName="deal_type" class="form-control" [ngClass]="{'is-invalid' : submited && f.deal_type.errors}">
+
+                <div *ngIf='submited && f.deal_type.errors'>
+                    <div *ngIf="submited && f.deal_type.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div> -->
+
+
+            <!-- <div class="form-group">
+                <label for="">    التقييم    </label>
+                <input type="text" formControlName="rate" name="rate" class="form-control" [ngClass]="{'is-invalid' : submited && f.rate.errors}">
+
+                <div *ngIf='submited && f.rate.errors'>
+                    <div *ngIf="submited && f.rate.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div> -->
+
+
+        </div>
+        <!---->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for=""> الاسم الاول </label>
+                <input type="text" name="first_name" formControlName="first_name" class="form-control" [ngClass]="{'is-invalid' : submited && f.first_name.errors}">
+                <div *ngIf='submited && f.first_name.errors'>
+                    <div *ngIf="submited && f.first_name.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for=""> الاسم الثاني </label>
+                <input type="text" name="second_name" formControlName="second_name" class="form-control" [ngClass]="{'is-invalid' : submited && f.second_name.errors}">
+                <div *ngIf='submited && f.second_name.errors'>
+                    <div *ngIf="submited && f.second_name.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for=""> العنوان </label>
+                <input type="text" name="address" formControlName="address" class="form-control" [ngClass]="{'is-invalid' : submited && f.address.errors}">
+                <div *ngIf='submited && f.address.errors'>
+                    <div *ngIf="submited && f.address.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- <div class="form-group">
+                <label for="">عدد الشحنات اليوميه </label>
+                <input type="number" name="number_of_shipments_daily" formControlName="number_of_shipments_daily" class="form-control" [ngClass]="{'is-invalid' : submited && f.number_of_shipments_daily.errors}">
+                <div *ngIf='submited && f.number_of_shipments_daily.errors'>
+                    <div *ngIf="submited && f.number_of_shipments_daily.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="">عدد الشحنات الشهريه </label>
+                <input type="number" name="number_of_shipments_monthly" formControlName="number_of_shipments_monthly" class="form-control" [ngClass]="{'is-invalid' : submited && f.number_of_shipments_monthly.errors}">
+                <div *ngIf='submited && f.number_of_shipments_monthly.errors'>
+                    <div *ngIf="submited && f.number_of_shipments_monthly.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="">عدد الشحنات السنويه </label>
+                <input type="number" name="number_of_shipments_yearly" formControlName="number_of_shipments_yearly" class="form-control" [ngClass]="{'is-invalid' : submited && f.number_of_shipments_yearly.errors}">
+                <div *ngIf='submited && f.number_of_shipments_yearly.errors'>
+                    <div *ngIf="submited && f.number_of_shipments_yearly.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div> -->
+
+            <!-- <div class="form-group">
+                <label for="">  المدينه </label> <br>
+                <input type="text" name="city" formControlName="city" class="form-control" name='اختر المحافظة' [ngClass]="{'is-invalid' : submited && f.city.errors}">
+                <div *ngIf='submited && f.city.errors'>
+                    <div *ngIf="submited && f.city.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div> -->
+
+
+        </div>
+    </div>
+
+    <button class="btn btn-primary"> {{ id === "" ? 'اضافة': 'حفظ' }} </button>
+</form>

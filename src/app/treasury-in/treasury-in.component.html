@@ -1,0 +1,229 @@
+<p-toast position="top-right" key="myKey2"></p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<div style="width : 85% ">
+    <div class="page-content">
+        <div class="container">
+            <div class="page-content-inner">
+                <div class="panel panel-dark">
+                    <div class="panel-heading">
+                        <div class="row" style="direction: inherit;">
+                            <div class="col-md-4">
+                                <div class="btn-group  btn-group-solid margin-bottom-10 pull-left">
+                                    <button type="button" class="btn green">You are on </button>
+                                    <button type="button" class="btn dark txtCurrentTreasuryName">({{(treasuryName)  ? treasuryName : 'Select Treasury'}})</button>
+                                    <button (click)="changeTreasury(changeTreasuryModal)" type="button" id="btnChangeTreasury" class="btn green" data-toggle="tooltip" title="Change"><i class="fas fa-sign-out-alt"></i></button>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-8">
+                                <h3 class="panel-title">Transaction In</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row py-4">
+                            <div class="col-md-12 btnsContainer">
+                                <div class="col-md-4">
+                                    <div class="pull-left btn-group  btn-group-solid margin-bottom-10">
+                                        <button *ngIf="this.allData?.length == 0 " type="button" class="btn dark txtTotalExpenses">0 EGP</button>
+                                        <button *ngIf="this.allData?.length > 0 " type="button" class="btn dark txtTotalExpenses">{{(this.allData[0]?.treasury?.expense)  ? this.allData[0]?.treasury?.expense : '0' }}  EGP</button>
+
+                                        <button type="button" class="btn btn-danger">إجمالي المصروفات</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div class="btn-group  btn-group-solid margin-bottom-10 ">
+                                        <button *ngIf="this.allData?.length > 0" type="button" class="btn dark txtTotalIncome">{{(this.allData[0]?.treasury?.expense)  ? this.allData[0]?.treasury?.income : '0' }}  EGP</button>
+                                        <button *ngIf="this.allData?.length == 0 " type="button" class="btn dark txtTotalIncome">0 EGP</button>
+
+                                        <button type="button" class="btn green">اجمالي الإيرادات</button>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class=" btn-group  btn-group-solid margin-bottom-10 pull-right">
+                                        <button *ngIf="this.allData?.length > 0" type="button" class="btn dark txtNetPayment">{{(this.allData[0]?.treasury?.income) - this.allData[0]?.treasury?.expense}}  EGP</button>
+                                        <button *ngIf="this.allData?.length == 0 " type="button" class="btn dark txtNetPayment">0 EGP</button>
+
+                                        <button type="button" class="btn btn-info">المبلغ الصافي</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ************* tab panels Will be Here ********** -->
+                <div class="activeCourses datbeMine income">
+                    <p-tabView>
+                        <!-- ============> Launching Courses Tracks  -->
+                        <!-- <p-tabPanel header="Trainees Payments">
+                        <div class="panel panel-dark">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Trainees Payments</h3>
+                            </div>
+                            <p-table [value]="trainees_payments" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Trainee Name</th>
+                                        <th>Address</th>
+                                        <th>Paid Amount </th>
+                                        <th>type</th>
+                                        <th>Treasury</th>
+                                        <th>Insertion Date </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-discount let-payment>
+                                    <tr>
+                                        <td>{{payment.lead?.first_name}} {{payment.lead?.first_name}} {{payment.lead?.last_name}}</td>
+                                        <td>{{payment.product_name}}</td>
+                                        <td>{{payment.amount}}</td>
+                                        <td>{{payment.product_type}}</td>
+                                        <td>{{payment.treasury?.label}}</td>
+
+                                        <td>{{payment.created_at | date:'short'}}</td>
+                                        <td *ngIf="payment.treasury_id == null ">
+                                            <div class="btn-group-vertical btn-group-sm"><a (click)="payMoney( payments , payment)" class="btn btn-xs blue" href="javascript:;" data-id="3" data-amount="1000 EGP" name="btnGetIncome" title="Receiving Money"><i class="fa fa-money"></i> Receiving Money</a></div>
+                                        </td>
+                                        <td *ngIf="payment.treasury_id != null ">
+                                            <a (click)="cancelPayment(payment)" class="btn btn-xs red" href="javascript:;" data-studentpaymentstransactionid="1442" data-treasurytransactionid="16" name="btnCancelStudentPayment" title="Cancel "><i class="fa fa-money"></i> Cancel </a>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </p-tabPanel> -->
+                        <!-- ============> End Launching Courses Tracks  -->
+
+                        <!-- ============> Expense  -->
+                        <!-- <p-tabPanel header="Income"> -->
+
+                        <div class="panel panel-dark income">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">الإيرادات</h3>
+                            </div>
+                            <p-table [value]="income" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>تاريخ الإدراج</th>
+                                        <th>الخزنه</th>
+                                        <th>المبلغ</th>
+                                        <th>الملاحظه</th>
+                                        <th>البند</th>
+
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-discount let-income>
+                                    <tr>
+
+
+
+
+                                        <td>{{income.created_at | date:'short'}}</td>
+                                        <td>{{income.treasury?.label}}</td>
+                                        <td>{{income.amount}}</td>
+                                        <td>{{income.notes}}</td>
+                                        <td>{{income.income.label}}</td>
+                                        <!-- <td *ngIf="income.treasury_id == null ">
+                                        <div class="btn-group-vertical btn-group-sm"><a (click)="payMoney( payments , income)" class="btn btn-xs blue" data-id="3" name="btnGetIncome" title="Receiving Money"><i class="fa fa-money"></i> Receiving Money</a></div>
+                                    </td>
+                                    <td *ngIf="income.treasury_id != null ">
+                                        <a (click)="cancelPayment(income)" class="btn btn-xs red" href="javascript:;" data-studentpaymentstransactionid="1442" data-treasurytransactionid="16" name="btnCancelStudentPayment" title="Cancel "><i class="fa fa-money"></i> Cancel </a>
+                                    </td> -->
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                        <!-- </p-tabPanel> -->
+                    </p-tabView>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #changeTreasuryModal let-c="close" let-d="dismiss">
+    <div class="modal-header ">
+        <h4 class="modal-title">إختر الخزنه</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+
+        <div class="form-horizontal treasuryManagement">
+            <div class="form-body">
+                <div class="form-group">
+                    <div class="col-md-12 d-flex" style="display:  flex !important;">
+
+                        <p-dropdown (onChange)="ontreasuryChange($event.value)" [options]="allTreasuries" optionLabel="label" [filter]="true" filterBy="label" [showClear]="true">
+                            <ng-template let-treasury pTemplate="item">
+                                <div class="treasury-item">
+                                    <div> {{treasury.label}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+
+                        <span class="input-group-btn">
+                          <button (click) = "filterByTreasury()" type="button" id="btnSaveSelectedTreasury" class="btn dark" data-select2-open="single-append-text"><i class="fa fa-arrow-left"></i></button>
+                      </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #payments let-c="close" let-d="dismiss">
+    <div class="modal-header ">
+        <h4 class="modal-title">Payment</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Amount</label>
+                            <label [(ngModel)]="amountPaid" id="txtPayAmount" class="control-label col-md-3 bold">{{amount}} EG</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Note</label>
+                            <div class="col-md-10">
+                                <textarea [(ngModel)]="note" id="txtPayPaymentNote" rows="4" tabindex="1" name="txtPayPaymentNote" placeholder="Note" autofocus="" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-footer">
+        <div class="row">
+            <div class=" pull-right">
+                <div class="col-md-12">
+                    <input type="button" (click)="saveMoney()" value="Save" id="btnSavePay" tabindex="17" class="btn btn-success">
+                    <input type="button" value="Cancel" id="btnCancelPay" tabindex="18" class="btn btn-default">
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<div *ngIf="this.is_loading == true " class="overlay">
+    <div class="sucees">Chganging Treasury Successfully...</div>
+</div>

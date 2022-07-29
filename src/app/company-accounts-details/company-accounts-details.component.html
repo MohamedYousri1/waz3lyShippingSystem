@@ -1,0 +1,238 @@
+<p-toast position="bottom-center" key="myKey2"></p-toast>
+<p-toast position="bottom-center" key="myKey1"></p-toast>
+
+<!--********************    start header  ********************************-->
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+
+        <p class="h5 text-light py-3 ml-auto"> حسابات المناديب </p>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="allCompanies" [globalFilterFields]="['price' , 'branch.name' ,  'name' , 'weight' ,'height' , 'date_of_receipt' , 'delivery_date']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber"
+    [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+        </button>
+                <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input class="search-textbox" pInputText type="text"
+            (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+        </span>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> الحسابات </th>
+            <th> التليفون</th>
+            <th> الرصيد</th>
+            <th> قيمه الشحنات </th>
+            <th>الشحنات الحاليه</th>
+            <th> حاله العضو</th>
+            <th> فرع</th>
+            <th> التاجر</th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td class="d-flex justify-content-around">
+                <a data-toggle="modal " (click)="afterZeroWallet(afterWallet,obj.id)" class="edit-emp-btn btn btn-primary btn-sm mx-2 ">
+            تم تصفيتها
+       </a>
+                <a data-toggle="modal " (click)="addRepresentative(shipmentDetail , obj.id)" class="edit-emp-btn btn btn-danger  btn-sm mx-2 ">
+          لم يتم التصفيه
+       </a>
+            </td>
+            <td> {{ obj.user?.phone_number }} </td>
+            <td>{{(obj.balance) ? obj.balance : '0'}}</td>
+            <td>{{(obj.value_of_shipment) ? obj.value_of_shipment : '0'}}</td>
+            <td>{{(obj.current_shipment) ? obj.current_shipment : '0'}}</td>
+            <td>{{(obj.user.is_active == 1 ) ? 'فعال' : 'غير فعال'}}</td>
+            <td> {{ (obj.branch?.name) ? obj.branch?.name : '' }} </td>
+            <td class="text-primary" (click)="moreDetailsFun(details, obj)"><a class="btn btn-outline-info  ">{{ (obj.name) ? obj.name : '' }}</a></td>
+        </tr>
+    </ng-template>
+
+
+    <!-- <ng-template pTemplate="footer">
+
+        <div class="container py-5 ">
+            <div class="row">
+                <div class="col-md-12 my-auto">
+                    <div class="shadow bg-light p-2 d-flex  total">
+                        <p> أجمالي الشحنات </p>
+                        <span class="mx-2">200000جنية</span>
+
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="shadow bg-light p-2 d-flex text-right total">
+                        <p> أجمالي متحصلات التاجر عن كل الشحنات </p>
+                        <span class="mx-2">500000جنية</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="shadow bg-light p-2 d-flex text-right total">
+                        <p> أجمالي عمولات التاجر عن كل الشحنات </p>
+                        <span class="mx-2">900000جنية</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </ng-template> -->
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+<ng-template #shipmentDetail let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> حسابات التاجر </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+
+        <div class="container">
+            <div class="row img-row">
+                <div class="col-12 ">
+
+                    <table dir="rtl" *ngIf="representativeData" class="table table-bordered table-wrapper">
+                        <thead>
+                            <tr>
+                                <th scope="col">الشحنه</th>
+                                <th scope="col">حاله الشحنه</th>
+                                <th scope="col">سعر المنتج</th>
+                                <th scope="col">رصيد التحصيل</th>
+                                <th scope="col">تكلفه الشحن</th>
+                                <th scope="col">تاريخ التسليم </th>
+                                <th scope="col">التاريخ</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let state of representativeData">
+                                <td>{{state?.shipment?.name_shipment}} </td>
+                                <td>{{state?.shipmentstatu?.name}} </td>
+                                <td>{{(state?.shipment?.product_price) ? state?.shipment?.product_price :'0'}} </td>
+                                <td>{{(state?.shipment_price) ? state?.shipment_price :'0'}} </td>
+                                <td>{{(state?.shipment?.shipping_price) ? state?.shipment?.shipping_price :'0'}} </td>
+                                <td *ngIf="state?.delivery_date">{{state?.delivery_date | date : 'shortDate'}} </td>
+                                <td *ngIf="!state?.delivery_date">{{state?.updated_at | date : 'shortDate'}} </td>
+
+                                <td>{{state?.created_at | date : 'shortDate'}} </td>
+                                <td>
+                                    <input type="checkbox" value="{{state.id}}" (change)="onChangeCheck(state.id , $event)">
+                                </td>
+                            </tr>
+                            <tr *ngIf="representativeData">
+                                <th colspan="4">
+                                    <button (click)="clearWallet(representativeData[0]?.company_id)" class="btn btn-outline-info p-3">تصفيه </button>
+                                </th>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+
+
+
+<ng-template #afterWallet let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> حسابات التاجر </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row img-row">
+                <div class="col-12 ">
+
+                    <table dir="rtl" *ngIf="companyDetail" class="table table-bordered table-wrapper">
+                        <thead>
+                            <tr>
+                                <th scope="col">الشحنه</th>
+                                <th scope="col">سعر المنتج</th>
+                                <th scope="col">رصيد التحصيل</th>
+                                <th scope="col">تكلفه الشحن</th>
+                                <th scope="col">التاريخ</th>
+                                <th scope="col">تاريخ تصفي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let state of companyDetail">
+                                <td>{{state?.shipment?.name_shipment}} </td>
+                                <td>{{(state?.shipment?.product_price) ? state?.shipment?.product_price :'0'}} </td>
+                                <td>{{(state?.shipment_price) ? state?.shipment_price :'0'}} </td>
+                                <td>{{(state?.shipment?.shipping_price) ? state?.shipment?.shipping_price :'0'}} </td>
+                                <td>{{state?.created_at | date : 'shortDate'}} </td>
+                                <td>{{state?.updated_at | date : 'shortDate'}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #details let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title">More Details</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+  <span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <table [width]="100" class="w-100 table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <!-- <th>طريقه الدفع</th> -->
+                    <th style="text-align : center !important">نوع المنتجات</th>
+                    <th style="text-align : center !important"> الحد الأدني لشحنات البيك اب </th>
+                    <th style="text-align : center !important"> رسوم البيك اب</th>
+                    <!-- <th style="text-align : center !important"> الوزن المسموح (بالكجم)</th> -->
+                    <th style="text-align : center !important"> رصيد الفلايرز</th>
+                    <th style="text-align : center !important">العنوان</th>
+                    <th style="text-align : center !important">المنطقه</th>
+                    <th style="text-align : center !important">البريد الإلكتروني</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <!-- <td>{{(moreDetails) ? moreDetails : '' }}</td> -->
+                    <td style="text-align : center !important">{{(moreDetails?.shipment_type) ? moreDetails?.shipment_type : '' }}</td>
+                    <td style="text-align : center !important">{{(moreDetails?.minimum_sunday_pick_up) ? moreDetails?.minimum_sunday_pick_up : '' }}</td>
+                    <td style="text-align : center !important">{{(moreDetails?.pick_up_fee) ? moreDetails?.pick_up_fee : '' }}</td>
+                    <!-- <td style="text-align : center !important">{{(moreDetails?.allowed_weight) ? moreDetails?.allowed_weight : '' }}</td> -->
+                    <td style="text-align : center !important">{{(moreDetails?.flyer_stock) ? moreDetails?.flyer_stock : '' }}</td>
+                    <td style="text-align : center !important">{{(moreDetails?.address) ? moreDetails?.address : '' }}</td>
+                    <td style="text-align : center !important">{{(moreDetails?.citie?.city_name_ar) ? moreDetails?.citie?.city_name_ar : '' }}</td>
+                    <td style="text-align : center !important">{{(moreDetails?.user?.email) ? moreDetails?.user?.email : '' }}</td>
+
+
+                </tr>
+            </tbody>
+
+        </table>
+        <!-- /render form here -->
+    </div>
+</ng-template>

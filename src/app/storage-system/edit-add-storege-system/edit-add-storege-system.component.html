@@ -1,0 +1,23 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form [formGroup]='myform' (submit)='onsubmit(id)'>
+
+    <!-- <div class="form-group">
+    <p-multiSelect [options]="" optionLabel="name"></p-multiSelect>
+  </div> -->
+
+
+    <div class="form-group">
+        <label for="title">اسم المخزن</label>
+        <input type="text" name="title" formControlName="title" id="title" class="form-control">
+        <div *ngIf='submited && f.title.errors'> * هذا الحقل مطلوب </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="description">وصف المخزن</label>
+        <textarea class="form-control" name="description" formControlName='description' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.description.errors }" id="title" cols="30" rows="6"></textarea>
+        <div *ngIf='submited && f.description.errors'> * هذا الحقل مطلوب </div>
+    </div>
+    <button class="btn btn-outline-dark"> {{ id === "" ? 'إتمام الطلب':' تعديل الطلب  '}}</button>
+</form>

@@ -1,0 +1,34 @@
+<p-toast position="top-right" key="myKey2"></p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+<form [formGroup]="myform" (submit)="onsubmit(id)">
+    <div class="form-group">
+        <label for="">  المبلغ  </label>
+        <input type="number" name="amount" formControlName="amount" [ngClass]="{'is-invalid' : submited && f.amount.errors}" class="form-control">
+        <div *ngIf="submited && f.amount.errors">
+            <div *ngIf="submited && f.amount.errors.required" style="color: red;"> مطلوب </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="">  التاريخ   </label>
+        <input type="date" name="date" formControlName="date" [ngClass]="{'is-invalid' : submited && f.date.errors}" class="form-control">
+        <div *ngIf="submited && f.date.errors">
+            <div *ngIf="submited && f.date.errors.required" style="color: red;"> مطلوب </div>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label for=""> اختر المخزن التابع اليه    </label>
+        <ng-select formControlName="storage_id" [ngClass]="{'is-invalid' : submited && f.storage_id.errors}">
+            <ng-option *ngFor="let item of storages" [ngValue]="item.id"> {{item.name}}</ng-option>
+        </ng-select>
+        <div *ngIf='submited && f.storage_id.errors'>
+            <div *ngIf="submited && f.storage_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+        </div>
+    </div>
+
+
+    <button class="btn btn-primary">  {{id === "" ? 'اضافة' : 'تعديل'}}</button>
+</form>

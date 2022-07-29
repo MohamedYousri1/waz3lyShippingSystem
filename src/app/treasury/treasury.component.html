@@ -1,0 +1,129 @@
+<p-toast position="top-left" key="myKey2"></p-toast>
+<p-toast position="top-left" key="myKey1"></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<div style="width : 85% !important ">
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="container">
+                <div class="page-content-inner">
+                    <div class="form-horizontal">
+                        <div class="panel panel-dark">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="wrappingHeading">
+                                        <h3 class="panel-title col-md-6">الخزن</h3>
+                                        <div class="btn-group btn-group-sm pull-right">
+                                            <button (click)="addTreasuryPop(addingTreasury)" type="button" class="btn addItemBtn mx-2">
+                                        إضافه خزنه  </button>
+
+                                            <!-- <button (click)="addTreasuryPop(addingexpense)" type="button" class="btn btn-danger">
+                                          إضافه سند قبض </button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-body">
+                                <p-tree [value]="files1" selectionMode="single" (onNodeSelect)="nodeSelect($event)" [contextMenu]="cm"></p-tree>
+                                <p-contextMenu #cm [model]="items"></p-contextMenu>
+                                <!-- <p-toast></p-toast> -->
+
+                                <!-- <p-tree [value]="files1" [filter]="true" filterMode="strict"></p-tree> -->
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button id="editingBtn" hidden (click)="editNode(EditingAdd , this.selectedNode)"></button>
+<!-- Editing Node  -->
+<ng-template #EditingAdd let-c="close" let-d="dismiss">
+    <div class="modal-header ">
+        <h4 class="modal-title">تعديل</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal">
+
+            <div class="form-group ">
+                <div class="row flex-row-reverse">
+                    <label class="col-md-2 control-label" for="txtTitle">الخزنه</label>
+                    <div class="col-md-10">
+                        <input type="text" [(ngModel)]="treasuryName" name="txtTitle" id="txtTitle" autofocus="" class="form-control" placeholder="Treasury Title" title="Treasury Title" tabindex="1">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <div class="row">
+                <div class="pull-right">
+                    <div class="col-md-12 ">
+                        <button type="button" (click)="editTreasury()" id="btnSaveTreasury" data-id="0" class="pull-right btn btn-sm btn-success">Save</button>
+                        <button type="button" (click)="cancelEditingForm()" id="btnCancelTreasury" class="btn default btn-sm pull-right" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+<!-- adding The Treasury  -->
+<!-- Editing Node  -->
+<ng-template #addingTreasury let-c="close" let-d="dismiss">
+    <div class="modal-header ">
+        <h4 class="modal-title">إضافه خزنه</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addingTreasuryForm">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="row flex-row-reverse">
+                        <label class="control-label col-md-2 ">الخزنه الرئيسيه</label>
+                        <div class="col-md-10">
+                            <p-dropdown [options]="allMainTreasury" optionValue="id" name="comission_management_id" formControlName="treasury_id" optionLabel="label" [filter]="true" filterBy="label" [showClear]="true" placeholder="Select Treasury ">
+                                <ng-template let-treasury pTemplate="item">
+                                    <div class="treasury-item">
+                                        <div> {{treasury.label}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row flex-row-reverse">
+                        <label class="col-md-2 control-label" for="txtTitle">إسم الخزنه</label>
+                        <div class="col-md-10">
+                            <input type="text" formControlName="label" name="txtTitle" id="txtTitle" autofocus="" class="form-control" placeholder="Treasury Title" title="Treasury Title" tabindex="1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="pull-right">
+                        <div class="col-md-12 ">
+                            <button type="button" (click)="addTreasury()" id="btnSaveTreasury" data-id="0" class="pull-right btn btn-sm btn-success">Save</button>
+                            <button type="button" (click)="cancelForm() " id="btnCancelTreasury" class="btn default btn-sm pull-right" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</ng-template>

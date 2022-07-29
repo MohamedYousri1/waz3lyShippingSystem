@@ -1,0 +1,237 @@
+<ul *ngIf="!isLogin  && is_company == 1" class="wrapper-main-nav d-flex flex-row-reverse justify-content-between align-items-centery p-0">
+    <li class="px-3">
+        <a *ngIf="!isLogin" class="nav-link" routerLinkActive="active-nav-link"></a>
+        <a *ngIf="isLogin && is_company ==1" (click)="logOut()" class="nav-link" routerLinkActive="active-nav-link">LogOut</a>
+
+    </li>
+    <li class="wrapper d-flex align-items-center">
+        <!-- <img class="img-fluid" src="../.com./assets/images/Notification white logo.png" alt="" /> -->
+    </li>
+</ul>
+<section class="sidebar " *ngIf="isLogin && is_company !==1">
+
+    <div class="contents d-flex flex-column-reverse justify-content-between align-items-end text-left ">
+
+        <div class="navigator">
+            <ul class="list-unstyled d-flex flex-column-reverse">
+
+                <li class="nav-item">
+                    <a (click)="logOut()" *ngIf="isLogin" routerLink="/login" class="nav-link" routerLinkActive="active-nav-link">تسجيل الخروج</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a  class="nav-link"  *ngIf="readAdvertisments" routerLink="advertisments" routerLinkActive="active-nav-link">صور الاعلانات</a
+        >
+      </li>
+
+      <li class="nav-item">
+        <a  class="nav-link"  *ngIf="readAdvertisments" routerLink="shipmentDetails" routerLinkActive="active-nav-link">قراءه البار كود</a
+  >
+</li>
+        <li *ngIf="isLogin" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" routerLinkActive="active-nav-link"  id="SalesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          التقارير
+        </a>
+                    <div class="dropdown-menu" aria-labelledby="SalesDropdown">
+                        <a class="dropdown-item" routerLink="accounts"> تقارير الحسابات </a>
+                        <a class="dropdown-item" routerLink="client-reports">
+            تقارير العملاء
+          </a>
+                        <a class="dropdown-item" routerLink="representative">
+            تقارير المناديب
+          </a>
+                        <a class="dropdown-item" routerLink="supervisor_report">
+            تقارير مشرفي المناديب
+          </a>
+                        <a class="dropdown-item" routerLink="employees_report">
+            تقارير الموظفين
+          </a>
+                        <a class="dropdown-item" routerLink="customer_received">
+            تقارير العملاء المستلمه
+          </a>
+                    </div>
+                </li>
+                <!--
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" routerLinkActive="active-nav-link" id="SalesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> اداره الشركات</a>
+
+                    <div class="dropdown-menu" aria-labelledby="SalesDropdown">
+                        <a class="dropdown-item" routerLink="companies"> الشركات </a>
+                    </div>
+                </li> -->
+
+
+                <li *ngIf="readout_categories || readin_categories" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" routerLinkActive="active-nav-link" id="SalesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> الحسابات </a>
+                    <div class="dropdown-menu" aria-labelledby="SalesDropdown">
+                        <a *ngIf="readout_categories" class="dropdown-item" routerLink="out_categories"> بنود المصروفات </a>
+                        <a *ngIf="readin_categories" class="dropdown-item" routerLink="in_categories">  بنود الأيرادات </a>
+                        <a *ngIf="readin_categories" class="dropdown-item" routerLink="financial-transact">   المعاملات المالية </a>
+                        <a *ngIf="readin_categories" class="dropdown-item" routerLink="daily-keeper">  المحفظه اليوميه </a>
+                        <a *ngIf="readin_categories" class="dropdown-item" routerLink="client-transact">   معاملات العملاء </a>
+                        <a *ngIf="readin_categories" class="dropdown-item" routerLink="representativeDetails"> معاملات المناديب </a>
+                        <!-- <a *ngIf="readin_categories" class="dropdown-item" routerLink="repres-transact"> معاملات المناديب </a> -->
+
+                    </div>
+                </li>
+
+
+                <li class="nav-item">ؤ
+                    <a class="nav-link" routerLink="companies" routerLinkActive="active-nav-link">الشركات</a>
+                </li>
+
+                <li *ngIf="readshipments || readshipment_types || readshipment_place " class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" routerLinkActive="active-nav-link" id="SalesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> الشحن </a>
+                    <div class="dropdown-menu" aria-labelledby="SalesDropdown">
+                        <a *ngIf="readshipment_types" class="dropdown-item" routerLink="shipment_type"> نوع الشحن </a>
+                        <a *ngIf="readshipment_place" class="dropdown-item" routerLink="shipment_place"> اماكن الشحن </a>
+                        <a *ngIf="readshipments" class="dropdown-item" routerLink="shipments"> الشحنات </a>
+                        <a *ngIf="readout_categories" class="dropdown-item" routerLink="pending_shipments">الشحنات المعلقه</a>
+                        <a *ngIf="readout_categories" class="dropdown-item" routerLink="shipment_back">الشحنات المرتجعه</a>
+
+                    </div>
+                </li>
+
+                <li *ngIf="readtransport_types" class="nav-item">
+                    <a *ngIf="readtransport_types" class="nav-link" routerLink="transport_type" routerLinkActive="active-nav-link">وسيلة النقل</a>
+                </li>
+
+                <li *ngIf="readstates || readreceive_statuses || readsub_states || readproduct_statuses" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" routerLinkActive="active-nav-link" id="SalesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">حالات الشحن</a>
+
+                    <div class="dropdown-menu" aria-labelledby="SalesDropdown">
+                        <!-- <a *ngIf="readstates" class="dropdown-item" routerLink="state"> الحالة </a> -->
+                        <a *ngIf="readreceive_statuses" class="dropdown-item" routerLink="receive_statuses">حالة الاستلام</a>
+                        <a *ngIf="readreceive_statuses" class="dropdown-item" routerLink="refusal_statuses">حالات رفض الاستلام</a>
+                        <a *ngIf="readproduct_statuses" class="dropdown-item" routerLink="product_statuses">حاله المنتج</a>
+                        <!-- <a *ngIf="readsub_states" class="dropdown-item" routerLink="sub_states"> حالات فرعية </a> -->
+                    </div>
+                </li>
+
+                <li *ngIf="readclients || readusers || readways || readinterest_levels " class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" routerLinkActive="active-nav-link" id="SalesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">نظام اداره العملاء</a>
+
+                    <div class="dropdown-menu" aria-labelledby="SalesDropdown">
+                        <a *ngIf="readclients" class="dropdown-item" routerLink="clients"> العملاءالمحتملين </a>
+                        <!-- <a *ngIf="readusers" class="dropdown-item" routerLink="users"> العملاء </a> -->
+                        <a class="dropdown-item" routerLink="movements"> حركات </a>
+                        <a *ngIf="readways" class="dropdown-item" routerLink="ways"> طرق المعرفة </a>
+                        <a *ngIf="readinterest_levels" class="dropdown-item" routerLink="interest_levels">مستوي الاهتمام</a>
+                    </div>
+                </li>
+
+                <!--
+            <li class="nav-item ">
+                <a class="nav-link" routerLink="storages-branches" routerLinkActive="active-nav-link" >  مخازن الفروع </a>
+            </li>
+            -->
+
+                <li *ngIf="readstates || readreceive_statuses || readsub_states || readproduct_statuses" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" routerLinkActive="active-nav-link" id="SalesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">حالات العملاء</a>
+
+                    <div class="dropdown-menu" aria-labelledby="SalesDropdown">
+                        <a *ngIf="readstates" class="dropdown-item" routerLink="state"> حالات رئيسيه </a>
+                        <a *ngIf="readsub_states" class="dropdown-item" routerLink="sub_states"> حالات فرعية </a>
+                    </div>
+                </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <li *ngIf="readtransactions" class="nav-item">
+                    <a *ngIf="readtransactions" class="nav-link" routerLink="transactions" routerLinkActive="active-nav-link">معاملات</a>
+                </li>
+
+                <li *ngIf="readcoupons" class="nav-item">
+                    <a *ngIf="readcoupons" class="nav-link" routerLink="coupons" routerLinkActive="active-nav-link">كوبونات</a>
+                </li>
+
+                <!-- <li *ngIf="readsuppliers" class="nav-item">
+                    <a *ngIf="readsuppliers" class="nav-link" routerLink="suppliers" routerLinkActive="active-nav-link">الموردين</a>
+                </li> -->
+
+                <li *ngIf="readclient_types" class="nav-item">
+                    <a *ngIf="readclient_types" class="nav-link" routerLink="client_types" routerLinkActive="active-nav-link">انواع العملاء</a>
+                </li>
+
+                <li *ngIf="readpayment_types" class="nav-item">
+                    <a *ngIf="readpayment_types" class="nav-link" routerLink="payment_type" routerLinkActive="active-nav-link">طرق الدفع</a>
+                </li>
+
+
+
+
+
+
+
+                <li *ngIf="readcountries || readprovinces || readareas" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" routerLinkActive="active-nav-link" id="SalesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">مناطق جغرافية</a>
+                    <div class="dropdown-menu" aria-labelledby="SalesDropdown">
+                        <a *ngIf="readcountries" class="dropdown-item" routerLink="countries"> دول </a>
+                        <a *ngIf="readprovinces" class="dropdown-item" routerLink="provinces"> محافظات </a>
+                        <a *ngIf="readareas" class="dropdown-item" routerLink="areas"> مناطق </a>
+                    </div>
+                </li>
+
+                <!-- <li *ngIf="isLogin" class="nav-item">
+                    <a class="nav-link" routerLink="targets" routerLinkActive="active-nav-link">الاهداف</a>
+                </li> -->
+
+                <li *ngIf="readDepartment || readjobs || reademployees || readbranches " class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" routerLinkActive="active-nav-link" id="SalesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">الادارات</a>
+                    <div class="dropdown-menu" aria-labelledby="SalesDropdown">
+                        <a *ngIf="readDepartment" class="dropdown-item" routerLink="sections"> ادارة الادارات </a>
+                        <a *ngIf="readjobs" class="dropdown-item" routerLink="jobs">ادارة الوظائف </a>
+                        <a *ngIf="reademployees" class="dropdown-item" routerLink="storage"> ادارة مخازن </a>	
+                        <a *ngIf="reademployees" class="dropdown-item" routerLink="/employees-settings">ادارةالموظفين</a>
+                        <a *ngIf="readbranches" class="dropdown-item" routerLink="branches"> ادارة الفروع </a>
+                        <a *ngIf="reademployees" class="dropdown-item" routerLink="/representative">ادارة المناديب</a>
+                        <a class="dropdown-item" routerLink="roles"> ادارة الصلاحيات </a>
+                        <a *ngIf="reademployees" class="dropdown-item" routerLink="supervisors"> المشرفين</a>
+                        <a *ngIf="reademployees" class="dropdown-item" routerLink="sales"> فريق المبيعات</a>
+                        <a *ngIf="readrate_types" class="dropdown-item" routerLink="rate_types"> التقييم</a>
+                    </div>
+                </li>
+
+                <li *ngIf="isLogin" class="nav-item">
+                    <a class="nav-link" routerLink="/home" routerLinkActive="active-nav-link" [routerLinkActiveOptions]="{ exact: true }">الصفحة الرئيسية<span class="sr-only">(current)</span></a>
+                </li>
+
+                <div *ngIf="isLogin" class="text-center px-1 my-2 d-flex justify-content-between align-items-center wrapper-admin">
+                    <i class="far fa-user fa-2x admin "></i>
+                    <span>لوحه التحكم</span>
+
+                </div>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="controls   d-flex justify-content-between align-items-center flex-column">
+        <!-- Right Control  -->
+        <div class="logo  mt-4 mx-auto">
+            <img class="img-fluid" src="../../assets/images/logo-crop.png" alt="">
+        </div>
+
+        <div (click)="callJQuery()" class="icon--controls text-center ">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="social-icons d-flex flex-column mb-4 ">
+            <a class="text-decoration-none text-white" href="https://Notification.net/"><i  class="fas fa-globe mb-3"></i></a>
+            <i class="fas fa-share-alt"></i>
+        </div>
+    </div>
+
+    <div class="clear-fix"></div>
+</section>

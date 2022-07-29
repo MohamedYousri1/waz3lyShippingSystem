@@ -1,0 +1,113 @@
+<p-toast position="top-right" key="myKey2"></p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+<form [formGroup]="myform" (submit)="onsubmit(id)">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for=""> الاسم الاخير </label>
+                <input type="text" name="last_name" formControlName="last_name" class="form-control" [ngClass]="{'is-invalid' : submited && f.last_name.errors}">
+                <div *ngIf='submited && f.last_name.errors'>
+                    <div *ngIf="submited && f.last_name.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label for=""> التليفون </label>
+                <input type="text" name="phone" formControlName="phone" class="form-control" [ngClass]="{'is-invalid' : submited && f.phone.errors}">
+                <div *ngIf='submited && f.phone.errors'>
+                    <div *ngIf="submited && f.phone.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for=""> اسم المشروع  </label>
+                <input type="text" name="project_name" formControlName="project_name" class="form-control" [ngClass]="{'is-invalid' : submited && f.project_name.errors}">
+                <div *ngIf='submited && f.project_name.errors'>
+                    <div *ngIf="submited && f.project_name.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="">    نوع العميل    </label>
+                <ng-select formControlName="client_type_id" [ngClass]="{'is-invalid' : submited && f.client_type_id.errors}">
+                    <ng-option *ngFor="let item of clients_type" [value]="item.id" (change)="changetyps($event)"> {{item.type}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.client_type_id.errors'>
+                    <div *ngIf="submited && f.client_type_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="">   عرفنا عن طريق  </label>
+                <ng-select formControlName="way_id" [ngClass]="{'is-invalid' : submited && f.way_id.errors}">
+                    <ng-option *ngFor="let way of ways" [value]="way.id" (change)="changeways($event)"> {{way?.way}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.way_id.errors'>
+                    <div *ngIf="submited && f.way_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for=""> الاسم الاول </label>
+                <input type="text" name="first_name" formControlName="first_name" class="form-control" [ngClass]="{'is-invalid' : submited && f.first_name.errors}">
+                <div *ngIf='submited && f.first_name.errors'>
+                    <div *ngIf="submited && f.first_name.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for=""> العنوان </label>
+                <input type="text" name="address" formControlName="address" class="form-control" [ngClass]="{'is-invalid' : submited && f.address.errors}">
+                <div *ngIf='submited && f.address.errors'>
+                    <div *ngIf="submited && f.address.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for=""> نوع المنتج  </label>
+                <input type="text" name="product_type" formControlName="product_type" class="form-control" [ngClass]="{'is-invalid' : submited && f.product_type.errors}">
+                <div *ngIf='submited && f.product_type.errors'>
+                    <div *ngIf="submited && f.product_type.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for=""> عدد الطلبات في الشهر </label>
+                <input type="number" name="orders_per_month" formControlName="orders_per_month" class="form-control" [ngClass]="{'is-invalid' : submited && f.way_id.errors}">
+                <div *ngIf='submited && f.orders_per_month.errors'>
+                    <div *ngIf="submited && f.orders_per_month.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="">  المحافظة </label> <br>
+                <ng-select formControlName="province_id" name='اختر المحافظة' [ngClass]="{'is-invalid' : submited && f.province_id.errors}">
+                    <ng-option *ngFor="let prov of provs" [value]="prov.id" (change)="changeProv($event)"> {{prov?.name}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.province_id.errors'>
+                    <div *ngIf="submited && f.province_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="">  مستوي الاهتمام  </label>
+                <ng-select formControlName="interest_level_id" [ngClass]="{'is-invalid' : submited && f.province_id.errors}">
+                    <ng-option *ngFor="let inter of intersts" [value]="inter.id" (change)="changeInter($event)"> {{inter?.level}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.interest_level_id.errors'>
+                    <div *ngIf="submited && f.interest_level_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary"> {{ id === "" ? 'اضافة': 'حفظ' }} </button>
+</form>

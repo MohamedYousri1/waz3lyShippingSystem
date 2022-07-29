@@ -1,0 +1,29 @@
+.width-85 {
+    width: 85% !important;
+}
+
+.tableData a {
+    font-size: 1.3rem !important;
+    cursor: pointer !important;
+}
+
+.fa-trash {
+    color: #F00;
+}
+
+.adding-btn {
+    padding: 9px;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #FFF;
+    border: none;
+    cursor: pointer;
+    border: 1px solid #EEE;
+    transition: all 0.6s;
+}
+
+.adding-btn:hover {
+    background-color: #FFF;
+    color: rgb(49, 53, 61);
+    border: 1px solid rgb(49, 53, 61);
+}

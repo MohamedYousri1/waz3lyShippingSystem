@@ -1,0 +1,66 @@
+<div class="container-fluid">
+
+    <a class="back" routerLink="/shipments"> العودة للشحنات <i class="fas fa-arrow-alt-circle-right"></i> </a>
+
+
+    <div class="row bg-dark mt-3">
+        <div class="col-md-12 d-flex flex-row">
+            <div class="pt-3">
+
+            </div>
+
+            <p class=" h5 text-light py-3 ml-auto">
+                منتجات شحنة &nbsp; <span style="color:#1DA1F2"> {{ship_name}}  </span>
+            </p>
+        </div>
+    </div>
+    <!--*******************    end  header  *****************************-->
+
+    <!--*******************    start tabel  body   *********************-->
+    <p-table #depTbl [value]="products" [globalFilterFields]="['name']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+        <!-- table caption  -->
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+                <div class="search-warpper">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+                </button>
+                    <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input class="search-textbox" pInputText type="text"
+                    (input)="depTbl.filterGlobal($event.target.value, 'contains')"  placeholder="بحث باسم المنتج" />
+                </span>
+                </div>
+            </div>
+        </ng-template>
+        <!--********  table header  *****-->
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name"> وصف المنتج
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="name"> عدد المنتج
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="name"> سعر المنتج
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+
+                <th pSortableColumn="name"> اسم المنتج
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <!--*******  table body  ******-->
+        <ng-template pTemplate="body" let-obj>
+            <tr>
+                <td> {{obj.description}}</td>
+                <td> {{obj.count}}</td>
+                <td> {{obj.unit_price}}</td>
+                <td> {{obj.name}}</td>
+
+
+            </tr>
+        </ng-template>
+    </p-table>
+    <!--********************    end  tabel  body   ********************************-->
+</div>

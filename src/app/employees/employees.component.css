@@ -1,0 +1,15 @@
+select {
+    direction: rtl;
+}
+.modal-title {
+    font-family: 'hanimation';
+    text-align: right;
+}
+
+.modal-header {
+    background: #343a40;
+}
+
+a.edit-emp-btn{
+    padding: .25rem .5rem;
+}

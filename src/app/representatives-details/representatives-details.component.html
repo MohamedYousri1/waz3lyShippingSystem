@@ -1,0 +1,186 @@
+<p-toast position="bottom-center" key="myKey2"></p-toast>
+<p-toast position="bottom-center" key="myKey1"></p-toast>
+
+<!--********************    start header  ********************************-->
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+
+        <p class="h5 text-light py-3 ml-auto"> حسابات المناديب </p>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="allRepresentatives" [globalFilterFields]="['price' , 'branch.name' ,  'name' , 'weight' ,'height' , 'date_of_receipt' , 'delivery_date']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber"
+    [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+        </button>
+                <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input class="search-textbox" pInputText type="text"
+            (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+        </span>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> الحسابات </th>
+            <th class="commission">العموله</th>
+            <th class="user.phone_number">التليفون</th>
+            <th> اسم المندوب</th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-representative>
+        <tr>
+            <td class="d-flex justify-content-around">
+                <a data-toggle="modal " (click)="afterZeroWallet(afterWallet,representative.id)" class="edit-emp-btn btn btn-primary btn-sm mx-2 ">
+            تم تصفيتها
+       </a>
+                <a data-toggle="modal " (click)="addRepresentative(shipmentDetail , representative.id)" class="edit-emp-btn btn btn-danger  btn-sm mx-2 ">
+          لم يتم التصفيه
+       </a>
+            </td>
+            <td style="direction: rtl;"> <span>{{(representative.commission) ? representative.commission : '0'}}</span> <span style="color : #aaa" class="mx-2">جنيه</span></td>
+            <td>{{ representative.user?.phone_number}}</td>
+            <td *ngIf="representative?.profile_pic" class="d-flex justify-content-around align-items-center"> <span>{{ representative?.name }} </span> <span><img class=" profile_pic mx-1" src={{representative?.profile_pic}} alt=""></span></td>
+            <td *ngIf="!representative?.profile_pic" class="d-flex justify-content-around align-items-center"> <span>{{ representative?.name }} </span> <span><img class=" profile_pic mx-1 rounded-circle " src='../../assets/images/قثحقثسثىفشفهرث.jpg' alt=""></span></td>
+        </tr>
+    </ng-template>
+
+
+    <!-- <ng-template pTemplate="footer">
+
+        <div class="container py-5 ">
+            <div class="row">
+                <div class="col-md-12 my-auto">
+                    <div class="shadow bg-light p-2 d-flex  total">
+                        <p> أجمالي الشحنات </p>
+                        <span class="mx-2">200000جنية</span>
+
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="shadow bg-light p-2 d-flex text-right total">
+                        <p> أجمالي متحصلات المندوب عن كل الشحنات </p>
+                        <span class="mx-2">500000جنية</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="shadow bg-light p-2 d-flex text-right total">
+                        <p> أجمالي عمولات المندوب عن كل الشحنات </p>
+                        <span class="mx-2">900000جنية</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </ng-template> -->
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+<ng-template #shipmentDetail let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> حسابات المندوب </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+
+        <div class="container">
+            <div class="row img-row">
+                <div class="col-12 ">
+
+                    <table dir="rtl" *ngIf="representativeData" class="table table-bordered table-wrapper">
+                        <thead>
+                            <tr>
+                                <th scope="col">الشحنه</th>
+                                <th scope="col">سعر المنتج</th>
+                                <th scope="col">رصيد التحصيل</th>
+                                <th scope="col">عموله المندوب</th>
+                                <th scope="col">تكلفه الشحن</th>
+                                <th scope="col">تاريخ التسليم </th>
+                                <th scope="col">التاريخ</th>
+                                <th scope="col">تصفيه</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let state of representativeData">
+                                <td>{{state?.shipment?.name_shipment}} </td>
+                                <td>{{(state?.shipment?.product_price) ? state?.shipment?.product_price :'0'}} </td>
+                                <td>{{(state?.collection_balance) ? state?.collection_balance :'0'}} </td>
+                                <td>{{(state?.commission) ? state?.commission :'0'}} </td>
+                                <td>{{(state?.shipment?.shipping_price) ? state?.shipment?.shipping_price :'0'}} </td>
+                                <td>{{state?.delivery_date | date : 'shortDate'}} </td>
+                                <td>{{state?.created_at | date : 'shortDate'}} </td>
+                                <td>
+                                    <input type="checkbox" value="{{state.id}}" (change)="onChangeCheck(state.id , $event)">
+                                </td>
+                            </tr>
+                            <tr *ngIf="representativeData">
+                                <th colspan="4">
+                                    <button (click)="clearWallet(representativeData[0]?.representative_id)" class="btn btn-outline-info p-3">تصفيه </button>
+                                </th>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+
+
+
+<ng-template #afterWallet let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> حسابات المندوب </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row img-row">
+                <div class="col-12 ">
+
+                    <table dir="rtl" *ngIf="representativesDetail" class="table table-bordered table-wrapper">
+                        <thead>
+                            <tr>
+                                <th scope="col">الشحنه</th>
+                                <th scope="col">سعر المنتج</th>
+                                <th scope="col">رصيد التحصيل</th>
+                                <th scope="col">عموله المندوب</th>
+                                <th scope="col">تكلفه الشحن</th>
+                                <th scope="col">التاريخ</th>
+                                <th scope="col">تاريخ تصفي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let state of representativesDetail">
+                                <td>{{state?.shipment?.name_shipment}} </td>
+                                <td>{{(state?.shipment?.product_price) ? state?.shipment?.product_price :'0'}} </td>
+                                <td>{{(state?.collection_balance) ? state?.collection_balance :'0'}} </td>
+                                <td>{{(state?.commission) ? state?.commission :'0'}} </td>
+                                <td>{{(state?.shipment?.shipping_price) ? state?.shipment?.shipping_price :'0'}} </td>
+                                <td>{{state?.created_at | date : 'shortDate'}} </td>
+                                <td>{{state?.updated_at | date : 'shortDate'}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

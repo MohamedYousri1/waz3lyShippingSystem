@@ -1,0 +1,26 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form [formGroup]='myform' (submit)='onsubmit(itmeId)'>
+
+    <div class="form-group">
+        <label for="province_id"> المحافظة  </label>
+        <ng-select formControlName="province_id" [ngClass]="{'is-invalid' : submited && f.province_id.errors}">
+            <ng-option *ngFor="let item of provinces" [value]="item.id">{{item?.name}}</ng-option>
+        </ng-select>
+        <div *ngIf='submited && f.province_id.errors'>
+            <div *ngIf="submited && f.province_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+        </div>
+    </div>
+    <div class="from-group">
+        <label for="">  المنطقة    </label>
+        <input type="text" name='name' formControlName='name' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.name.errors}">
+        <div *ngIf='submited && f.name.errors' class="invalid-feedback">
+            <div *ngIf='f.name.errors.required'> مطلوب </div>
+        </div>
+    </div>
+
+
+
+
+    <button class='btn btn-outline-dark' type="submit"> {{itmeId === "" ?  'اضافة': 'تعديل'}}  </button>
+</form>

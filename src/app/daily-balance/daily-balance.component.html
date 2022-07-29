@@ -1,0 +1,177 @@
+<div style="width : 85% !important">
+    <div class="page-content">
+        <div class="container">
+            <div class="page-content-inner">
+                <div class="form-horizontal">
+                    <div class="panel panel-dark">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Daily Balance Report</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form [formGroup]="formData">
+
+                                <div class="form-group my-2">
+                                    <div class="row">
+                                        <label class="col-md-3 control-label" for="txtEarningsReportFromDate"></label>
+                                        <div class="col-md-6">
+                                            <div class=" date-picker input-daterange">
+                                                <input formControlName="payment_date" type="date" class="form-control" id=" txtEarningsReportFromDate" name="date" placeholder="Date" title="Date" tabindex="2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="col-md-3 control-label" for="ddlEarningsReportExpensItem"></label>
+                                        <div class="col-md-6">
+                                            <p-dropdown [options]="allTreasuries" optionValue="id" class="form-group" name="comission_management_id" formControlName="treasury_id" optionLabel="label" [filter]="true" filterBy="label" [showClear]="true" placeholder="Select Treasury ">
+                                                <ng-template let-treasury pTemplate="item">
+                                                    <div class="treasury-item">
+                                                        <div> {{treasury.label}}</div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" dir="rtl">
+                                    <div class="row ">
+                                        <div class="col-md-6  m-auto  col-md-offset-3">
+                                            <div class="row">
+                                                <div class="col-md-12 m-auto">
+                                                    <a class="col-md-12 btn btn-primary" (click)="sendData()" id="btnEarningsReportSearch"><i style="margin : 0 5px !important ;" class="fa fa-search"></i>Show Report</a>
+                                                </div>
+                                                <div class="col-md-6 mx-auto my-2">
+                                                    <button style="font-size: 1.2rem;" class="col-md-12 btn btn-success" ngxPrint printSectionId="tablePrint2" [useExistingCss]="true" styleSheetFile="../../users/income-report/income-report.component.css"><i style="margin : 0 5px !important ;" class="fa fa-print"></i>Print Incomes</button>
+                                                </div>
+
+                                                <div class="col-md-6 mx-auto my-2">
+                                                    <button style="font-size: 1.2rem;" class="col-md-12 btn btn-danger" ngxPrint printSectionId="tablePrint1" [useExistingCss]="true" styleSheetFile="../../users/income-report/income-report.component.css"><i style="margin : 0 5px !important ;" class="fa fa-print"></i>Print expenses</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="table-container">
+                <div class="form-group daily--report">
+                    <!-- The Incomes Here  -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p-table id="tablePrint2" class="clientDeals" #depTbl [value]="this.filteredIncomes" [globalFilterFields]="['transaction_date' , 'treasury_payment_note' , 'amount' , 'first_name' , 'titel_id' , 'treasury_title' , 'id']" styleClass="p-datatable-gridlines"
+                                [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [pageLinks]="8" [scrollable]="true">
+                                <ng-template pTemplate="caption">
+                                    <div *ngIf="daySpecial" class="date">
+                                        <button type="button" class="btn red">Report Of Day</button>
+                                        <button type="button" class="btn dark txtTotalIncome">{{daySpecial  | date : 'shortDate'}}</button>
+                                    </div>
+                                    <div>
+                                        <h3 style="text-align : center  ; font-weight : 6002  ; font-size:1.7rem !important  ; color : #fff ">Incomes</h3>
+                                    </div>
+                                </ng-template>
+
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>الخزنه </th>
+                                        <th>البند</th>
+                                        <th>الملاحظات</th>
+                                        <th>المبلغ</th>
+                                        <th pSortableColumn="transaction_date">تاريخ العمليه</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-income>
+                                    <tr>
+                                        <td>{{income.treasury?.label}}</td>
+                                        <td>{{income.income?.label}}</td>
+                                        <td>({{(income.notes) ? income.notes : ''}}</td>
+                                        <td>{{income.price}}</td>
+                                        <td>{{income.payment_date | date : 'shortDate'}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <div style="display : flex   ; justify-content : space-around  ; padding : 15px 0 ">
+
+                                        <div style="display : flex  ; justify-content : center " class="btn-group wrapBtns  btn-group-solid margin-bottom-10 ">
+                                            <button type="button" class="btn red">Total Incomes</button>
+                                            <button type="button" class="btn dark txtTotalIncome">{{(this.totalIncome) ? this.totalIncome: '0' }}  EGP</button>
+                                        </div>
+
+                                        <div style="display : flex  ; justify-content : center " class="btn-group wrapBtns  btn-group-solid margin-bottom-10 ">
+                                            <button type="button" class="btn blue">Total Expenses </button>
+                                            <button type="button" class="btn dark txtTotalIncome">{{(this.totalExpense) ? this.totalExpense : '0' }}  EGP</button>
+                                        </div>
+
+                                        <div style="display : flex  ; justify-content : center " class="btn-group wrapBtns  btn-group-solid margin-bottom-10 ">
+                                            <button type="button" class="btn green">Total Revenue</button>
+                                            <button type="button" class="btn dark txtTotalIncome">{{(this.totalIncome) -  (this.totalExpense)}}  EGP</button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </p-table>
+                        </div>
+
+
+
+                        <!-- The Expenses Here  -->
+
+                        <div class="col-md-6">
+                            <p-table id="tablePrint1" class="clientDeals" #depTbl [value]="this.filteredExpenses" [globalFilterFields]="['transaction_date' , 'treasury_payment_note' , 'amount' , 'first_name' , 'titel_id' , 'treasury_title' , 'id']" styleClass="p-datatable-gridlines"
+                                [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [pageLinks]="8" [scrollable]="true">
+                                <ng-template pTemplate="caption">
+
+                                    <div *ngIf="daySpecial" class="date">
+                                        <button type="button" class="btn red">Report Of Day</button>
+                                        <button type="button" class="btn dark txtTotalIncome">{{daySpecial  | date : 'shortDate'}}</button>
+                                    </div>
+
+                                    <div>
+                                        <h3 style="text-align : center  ; font-weight : 6002  ; font-size:1.7rem !important  ; color : #FFF ">Expenses</h3>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>الخزنه </th>
+                                        <th>البند</th>
+                                        <th>الملاحظات</th>
+                                        <th>المبلغ</th>
+                                        <th pSortableColumn="transaction_date">تاريخ العمليه</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-income>
+                                    <tr>
+                                        <td>{{income.treasury?.label}}</td>
+                                        <td>{{income.expense?.label}}</td>
+                                        <td>({{(income.notes) ? income.notes : ''}}</td>
+                                        <td>{{income.price}}</td>
+                                        <td>{{income.payment_date | date : 'shortDate'}}</td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="footer">
+                                    <div style="display : flex   ; justify-content : space-around ">
+
+                                        <div style="display : flex  ; justify-content : center  ;  padding : 15px 0 " class="btn-group wrapBtns  btn-group-solid margin-bottom-10 ">
+                                            <button type="button" class="btn blue">Total Expenses </button>
+                                            <button type="button" class="btn dark txtTotalIncome">{{(this.totalExpense) ? this.totalExpense : '0' }}  EGP</button>
+                                        </div>
+
+                                    </div>
+                                </ng-template>
+                            </p-table>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

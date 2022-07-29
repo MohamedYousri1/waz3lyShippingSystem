@@ -1,0 +1,52 @@
+<p-toast position="top-right" key="myKey2">
+</p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+<form >
+
+    <div class="form-group">
+        <label for="">  اختر  نوع المعاملة    </label> <br>
+        <select (change) = "onchoose($event.target)" class="w-100">
+            <option value="1"> ايراد</option>
+            <option value="2"> مصروف</option>
+        </select>
+        </div>
+
+
+    <div class="form-group" *ngIf="revSelect">
+        <label for="">  اختر  نوع الايراد       </label>
+        <ng-select name="revenue_id" [(ngModel)]='revenue_id' >
+            <ng-option *ngFor="let rev of Revenues" [value]="rev.id" > {{rev.title}}</ng-option>
+        </ng-select>
+    </div> 
+
+
+    <div class="form-group" *ngIf="expSelect">
+        <label for="">  اختر  نوع المصروف       </label>
+        <ng-select name="expense_id"  [(ngModel)]='expense_id'>
+            <ng-option *ngFor="let exp of Expenses"  [value]="exp.id"> {{exp.title}}</ng-option>
+        </ng-select>
+    </div> 
+
+
+    <div class="form-group">
+        <label for="">   أدخل قيمة المعاملة        </label>
+
+        <input type="number"  class="form-control" name="price" [(ngModel)]='price' >
+
+    </div>
+
+    <div class="form-group">
+        <label for="">   أدخل وصف المعاملة        </label>
+
+        <input type="text" class="form-control" name="description" [(ngModel)]='description'>
+
+    </div>
+
+    <!-- <div class="form-group">
+        <label for="">   أدخل تاريخ المعاملة        </label>
+        <input type="date" name="created_at" [(ngModel)]='created_at'>
+    </div> -->
+
+    <button class="btn btn-info float-left" (click)="onsubmit()"> حفظ </button>
+
+</form>

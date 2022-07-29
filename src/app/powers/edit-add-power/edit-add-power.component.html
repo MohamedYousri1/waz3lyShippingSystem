@@ -1,0 +1,40 @@
+<p-toast position="top-right" key="Key2"></p-toast>
+<p-toast position="bottom-left" key="Key1"></p-toast>
+<form class="overflow-scroll" [formGroup]='myform' (submit)='onsubmit(id)'>
+  <div *ngIf="id === ''">
+    <label for="user_id"><span class="text-danger font-weight-bold star">*</span>اختر المستخدم</label>
+    <div class="form-group" *ngIf="all_Users">
+        <select class="form-control" formControlName="user_id" name="user_id" id="user_id">
+          <option *ngFor="let user of all_Users" [value]="user.user?.id">{{user.user?.first_name}} {{user.user?.second_name}} {{user.user?.last_name}}</option>
+        </select>
+        <div *ngIf='submited && f.user_id.errors'>
+            <div *ngIf="submited && f.user_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+        </div>
+    </div>
+  </div>
+
+    <!-- all Permissions  -->
+    <div>
+        <div class="card w-100">
+            <div class="card-header d-flex flex-wrap w-100 p-0" *ngIf="allPermissions">
+                <h3 class="card-title"></h3>
+                <ul class="nav nav-pills  w-25" *ngFor="let per  of allPermissions[0]">
+                    <li *ngFor="let operation of  per | keyvalue" class="nav-item"><a class="nav-link " data-toggle="tab">{{operation.value}}</a>
+                        <label *ngFor="let op  of allPermissions[1]">
+                          <div class="wrapper" *ngFor="let r of  op | keyvalue">
+                            <label class="container">{{r.value}}
+                        <input class="checkmark" (change)="onCbChange($event)" type="checkbox" name="permissions[]" value="{{r.key}}-{{operation.key}}">
+                        <span class="checkmark"></span>
+                      </label>
+            </div>
+            </label>
+            </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+
+
+
+    <button class="btn btn-primary"> {{ id === "" ? 'اضافة':'حفظ'}}</button>
+</form>

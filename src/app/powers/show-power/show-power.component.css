@@ -1,0 +1,16 @@
+.permission {
+    padding: 10px 10px;
+    background-color:#ddd;
+    /* color: #FFF; */
+    margin: 5px;
+    border-radius: 5px;
+    width: 20% !important;
+    text-align: center !important;
+    display: inline-block !important;
+}
+
+.profile_pic img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}

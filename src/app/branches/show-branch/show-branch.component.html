@@ -1,0 +1,103 @@
+<p-toast position="top-center" key="Key1"></p-toast>
+<p-toast position="top-center" key="Key2"></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}"></p-confirmDialog>
+<div class="width-85">
+    <div class="row bg-dark">
+        <div class="col-md-12 d-flex flex-row">
+            <!-- New Employee Modal Button  -->
+            <div class="pt-3">
+                <button *ngIf="createbranche" type="button" (click)="add_edit(AE_modal, '')" class="adding-btn" data-toggle="modal" data-target="#NewEmployeeModal">
+            اضافة
+        </button>
+                <button disabled *ngIf="!createbranche" type="button" class="btn btn-danger">
+          غير مسموح
+      </button>
+            </div>
+            <p class="h5 text-light py-3 ml-auto"> إداره الفروع </p>
+        </div>
+    </div>
+</div>
+<!-- PrimeNg Table -->
+<!-- ==============empList============ -->
+<!-- For Get Request -->
+<p-table #empsTbl [value]="branchList" [globalFilterFields]="['name','address', 'username' , 'phone','area.name']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(empsTbl)"></button>
+                <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input class="search-textbox" pInputText type="text"
+                    (input)="empsTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+                </span>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <!-- <th> حالة المخزن
+            </th> -->
+            <th pSortableColumn="area.name"> المنطقة
+                <p-sortIcon field="area.name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="phone"> تليفون الفرع
+                <p-sortIcon field="phone"></p-sortIcon>
+            </th>
+            <!-- <th pSortableColumn="manager.user.first_name"> الموظف المسؤل
+                <p-sortIcon field="manager.user.first_name"></p-sortIcon>
+            </th> -->
+            <th pSortableColumn="address"> عنوان الفرع
+                <p-sortIcon field="address"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name"> اسم الفرع
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <a class="edit-emp-btn  btn btn-outline-danger btn-sm mx-2" (click)="confirm(obj)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+                <a *ngIf="updatebranche" data-toggle="modal" data-target="#NewEmployeeModal" (click)="add_edit(AE_modal, obj )" title="تعديل" class="edit-emp-btn btn btn-outline-primary  btn-sm mx-2"><i class="fas fa-edit"></i></a>
+                <!-- <a *ngIf="updatebranche" data-toggle="modal" (click)="add_edit(AE_modal, obj )" data-target="#NewEmployeeModal" title="تعديل  " class="edit-emp-btn btn btn-primary btn-sm "><i class="fas fa-user-edit"></i></a> &nbsp; -->
+                <button disabled *ngIf="!updatebranche" class="btn-outline-danger">غير مسموح لك</button>
+                <!-- <a [routerLink]='["/storages-branches", obj.id]' (click)='catch_obj(obj)' title="الذهاب الي المخازن" class="btn btn-success btn-sm "><i class="fas fa-database"></i></a> -->
+            </td>
+            <!-- <td>
+                <div class="custom-control custom-switch">
+                    <input [checked]="obj.active" (click)="active(obj)" type="checkbox" class="custom-control-input" id="customSwitches_{{obj.id}}">
+                    <label class="custom-control-label" for="customSwitches_{{obj.id}}"></label>
+                </div>
+            </td> -->
+            <td>{{obj.area?.name}}</td>
+            <td>{{obj.phone}}</td>
+            <!-- <td>{{obj.username}}</td> -->
+            <td>{{obj.address}}</td>
+            <td>{{obj.name}}</td>
+        </tr>
+    </ng-template>
+
+</p-table>
+<!-- End-PrimeNg Table -->
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss" class="modal-lg">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> إداره الفروع </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-branch [Catchobj]='Catch_obj' (newData)="after($event)"> </app-edit-add-branch>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->

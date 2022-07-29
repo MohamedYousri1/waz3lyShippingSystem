@@ -1,0 +1,12 @@
+.error {
+    font-size: 6rem;
+    color: #949cb0;
+}
+
+.error span {
+    color: yellow
+}
+
+.error-wrapper {
+    height: 100vh !important;
+}

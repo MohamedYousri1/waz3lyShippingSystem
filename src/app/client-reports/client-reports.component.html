@@ -1,0 +1,494 @@
+<p-tabView class="wrapper_tab">
+
+    <p-tabPanel header="تقارير  بيانات العملاء">
+        <div class="col-md-10">
+            <p-table id="bynat3omla" #depTbl [value]="allClients"
+                [globalFilterFields]="['first_name' , 'email', 'address' , 'phone_number' , 'number_of_shipments' ]" [paginator]="true" [rows]="10"
+                [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8"
+                [scrollable]="true" scrollHeight="350p x">
+
+                <ng-template pTemplate="caption">
+                    <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                (click)="clear(depTbl)"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+                                <i class="pi pi-search"></i>
+                                <input class="search-textbox" pInputText type="text"
+                                    (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+                            </span>
+                        </div>
+                        <div class="print">
+                            <button [useExistingCss]="true" ngxPrint printSectionId="bynat3omla"
+                                class="pritnBtn btn mx-2 text-white-50">طباعه <i
+                                    class="fas fa-print ml-2 text-primary"></i></button>
+
+                        </div>
+
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                
+                        <th pSortableColumn="number_of_shipments" class="orders_per_month">عدد الشحنات
+                            <p-sortIcon field="number_of_shipments"></p-sortIcon>
+                        </th>
+                       
+                        <th pSortableColumn="phone_number" class="phone">التليفون
+                            <p-sortIcon field="phone_number"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="email" class="email">الايميل
+                            <p-sortIcon field="email"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="address" class="address">العنوان
+                            <p-sortIcon field="address"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="first_name"> اسم العميل
+                            <p-sortIcon field="first_name "></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="body" let-client >
+                    <tr>
+                        <td>{{ client?.number_of_shipments  }}</td>
+                    
+                        <td>{{ client?.phone_number}}</td>
+                        <td>{{ client?.email}}</td>
+                        <td>{{ client?.address}}</td>
+                        <td>{{ client.first_name }} {{ client.last_name }} </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </p-tabPanel>
+
+    <p-tabPanel header="تقارير بنوع التعامل مع العميل">
+        <!-- تقارير  نوع التعامل   -->
+        <!-- تقارير  نوع التعامل   -->
+        <!-- تقارير  نوع التعامل   -->
+
+        <div class="col-md-10">
+            <p-table id="no3elt3amol" #depTb2 [value]="allClients"
+                [globalFilterFields]="['first_name' , 'address' , 'email' , 'phone_number' , 'number_of_shipments' ,'is_deal_type_now']"
+                [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber"
+                [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+
+                <ng-template pTemplate="caption">
+                    <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                (click)="clear(depTb2)"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+                                <i class="pi pi-search"></i>
+                                <input class="search-textbox" pInputText type="text"
+                                    (input)="depTb2.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+                            </span>
+                        </div>
+                        <div class="print">
+                            <button [useExistingCss]="true" ngxPrint printSectionId="no3elt3amol"
+                                class="pritnBtn btn mx-2 text-white-50">طباعه <i
+                                    class="fas fa-print ml-2 text-primary"></i></button>
+
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="is_deal_type_now" class="is_deal_type_now">نوع التعامل
+                            <p-sortIcon field="is_deal_type_now"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="number_of_shipments" class="number_of_shipments">عدد الشحنات
+                            <p-sortIcon field="number_of_shipments"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="phone_number" class="phone_number">التليفون
+                            <p-sortIcon field="phone_number"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="email" class="email">الايميل
+                            <p-sortIcon field="email"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="address" class="address">العنوان
+                            <p-sortIcon field="address"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="first_name"> اسم العميل
+                            <p-sortIcon field="first_name"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="body" let-client>
+                    <tr>
+                        <td class="bg-dark text-white">{{ (client?.is_deal_type_now) == 0 ? 'دفع موْخر' : 'دفع مقدم'}}
+                        </td>
+                        <td>{{ client?.number_of_shipments}}</td>
+                        <td>{{ client?.phone_number}}</td>
+                        <td>{{ client?.email}}</td>
+                        <td>{{ client?.address}}</td>
+                        <td>{{ client.first_name }} {{ client.last_name }} </td>
+                    </tr>
+                </ng-template>
+
+                
+                
+            </p-table>
+
+
+            <div class="d-flex flex-column align-items-start w-50  p-2">
+
+                <div class="bg-light shadow px-3  p-1 my-2 d-flex justify-content-between">
+                    <p> {{Prepaidlength}} </p>
+                    <p>اجمالي الدفع المقدم</p>
+                </div>
+
+                <div class="bg-light shadow px-3 py-1 my-2  d-flex justify-content-between">
+                    <p>{{PostpaidLenght}}</p>
+                    <p>اجمالي الدفع المؤخر</p>
+                </div>
+
+            </div>
+        </div>
+        <!-- نهايه تقارير العملاء ونوع التعامل مع العميل -->
+        <!-- نهايه تقارير العملاء ونوع التعامل مع العميل -->
+        <!-- نهايه تقارير العملاء ونوع التعامل مع العميل -->
+        <!-- نهايه تقارير العملاء ونوع التعامل مع العميل -->
+
+    </p-tabPanel>
+
+    <p-tabPanel header="تقارير بأجمالي عدد شحنات العميل">
+        <!-- تقارير  نوع التعامل   -->
+        <!-- تقارير  نوع التعامل   -->
+        <!-- تقارير  نوع التعامل   -->
+
+        <div class="col-md-10">
+            <p-table id="3ddshohnat" #depTb3 [value]="allClients" [globalFilterFields]="['first_name' , 'address' , 'phone_number' , 'number_of_shipments' , 'number_of_shipments_daily','number_of_shipments_monthly' ,'number_of_shipments_yearly' ]" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8"
+                [scrollable]="true" scrollHeight="350px">
+
+                <ng-template pTemplate="caption">
+                    <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTb3)"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+          <i class="pi pi-search"></i>
+          <input class="search-textbox" pInputText type="text"
+            (input)="depTb3.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+        </span>
+                        </div>
+                        <div class="print">
+                            <button [useExistingCss]="true" ngxPrint printSectionId="3ddshohnat" class="pritnBtn btn mx-2 text-white-50">طباعه <i class="fas fa-print ml-2 text-primary"></i></button>
+
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <!-- <th pSortableColumn="way.way" class="way.way">نوع العميل
+                            <p-sortIcon field="way.way"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="way.way" class="way.way">نوع العميل
+                          <p-sortIcon field="way.way"></p-sortIcon>
+                      </th> -->
+                        <th pSortableColumn="number_of_shipments_yearly" class="number_of_shipments_yearly">عدد الشحنات السنوي
+                            <p-sortIcon field="number_of_shipments_yearly"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="number_of_shipments_monthly" class="number_of_shipments_monthly">عدد الشحنات الشهري
+                            <p-sortIcon field="number_of_shipments_monthly"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="number_of_shipments_daily" class="number_of_shipments_daily">عدد الشحنات اليومي
+                            <p-sortIcon field="number_of_shipments_daily"></p-sortIcon>
+                        </th>
+                        <!-- <th pSortableColumn="number_of_shipments" class="number_of_shipments">عدد الشحنات
+                            <p-sortIcon field="number_of_shipments"></p-sortIcon>
+                        </th> -->
+
+                        <th pSortableColumn="phone_number" class="phone_number">التليفون
+                            <p-sortIcon field="phone_number"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="address" class="address">العنوان
+                            <p-sortIcon field="address"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="first_name"> اسم العميل
+                            <p-sortIcon field="first_name"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="body" let-client>
+                    <tr>
+                        <td class="bg-dark text-white">{{client?.number_of_shipments_yearly}}</td>
+                        <td class="bg-dark text-white">{{client?.number_of_shipments_monthly}}</td>
+                        <td class="bg-dark text-white">{{client?.number_of_shipments_daily}}</td>
+                        <!-- <td>{{ client?.number_of_shipments}}</td> -->
+                        <!-- <td>{{ client?.way?.way}}</td> -->
+                        <td>{{ client?.phone_number}}</td>
+                        <td>{{ client?.address}}</td>
+                        <td>{{ client.first_name }} {{ client.last_name }} </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <!-- نهايه تقارير العملاء ونوع التعامل مع العميل -->
+        <!-- نهايه تقارير العملاء ونوع التعامل مع العميل -->
+        <!-- نهايه تقارير العملاء ونوع التعامل مع العميل -->
+        <!-- نهايه تقارير العملاء ونوع التعامل مع العميل -->
+
+    </p-tabPanel>
+
+    <p-tabPanel header="تقارير بمناطق شحنات العميل">
+
+        <div class="col-md-10">
+            <p-table id="manate2" #depTb4 [value]="allClients" [globalFilterFields]="['name' , 'address' , 'phone_number' , 'shipment_areas' , 'email' ]" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true"
+                scrollHeight="350px">
+
+                <ng-template pTemplate="caption">
+                    <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTb4)"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+    <i class="pi pi-search"></i>
+    <input class="search-textbox" pInputText type="text"
+      (input)="depTb4.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+  </span>
+                        </div>
+                        <div class="print">
+                            <button [useExistingCss]="true" ngxPrint printSectionId="manate2" class="pritnBtn btn mx-2 text-white-50">طباعه <i class="fas fa-print ml-2 text-primary"></i></button>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="shipment_areas" class="shipment_areas">مناطق شحنات العميل
+                            <p-sortIcon field="shipment_areas"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="phone_number" class="phone_number">التليفون
+                            <p-sortIcon field="phone_number"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="email" class="email">الايميل
+                            <p-sortIcon field="email"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="address" class="address">العنوان
+                            <p-sortIcon field="address"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="name"> اسم العميل
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="body" let-client>
+                    <tr>
+                        <td class="text-white bg-dark">
+                            <span>{{client?.shipment_areas.name}}</span> </td>
+                            <!-- <span>{{areaName}}</span> -->
+                        <!-- <td>{{ client?.way?.way}}</td> -->
+                        <td>{{ client?.phone_number}}</td>
+                        <td>{{ client?.email}}</td>
+                        <td>{{ client?.address}}</td>
+                        <td>{{ client?.name}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <!-- نهايه تقارير العملاء -->
+        <!-- نهايه تقارير العملاء -->
+        <!-- نهايه تقارير العملاء -->
+        <!-- نهايه تقارير العملاء -->
+
+    </p-tabPanel>
+
+    <p-tabPanel header="تقارير بعدد المرتجعات لكل عميل">
+
+
+        <div class="col-md-10">
+            <p-table id="morga3" #depTb5 [value]="allClients" [globalFilterFields]="['first_name' , 'address' , 'phone_number' , 'number_of_back_shipments' ,'email' , 'number_of_shipments' ]" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber"
+                [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+
+                <ng-template pTemplate="caption">
+                    <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTb5)"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+      <i class="pi pi-search"></i>
+      <input class="search-textbox" pInputText type="text"
+        (input)="depTb5.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+    </span>
+                        </div>
+                        <div class="print">
+                            <button [useExistingCss]="true" ngxPrint printSectionId="morga3" class="pritnBtn btn mx-2 text-white-50">طباعه <i class="fas fa-print ml-2 text-primary"></i></button>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                      
+                        <th pSortableColumn="number_of_back_shipments" class="number_of_back_shipments">عدد الشحنات المرتجعه
+                            <p-sortIcon field="number_of_back_shipments"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="number_of_shipments" class="number_of_shipments">عدد الشحنات
+                            <p-sortIcon field="number_of_shipments"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="phone_number" class="phone_number">التليفون
+                            <p-sortIcon field="phone_number"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="email" class="email">الايميل
+                            <p-sortIcon field="email"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="address" class="address">العنوان
+                            <p-sortIcon field="address"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="first_name"> اسم العميل
+                            <p-sortIcon field="first_name"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="body" let-client>
+                    <tr>
+                        <td class=" bg-dark text-white">{{ client?.number_of_back_shipments}}</td>
+                        <td>{{ client?.number_of_shipments}}</td>
+                        <!-- <td>{{ client?.way?.way}}</td> -->
+                        <td>{{ client?.phone_number}}</td>
+                        <td>{{ client?.email}}</td>
+                        <td>{{ client?.address}}</td>
+                        <td>{{ client?.first_name }} {{ client?.last_name }} </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+    </p-tabPanel>
+
+    <p-tabPanel header="تقارير بالمرتجعات">
+
+        <div class="col-md-10">
+
+            <p-table id="morga32" #depTb6 [value]="selectedMembers"
+                [globalFilterFields]="['user.phone_number' , 'user.first_name' , 'price' ,'description' ,'name' , 'refusal.status'  , 'received_representative']"
+                [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8"
+                [scrollable]="true" scrollHeight="350px">
+            
+                <ng-template pTemplate="caption">
+                    <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                                (click)="clear(depTb6)"></button>
+
+                            <span class="p-input-icon-left p-ml-auto">
+                                <i class="pi pi-search"></i>
+                                <input class="search-textbox" pInputText type="text"
+                                    (input)="depTb6.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+                            </span>
+                        </div>
+                        <div class="print">
+                            <button [useExistingCss]="true" ngxPrint printSectionId="morga32" class="pritnBtn btn mx-2 text-white-50">طباعه <i class="fas fa-print ml-2 text-primary"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="searching-box py-2">
+                        <!-- <button class="btn btn-info" (click)=" Retreat()">تراجع</button> -->
+                        <button class="btn btn-info" (click)=" getDate(start,end)">بحث</button>
+                       
+
+
+                        
+                        <input type="date"  [(ngModel)]="end" class="search-textbox">
+                        <label for="">  ادخل تاريخ النهاية </label>
+
+
+                             <input type="date"  [(ngModel)]="start" class="search-textbox"> 
+                             <label for="">  ادخل تاريخ البداية </label>  
+                       
+                    </div>
+
+                  
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+
+                      
+
+                        
+                        <th class="mark" pSortableColumn="received_representative">  المندوب 
+                            <p-sortIcon field="received_representative"></p-sortIcon>
+                        </th>
+                        <th class="mark" pSortableColumn="refusal.status"> حالة المرتجع 
+                            <p-sortIcon field="refusal.status"></p-sortIcon>
+                        </th>
+                        
+                        <th class="mark" pSortableColumn="date_of_receipt"> تاريخ المرتجع  
+                            <p-sortIcon field="date_of_receipt"></p-sortIcon>
+                        </th>
+
+                        <th class="mark" pSortableColumn="refusal.status"> سبب الارتجاع 
+                            <p-sortIcon field="refusal.status"></p-sortIcon>
+                        </th>
+
+                      
+
+                        <th pSortableColumn="user.phone_number" class="user.phone_number">رقم التليفون
+                            <p-sortIcon field="user.phone_number"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="user.first_name" class="user.first_name mark">اسم العميل
+                            <p-sortIcon field="user.first_name"></p-sortIcon>
+                        </th>
+                      
+                        <th pSortableColumn="price" class="price">السعر
+                            <p-sortIcon field="price"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="description" class="description">الوصف
+                            <p-sortIcon field="description"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="name" class="name">اسم المنتج
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                       
+
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="body" let-products>
+                    <tr>
+  
+                        <td> {{ products?.received_representative}} </td>
+                        <td>{{ products?.refusal.status}}</td>
+                        <td>{{ products?.date_of_receipt  | date }}</td>
+                        <td>{{ products?.refusal.status}}</td>
+                        <td>{{ products?.user?.phone_number}}</td>
+
+                        <td>{{ products?.user?.first_name }} {{ products?.user?.second_name }} {{ products?.user?.last_name }}</td>
+                        <td>{{ products?.price}}</td>
+                        <td>{{ products?.description}}</td>
+                        <td>{{ products?.name}}</td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+    </p-tabPanel>
+
+    <p-tabPanel header="الصفحة الرئيسية" >
+     <div class="col-md-10">
+        <app-home></app-home>
+     </div>
+    </p-tabPanel>
+
+
+</p-tabView>

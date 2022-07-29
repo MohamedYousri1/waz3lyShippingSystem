@@ -1,0 +1,82 @@
+<p-toast position="top-center" key="Key1"></p-toast>
+<p-toast position="top-center" key="Key2"></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}"></p-confirmDialog>
+
+<div class="width-85">
+    <div style="background-color: #31353D;" class="row">
+        <div class="col-md-12 d-flex flex-row">
+            <div class="pt-3">
+                <button type="button" (click)="edit_add(AE_modal , '')" class="adding-btn" data-toggle="modal" data-target="#jobs">
+        اضافة طلب جديد
+      </button>
+                <!-- <button disabled  type="button" class="btn btn-danger">
+        غير مسموح
+    </button> -->
+            </div>
+            <p class="h5 text-light py-3 ml-auto">الطلبات (البيك اب)</p>
+        </div>
+    </div>
+</div>
+
+<p-table #depTbl [value]="pickupList" [globalFilterFields]="['qty' , 'transporttype.type']" [paginator]="true" [rows]="7" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)"></button>
+                <span class="p-input-icon-left p-ml-auto">
+          <i class="pi pi-search"></i>
+          <input class="search-textbox" pInputText type="text"
+            (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث " />
+        </span>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <th>محتوي الطلب</th>
+            <th pSortableColumn="qty">عدد الشحنات
+                <p-sortIcon field="qty"></p-sortIcon>
+            </th>
+            <th pSortableColumn="transporttype.type">نوع وسيله النقل
+                <p-sortIcon field="transporttype.type"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <a class="edit-emp-btn btn btn-outline-danger btn-sm mx-2" (click)="confirm(obj)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+                <a href="" data-toggle="modal" data-target="#objs" (click)="edit_add(AE_modal, obj)" title="تعديل " class="edit-emp-btn btn btn-outline-primary btn-sm mx-2"><i class="fas fa-edit"></i></a>
+                <!-- <button disabled *ngIf="!updateobj" class="btn-outline-danger">غير مسموح لك</button> -->
+            </td>
+
+            <td>{{(obj.notes) ? obj.notes :''}}</td>
+            <td>{{(obj.qty) ? obj.qty : '0'}}</td>
+            <td class="d-flex justify-content-center align-items-center ">{{(obj.transporttype?.type) ? obj.transporttype?.type :''}}</td>
+
+        </tr>
+
+
+    </ng-template>
+</p-table>
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-pick-up [Catchobj]='catch_obj' (sent_new)='after($event)'> </app-edit-add-pick-up>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->

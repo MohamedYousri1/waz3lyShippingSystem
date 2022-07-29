@@ -1,0 +1,12 @@
+<p-toast position="top-right" key="myKey2"></p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+<form [formGroup]='myform' (submit)='onsubmit(CatchId)'>
+    <div class="from-group">
+        <label for="">  طرق المعرفة   </label>
+        <input type="text" name='way' formControlName='way' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.way.errors}">
+        <div *ngIf='submited && f.way.errors' class="invalid-feedback" >
+            <div *ngIf='f.way.errors.required' > مطلوب  </div>
+        </div>
+    </div><br>
+    <button class='btn btn-primary' type="submit"> {{CatchId === "" ?  'اضافة': 'تعديل'}}  </button>
+</form>

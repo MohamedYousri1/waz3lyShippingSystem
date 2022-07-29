@@ -1,0 +1,149 @@
+<!--********************    start header  ********************************-->
+<!-- <p class="top_p flex-row"> الحسابات الصادرة </p> -->
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+        <div class="pt-3">
+            <button  type="button" (click)="add_edit(AE_modal, '')" class="btn btn-primary" data-toggle="modal" data-target="#jobs">
+                
+                اضافة معاملة
+            </button>
+            <!-- <button disabled *ngIf="!createout_categories" type="button" class="btn btn-danger">
+              
+              غير مسموح
+          </button> -->
+        </div>
+        <p class="h5 text-light py-3 ml-auto">    تسجيل المعاملات المالية </p>
+    </div>
+</div>
+
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="selectedMembers" [globalFilterFields]="['created_at','price' , 'expense.title' ,'description' ,'revenue.title']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+  
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex px-5">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+            </button>
+
+            <input class="search-textbox" pInputText type="text"
+            (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+
+                
+                 <select name="" (change) = "swapTo($event.target)" id="" class="form-control w-100 px-3 mt-2">
+                    <option value="3">ايراد/مصروف</option>
+                     <option value="1">الايرادات</option>
+                     <option value="2">المصروفات</option>
+                     
+                 </select>
+            
+              
+          
+            </div>
+        </div>
+
+        <div class="searching-box py-2 px-5">
+
+            <button class="btn btn-info mx-5" (click)="toDailyKeepr()">الحفظة اليومية</button>
+            <button class="btn btn-info" (click)="getDate(start,end)">بحث</button>
+           
+            <input type="date"  [(ngModel)]="end" class="search-textbox">
+            <label for="">  ادخل تاريخ النهاية </label>
+
+
+                 <input type="date" placeholder="من تاريخ"  [(ngModel)]="start" class="search-textbox"> 
+                 <label for="">  ادخل تاريخ البداية </label>  
+           
+        </div>
+
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header" >
+        <tr>
+            <!-- <th> ألاجراءات </th> -->
+            <th pSortableColumn="created_at "> تاريخ المعاملة  
+                <p-sortIcon field="created_at "></p-sortIcon>
+            </th>
+            <th pSortableColumn="price"> قيمة المعاملة 
+                <p-sortIcon field="price"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="description"> وصف المعاملة 
+                <p-sortIcon field="description"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="expense_id"> طبيعة المعاملة 
+                <p-sortIcon field="expense_id"></p-sortIcon>
+            </th>
+
+            
+            <th pSortableColumn="revenue_id"> نوع المعاملة 
+                <p-sortIcon field="revenue_id "></p-sortIcon>
+            </th>
+           
+          
+          
+           
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <!-- <td></td> -->
+            <td>{{obj.created_at | date:'shortDate'}} </td>
+            <td>{{obj.price}}</td>
+            <td>{{obj.description}}</td>
+            <td> {{obj.expense_id != null  ? obj.expense?.title : obj.revenue?.title}}</td>
+            <td>{{obj.revenue_id != null ? 'ايراد' : ' مصروف'}}</td>
+        
+            
+        </tr>
+    </ng-template>
+
+
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-transact [Catchobj]='catchobj' (newData)="after($event)"> </app-edit-add-transact>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->
+
+<div class="container py-5 ">
+    <div class="row">
+        <div class="col-md-6 my-auto">
+            <div class="shadow bg-light p-2 d-flex total">
+                <p> صافي اليوم  :  </p> 
+                <span class="mx-2">{{sumRevenue - sumExpense}}</span>
+                
+            </div>          
+         </div>
+        <div class="col-md-6 ">
+                    <div class="shadow bg-light p-2 d-flex text-right total">
+                        <p> أجمالي الأيرادات  :  </p>
+                        <span class="mx-2">{{sumRevenue}}</span>
+                    </div>
+
+                    <div class="shadow bg-light p-2 d-flex text-right total">
+                        <p> أجمالي المصروفات  :  </p>
+                     <span class="mx-2">{{sumExpense}}</span>
+                    </div>
+        </div>
+
+        
+    </div>
+</div>

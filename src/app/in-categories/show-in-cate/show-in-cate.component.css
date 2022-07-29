@@ -1,0 +1,30 @@
+.hover:hover{
+    background: #e9ecef;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+.hover a{
+    display: block;
+}
+
+.top_p{
+    margin: 0;
+    background: #343a40;
+    position: relative;
+    width: 102.1%;
+    top: 16px;
+    left: -16px;
+    font-size: 21px;
+    padding: 5px;
+    color: #007bff;
+}
+
+.main_title{
+    margin: 0 1px 0 1px !important;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+.main_title:hover{
+    background: #e5e6e6;
+}

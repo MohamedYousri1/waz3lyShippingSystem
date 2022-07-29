@@ -1,0 +1,204 @@
+<p-toast position="top-right" key="myKey2"></p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+<div class="container-fluid">
+
+    <div class="row bg-dark mt-3">
+        <div class="col-md-12 d-flex flex-row">
+            <div class="pt-3">
+
+            </div>
+
+            <p class=" h5 text-light py-3 ml-auto">
+                العملاء
+            </p>
+        </div>
+    </div>
+    <!--*******************    end  header  *****************************-->
+
+    <!--*******************    start tabel  body   *********************-->
+    <p-table #depTbl [value]="allClients" [globalFilterFields]="['rate' , 'number_of_shipments' , 'wallet' , 'phone_number' , 'first_name']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8"
+        [scrollable]="true" scrollHeight="350px">
+        <!-- table caption  -->
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+                <div class="search-warpper">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+            </button>
+                    <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input class="search-textbox" pInputText type="text"
+                (input)="depTbl.filterGlobal($event.target.value, 'contains')"  placeholder="بحث " />
+            </span>
+                </div>
+            </div>
+        </ng-template>
+        <!--********  table header  *****-->
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th>
+                    <pSortableColumn pSortableColumn="wallet"> المحفظه
+                        <p-sortIcon field="wallet"></p-sortIcon>
+                    </pSortableColumn>
+                </th>
+
+
+                <th>
+                    <pSortableColumn pSortableColumn="month_commission"> العموله الشهريه
+                        <p-sortIcon field="month_commission"></p-sortIcon>
+                    </pSortableColumn>
+                </th>
+                <th>
+                    <pSortableColumn pSortableColumn="number_of_shipments_monthly"> المحقق
+                        <p-sortIcon field="number_of_shipments_monthly"></p-sortIcon>
+                    </pSortableColumn>
+                </th> -->
+
+                <th>عرض الحركات</th>
+                <th>
+                    <pSortableColumn pSortableColumn="orders_per_month"> الطلبات شهريا
+                        <p-sortIcon field="orders_per_month"></p-sortIcon>
+                    </pSortableColumn>
+                </th>
+                <th>
+                    <pSortableColumn pSortableColumn="interest_level.level"> الحاله
+                        <p-sortIcon field="interest_level.level"></p-sortIcon>
+                    </pSortableColumn>
+                </th>
+                <th>
+                    <pSortableColumn pSortableColumn="way.way">طرق المعرفه
+                        <p-sortIcon field="way.way"></p-sortIcon>
+                    </pSortableColumn>
+                </th>
+
+                <th>
+                    <pSortableColumn pSortableColumn="province.name"> المدينه
+                        <p-sortIcon field="province.name"></p-sortIcon>
+                    </pSortableColumn>
+                </th>
+
+                <!-- <th>
+                    <pSortableColumn pSortableColumn="salary"> المرتب
+                        <p-sortIcon field="salary"></p-sortIcon>
+                    </pSortableColumn>
+                </th> -->
+                <th>
+                    <pSortableColumn pSortableColumn="phone"> التليفون
+                        <p-sortIcon field="phone"></p-sortIcon>
+                    </pSortableColumn>
+                </th>
+                <th>
+                    <pSortableColumn pSortableColumn="first_name"> اسم العميل
+                        <p-sortIcon field="first_name"></p-sortIcon>
+                    </pSortableColumn>
+                </th>
+            </tr>
+        </ng-template>
+
+
+        <!--*******  table body  ******-->
+        <ng-template pTemplate="body" let-obj>
+            <tr>
+
+                <td>
+                    <a data-toggle="modal" (click)="add_edit(shipDetails, obj )" title="اضافه حركه" class="edit-emp-btn btn btn-primary btn-sm "><i class="fas fa-plus"></i></a> &nbsp;
+
+                    <a data-toggle="modal " style="cursor: pointer;" (click)="add_edit(rate_emps, obj) " class="edit-emp-btn btn btn-success  btn-sm mx-2 ">
+                        عرض
+                    </a>
+                </td>
+
+                <td> {{obj.orders_per_month}}</td>
+                <td> {{obj.interest_level?.level}} </td>
+                <td> {{(obj.way?.way)}} </td>
+                <td> {{obj.province?.name}} </td>
+                <td> {{obj.phone}} </td>
+                <td> {{obj.first_name}} {{obj.second_name}} {{obj.last_name}} </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <!--********************    end  tabel  body   ********************************-->
+</div>
+
+
+
+
+<ng-template #rate_emps let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> الحركات </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body " style="direction: rtl;">
+
+
+
+        <div class="rate shadow-lg d-flex justify-content-between align-items-center px-5 py-3 my-3" *ngFor="let move of allMovements">
+            <div class="title-rate key text-center d-flex justify-content-between align-items-center flex-column-reverse">
+                <span class="my-2"> الحركه </span>
+                <span class="my-2"> العميل </span>
+                <span class="my-2"> الموظف </span>
+            </div>
+            <div class="title-rate key text-center d-flex justify-content-between align-items-center flex-column-reverse">
+                <span class="my-2"> {{move.sub_state.state }} </span>
+                <span class="my-2"> {{move.client.first_name }} {{move.client.last_name }} </span>
+                <span class="my-2"> {{move.employee.user.first_name }} {{move.employee.user.second_name }} {{move.employee.user.last_name }} </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</ng-template>
+
+
+
+
+
+
+<ng-template #shipDetails let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> اضافه حركه </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body " style="direction: rtl;">
+        <!-- Modal Form Start -->
+        <div class="border"></div>
+        <form [formGroup]="myform" (submit)="onsubmit()">
+            <div class="form-group">
+                <label for="">  اختر  العميل    </label>
+                <select formControlName="client_id" class="form-control" [ngClass]="{'is-invalid' : submited && f.client_id.errors}">
+                <!-- <option>select department</option> -->
+                <option *ngFor="let item of allClients_sales" [ngValue]="item.id" >
+                    {{item?.first_name}} {{item?.second_name}}
+                </option>
+            </select>
+                <div *ngIf='submited && f.client_id.errors'>
+                    <div *ngIf="submited && f.client_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="">  اختر الحالة الفرعية       </label>
+                <select formControlName="sub_state_id" class="form-control" [ngClass]="{'is-invalid' : submited && f.sub_state_id.errors}">
+                <!-- <option>select department</option> -->
+                <option *ngFor="let item of substatus" [ngValue]="item.id" >
+                    {{item?.state}}
+                </option>
+            </select>
+                <div *ngIf='submited && f.sub_state_id.errors'>
+                    <div *ngIf="submited && f.sub_state_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+
+            <button class="btn btn-primary"> اضافة </button>
+        </form>
+    </div>
+
+</ng-template>

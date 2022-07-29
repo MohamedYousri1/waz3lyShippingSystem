@@ -1,0 +1,11 @@
+
+<form [formGroup]="myform" (submit)="onsubmit(id)">
+    <div class="form-group">
+        <input type="text" name="qualification" formControlName="qualification" [ngClass]="{'is-invalid' : submited && f.qualification.errors}"  class="form-control">
+        <div *ngIf="submited && f.qualification.errors"> 
+            <div *ngIf="submited && f.qualification.errors.required"> مطلوب  </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary">  {{id === "" ? 'اضافة' : 'تعديل'}}</button>
+</form>

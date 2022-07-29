@@ -1,0 +1,181 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form>
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label for="employeeTel">التليفون</label>
+                <input type="text" name='phone_number' [(ngModel)]='phone_number' class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="address">  العنوان </label>
+                <input type="text" name='address' [(ngModel)]='address' class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="">   القسم التابع له   </label>
+                <ng-select name='department_id' [(ngModel)]='department_id'>
+                    <ng-option *ngFor="let item of departments" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+            </div>
+
+            <!-- <div class="form-group">
+                <label for="">المخزن</label>
+                <ng-select name='store_id' [(ngModel)]='store_id'>
+                    <ng-option *ngFor="let item of branches" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+
+            </div> -->
+
+            <!-- <div class="form-group">
+                <label for=""> نوع المرتب</label>
+                <select name="" id="" (change)="onSwap($event.target.value)" class="w-100 form-control">
+                    <option value="1">ثابت</option>
+                    <option value="2">عمولة</option>
+                    <option value="3"> ثابت/عمولة</option>
+                </select>
+            </div> -->
+
+            <div class="form-group">
+                <label for="salary">  المرتب </label>
+                <input type="number" name='salary' [(ngModel)]='salary' class="form-control">
+            </div>
+
+
+
+            <div class="form-group" *ngIf="Catchobj === '' ">
+                <label for="">  تاكيد كلمه السر     </label>
+                <input type="password" name='password_confirmation' [(ngModel)]='password_confirmation' required class="form-control">
+                <i class="fa" [hidden]="!password_confirmation?.value" [ngClass]="{'fa-eye-slash': !ShowPassord,'fa-eye': ShowPassord }" (click)="showPassword()"> </i>
+            </div> <br>
+
+            <div class="form-group">
+                <label for="" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span>   اختر المنطقه    </label>
+                <ng-select name='city_id' [(ngModel)]='city_id'>
+                    <ng-option *ngFor="let item of allAreas" [value]="item.id"> {{item?.city_name_ar}}</ng-option>
+                </ng-select>
+                <!-- <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.city_id.errors'> * يرجي تحديد المنطقه </div> -->
+            </div>
+
+
+            <!--
+            <div class="form-group" *ngIf="commSec">
+                <label for="commission">  العموله </label>
+                <input type="text" name='commission' [(ngModel)]='commission' class="form-control">
+            </div> -->
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="employeeSecondName"> الاسم </label>
+                <input name='name' [(ngModel)]='name' type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="employeeTel"> البريد الالكتروني </label>
+                <input type="email" name='email' [(ngModel)]='email' class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="">   الوظيفة   </label>
+                <ng-select name='job_id' [(ngModel)]='job_id'>
+                    <ng-option *ngFor="let item of jobs" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+            </div>
+
+            <div class="form-group">
+                <label for="">    الفرع    </label>
+                <ng-select name='branch_id' [(ngModel)]='branch_id'>
+                    <ng-option *ngFor="let item of branches" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+
+            </div>
+
+
+
+            <div class="form-group" *ngIf="Catchobj === '' ">
+                <label for="">  كلمه السر     </label>
+                <input type="password" name='password' [(ngModel)]='password' required class="form-control">
+                <i class="fa" [hidden]="!password?.value" [ngClass]="{'fa-eye-slash': !ShowPassord,'fa-eye': ShowPassord }" (click)="showPassword()"> </i>
+            </div>
+
+            <div class="form-group">
+                <label for="" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span>المحافظه</label>
+                <ng-select [(ngModel)]="province_id" (change)="onProvinceChange($event)">
+                    <ng-option *ngFor="let item of provinces" [value]="item.id"> {{item?.governorate_name_ar}} </ng-option>
+                </ng-select>
+            </div>
+
+
+            <div class="form-group">
+                <label dir="ltr">الصلاحيه</label>
+                <p-dropdown [options]="allActivatedRoles" [(ngModel)]="role_id" optionValue="id" name="role_id" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="إختر صلاحيه الموظف">
+                    <ng-template let-role pTemplate="item">
+                        <div class="role-item">
+                            <div> {{role.name}}</div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- imgs -->
+    <div class="row mx-auto">
+        <div class="col-md-3">
+            <div class="form-group">
+                <div style="min-height: 250px;display: flex;max-width: 200px;background-color: #ddd;justify-content: center;align-items: center;" class="cont_img">
+                    <p class="cv-name">{{selectedResum?.name}}</p>
+                </div>
+                <label for="employeeTel"> السيره الزاتية   </label> &nbsp;
+                <input type="file" #select_resum style="display: none;" (change)="selectResum($event)">
+                <button class="btn btn-outline-dark  selc" (click)="select_resum.click()"> <i class="fa fa-upload"></i> </button>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="cont_img">
+                    <img class="img-fluid rounded" style="width:200px; height:250px; margin-bottom:10px" [src]="profile_pic">
+                </div>
+                <label for="employeeTel"> صوره شخصية    </label> &nbsp;
+                <input type="file" #select_img style="display: none;" (change)=" selectImg($event)">
+                <button class="btn btn-outline-dark  selc" (click)="select_img.click()">  <i class="fa fa-upload"></i> </button>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="cont_img">
+                    <img class="img-fluid rounded" style="width:200px; height:250px; margin-bottom:10px" [src]="face_ID_card_pic">
+                </div>
+                <label for="employeeTel">  صورة وش البطاقة  </label> &nbsp;
+                <input type="file" #select_IdFace style="display: none;" (change)="selectIdFace($event)">
+                <button class="btn btn-outline-dark  selc" (click)="select_IdFace.click()"> <i class="fa fa-upload"></i> </button>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="cont_img">
+                    <img class="img-fluid rounded" style="width:200px; height:250px; margin-bottom:10px" [src]="back_ID_card_pic ">
+                </div>
+                <label for="employeeTel">  صورة ظهر البطاقة    </label> &nbsp;
+                <input type="file" #select_IdBack style="display: none;" (change)="selectIdBack($event)">
+                <button class="btn btn-outline-dark  selc" (click)="select_IdBack.click()">  <i class="fa fa-upload"></i>  </button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <br> <br>
+    <div class="col-12">
+        <button class="btn btn-primary" (click)="onsubmit()"> {{Catchobj === "" ? 'اضافة' : 'تعديل'}} </button>
+    </div>
+</form>

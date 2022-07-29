@@ -1,0 +1,305 @@
+<p-toast position="top-right" key="myKey2"></p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+
+
+<div style="width : 85% !important ">
+    <div class="container my-5">
+        <div class="header-img mb-5">
+            <img class="img-fluid" src="../../assets/images/waz3ly gray logo.png" alt="">
+
+            <div class="col-md-5">
+                <label for="employee_id">اختر المندوب</label>
+                <div class="form-group">
+                    <!-- <select class="form-control" (change)="onRepresentativeChange($event.value)" [(ngModel)]="representativeId" name="employee_id" id="employee_id">
+              <option *ngFor="let employee of allRepresentative" [value]="employee.id">{{employee?.name}}</option>
+          </select> -->
+
+                    <ng-select [(ngModel)]="representativeId" (change)="onRepresentativeChange($event)">
+                        <ng-option *ngFor="let item of allRepresentative" [value]="item.id"> {{item?.name}} </ng-option>
+                    </ng-select>
+                    <!-- <div *ngIf='submited && f.employee_id.errors'>
+        <div *ngIf="submited && f.employee_id.errors.required" style="color: red;"> * مطلوب </div>
+    </div> -->
+                </div>
+            </div>
+        </div>
+
+
+        <form class="w-50 m-auto ">
+            <input onblur="this.focus()" autofocus class="form-control" id="shipment_id" type="number" name="shipment_id" [(ngModel)]="shipment_id">
+        </form>
+
+        <div class="row" *ngIf="fillData == true ">
+            <div class="col-md-5 ship-wrapping">
+                <img class="img-fluid" src="../../assets/images/123.jpg" alt="">
+            </div>
+
+            <div class="col-md-7">
+                <a *ngIf="allData.pending_approve == 1 && allData.complete_status_id == 3 &&  allData.delivery_date == null  " data-toggle="modal " (click)="add_edit(addrepresentative, allData) " title="تفعيل " class="edit-emp-btn btn btn-danger  btn-sm mx-2 ">
+                    <i class="fas fa-times-circle "></i> اضافه مندوب علي الشحنه
+                </a>
+
+                <button class="btn btn-info " *ngIf="allData.pending_approve == 1  && allData.complete_status_id < 3 " disabled>..جاري الاستلام </button>
+
+
+                <a data-toggle="modal " *ngIf="allData.pending_approve==1 && allData.delivery_date !== null " title="مفعل" class="edit-emp-btn btn btn-primary btn-sm mx-2 ">
+                    <i class="fas fa-check-circle "></i> تم تحديد المندوب ومعاد التسليم
+                </a>
+                <table *ngIf="fillData  == true " class="table table-bordered table-wrapper">
+
+
+
+
+                    <tbody class="teble-details">
+                        <tr>
+                            <th><strong class="mx-2"> {{(allData.user?.user_data?.name) ? allData.user?.user_data?.name : ""}}</strong></th>
+                            <th><strong class="mx-2">اسم الراسل</strong> </th>
+
+                        </tr>
+                        <tr>
+                            <th><strong class="mx-2">{{(allData.name_shipment) ?  allData.name_shipment : ""}}</strong> </th>
+                            <th><strong class="mx-2">اسم الشحنه</strong> </th>
+                        </tr>
+
+                        <tr>
+                            <th><strong class="mx-2"> {{(allData?.service_type?.type) ? allData?.service_type?.type : ''}}</strong> </th>
+                            <th><strong class="mx-2">نوع الخدمه </strong> </th>
+                        </tr>
+                        <tr>
+                            <th><strong class="mx-2"> {{(allData?.weight) ? allData?.weight : ''}} </strong> </th>
+                            <th><strong class="mx-2">وزن الشحنه</strong> </th>
+                        </tr>
+
+                        <tr>
+                            <th><strong class="mx-2">{{(allData?.shipmentstatu.name) ? allData?.shipmentstatu.name :''}}</strong> </th>
+                            <th><strong class="mx-2">حاله الشحنه</strong> </th>
+                        </tr>
+
+
+                        <tr>
+                            <th><strong class="mx-2">{{(allData?.product_price) ? allData?.product_price : '0'}}</strong> </th>
+                            <th><strong class="mx-2">سعر إجمالي</strong> </th>
+                        </tr>
+
+                        <!--
+                        <tr>
+                            <th><strong class="mx-2">{{(allData?.shipping_price) ? allData?.shipping_price : '0'}}</strong> </th>
+                            <th><strong class="mx-2">سعر الشحن</strong> </th>
+                        </tr>
+
+
+                        <tr>
+                            <th><strong class="mx-2">{{(allData?.total_shipment) ? allData?.total_shipment : '0'}}</strong> </th>
+                            <th><strong class="mx-2">سعر إجمالي</strong> </th>
+                        </tr> -->
+
+                        <tr>
+                            <th><strong class="mx-2">{{allData?.created_at | date:'shortDate'}}</strong> </th>
+                            <th><strong class="mx-2">تاريخ طلب الشحنه </strong> </th>
+                        </tr>
+                        <tr>
+                            <th><strong class="mx-2">{{(allData.client?.name) ? allData.client?.name : ''}}</strong> </th>
+                            <th><strong class="mx-2">اسم المستلم</strong> </th>
+                        </tr>
+
+                        <tr>
+                            <th><strong class="mx-2">{{(allData.client?.address) ? allData.client?.address : ''}}</strong> </th>
+                            <th><strong class="mx-2">العنوان</strong> </th>
+                        </tr>
+
+
+                        <tr>
+                            <th><strong class="mx-2">{{(allData.client?.phone)  ? allData.client?.phone : ''}}</strong> </th>
+                            <th><strong class="mx-2">التليفون</strong> </th>
+                        </tr>
+
+
+
+                        <tr>
+                            <th><strong class="mx-2">{{(allData.representative?.name) ? allData.representative?.name : ''}}</strong> </th>
+                            <th><strong class="mx-2">المندوب المستلم من الراسل</strong> </th>
+                        </tr>
+
+
+                        <!-- <tr *ngIf="allData.pending_approve==1 && allData.delivery_date !== null ">
+                            <th><strong class="mx-2">{{allData?.employee?.user?.first_name}} {{allData?.employee?.user?.second_name}} {{allData?.employee?.user?.last_name}}</strong> </th>
+                            <th><strong class="mx-2">مندوب التوصيل</strong> </th>
+                        </tr> -->
+
+
+
+                        <!--
+                        <tr *ngIf="allData.pending_approve==1 && allData.delivery_date !== null ">
+                            <th><strong class="mx-2">{{allData?.delivery_date | date:'shortDate'}}</strong> </th>
+                            <th><strong class="mx-2">تاريخ التسليم للعميل</strong> </th>
+                        </tr> -->
+
+
+                        <!-- <tr>
+                            <th><strong class="mx-2">{{allData.payment_type?.name}}</strong> </th>
+                            <th><strong class="mx-2">طريقه الدفع</strong> </th>
+                        </tr> -->
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+        <button *ngIf="fillData == true " (click)="printIt()" id="print_btn" class="btn btn-lg mx-3">Print </button>
+        <button (click)="confirmAddingRes()" *ngIf="fillData == true " class="btn btn-lg">تاكيد</button>
+    </div>
+
+</div>
+
+<div *ngIf="fillData == false " class="message w-100  d-flex justify-content-center align-items-center">
+    <h4>لا يوجد شحنات </h4>
+</div>
+
+
+
+
+
+<ng-template #addrepresentative let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> شحنه معلقه </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body " style="direction: rtl;">
+        <!-- Modal Form Start -->
+        <div class="border"></div>
+
+        <form [formGroup]="myForm" (submit)="addRepresentative()" class="p-2">
+            <div class="row">
+                <!-- اسم شركه النقل   -->
+                <div class="col-md-6">
+                    <label for="employee_id">اختر المندوب</label>
+                    <div class="form-group">
+                        <select class="form-control" formControlName="employee_id" name="employee_id" id="employee_id">
+                        <option *ngFor="let employee of allRepresentative" [value]="employee.id">{{employee.user?.first_name}} {{employee.user?.second_name}} {{employee.user?.last_name}}</option>
+                    </select>
+
+                        <!-- <div *ngIf='submited && f.employee_id.errors'>
+                  <div *ngIf="submited && f.employee_id.errors.required" style="color: red;"> * مطلوب </div>
+              </div> -->
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="delivery_date">تاريخ التسليم</label>
+                    <div class="form-group">
+                        <input type="date" class="form-control" formControlName="delivery_date" name="delivery_date" id="delivery_date">
+                        <!-- <div *ngIf='submited && f.delivery_date.errors'>
+                <div *ngIf="submited && f.delivery_date.errors.required" style="color: red;"> * مطلوب </div>
+            </div> -->
+                    </div>
+                </div>
+
+
+                <div class="bg-light p-2 w-100">
+                    <button [disabled]="myForm.invalid" (click)="addRepresentative()" class="btn btn-primary btn-block text-center"> اضافه </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</ng-template>
+
+
+
+<div style="width:85%; display : none " class="sheetRes">
+
+    <div class="wrapping-sheet" id="sheetRes">
+
+        <div class="row" style="display : flex  ; align-items : center;padding: 50px 0 ;">
+            <div style="width : 10% !important" class="col-md-3">
+
+            </div>
+
+            <div style="width : 65% !important" class="col-md-5">
+                <h2 style="    font-size: 3rem;font-family: ui-monospace;color: #2A9ACB !important;">Delivery Report Sheet </h2>
+            </div>
+            <div style="width : 25% !important" class="col-md-4">
+                <img src="../../assets/images/Wasela_Logo.png" class="img-fluid" style="width  : 150px !important  ; padding : 20px  " alt="">
+            </div>
+        </div>
+
+        <table id="excel-table" class="hiddenTable" class="table ">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th style="text-align : center !important">Area</th>
+                    <th style="text-align : center !important">Courier</th>
+                    <th style="text-align : center !important">BarCode</th>
+                    <!-- <th style="text-align : center !important">Rec.Mobile</th> -->
+
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>{{this.today}}</td>
+                    <td style="text-align : center !important">{{(sheetRepresentatives[0]?.representative?.address) ? sheetRepresentatives[0]?.representative?.address : ''}}</td>
+                    <td style="text-align : center !important">{{(sheetRepresentatives[0]?.representative?.name) ? sheetRepresentatives[0]?.representative?.name : ''}}</td>
+                    <td style="text-align : center !important ; color :#b8daff !important "><i class="fas fa-check"></i></td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <table id="excel-table" class="hiddenTable" class="table table-bordered">
+            <thead>
+                <tr style="background-color: #b8daff !important;" class="table-primary">
+                    <th>#Index</th>
+                    <th>Bolisa Number</th>
+                    <th>Rec.Name</th>
+                    <th>Rec.Address</th>
+                    <th>Rec.Mobile</th>
+                    <th>COD</th>
+                    <th>Shipper</th>
+                    <th>Rec.Signature</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let shipment of sheetRepresentatives ; let i = index ">
+                    <td>{{i + 1}}</td>
+                    <td>{{shipment.id}}</td>
+                    <td>{{(shipment.client?.name) ? shipment.client?.name : ''}}</td>
+                    <td>{{(shipment.client?.address) ? shipment.client?.address : ''}} </td>
+                    <td>{{(shipment.client?.phone) ? shipment.client?.phone : ''}}</td>
+                    <td>{{(shipment.product_price) ? shipment.product_price : ''}}</td>
+                    <td>{{(shipment.user?.user_data?.name) ? shipment.user?.user_data?.name : ''}}</td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row" style="display : flex  ; align-items : center  ; padding: 50px 0 ;">
+            <div style="width : 25% !important" class="col-md-3">
+                <p>Date {{todayDate}}</p>
+            </div>
+
+            <div style="width : 25% !important" class="col-md-3">
+                <!-- <p>COD : {{todayDate}}</p> -->
+            </div>
+
+            <div style="width : 25% !important" class="col-md-3">
+                <p>Courier Sign ________________</p>
+            </div>
+            <div style="width : 25% !important" class="col-md-3">
+                <p>Team Leader Sign ________________</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>

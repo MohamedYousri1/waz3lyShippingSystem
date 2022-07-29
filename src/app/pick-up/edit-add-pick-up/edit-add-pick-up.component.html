@@ -1,0 +1,27 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form [formGroup]='myform' (submit)='onsubmit(id)'>
+
+    <!-- <div class="form-group">
+    <p-multiSelect [options]="" optionLabel="name"></p-multiSelect>
+  </div> -->
+    <div class="form-group">
+        <label for=""> إختر ةسيله النقل </label>
+        <ng-select name="transport_type_id" formControlName="transport_type_id">
+            <ng-option *ngFor="let item of transportTypes" [value]="item.id"> {{item?.type}} - {{item?.price}} <span>جنيه</span></ng-option>
+        </ng-select>
+    </div>
+
+    <div class="form-group">
+        <label for="">عدد الشحنات</label>
+        <input type="number" name="qty" formControlName='qty' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.qty.errors }">
+        <div *ngIf='submited && f.qty.errors'> * هذا الحقل مطلوب </div>
+    </div>
+
+    <div class="form-group">
+        <label for="">محتوي الطلب </label>
+        <textarea class="form-control" name="name" formControlName='notes' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.notes.errors }" id="notes" cols="30" rows="6"></textarea>
+        <div *ngIf='submited && f.notes.errors'> * هذا الحقل مطلوب </div>
+    </div>
+    <button class="btn btn-outline-dark"> {{ id === "" ? 'إتمام الطلب':' تعديل الطلب  '}}</button>
+</form>

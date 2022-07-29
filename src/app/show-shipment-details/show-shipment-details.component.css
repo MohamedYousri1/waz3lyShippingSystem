@@ -1,0 +1,36 @@
+#shipment_id {
+    opacity: 0;
+}
+
+.ship-wrapping img {
+    min-height: 97% !important;
+    transition: all .5s;
+}
+
+.teble-details tr:nth-of-type(odd) {
+    background-color: #ff5827 !important;
+}
+
+.teble-details tr {
+    text-align: center !important;
+}
+
+.header-img {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-img img {
+    max-width: 200px;
+}
+
+@media print {
+    .table-primary {
+        background-color: #b8daff !important;
+    }
+}
+
+.table-primary {
+    background-color: #b8daff !important;
+}

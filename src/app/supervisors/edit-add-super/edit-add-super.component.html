@@ -1,0 +1,164 @@
+<p-toast position="top-right" key="myKey2"></p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+<form>
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label for="second_name"> الاسم الثاني </label>
+                <input type="text" name='second_name' [(ngModel)]='second_name' class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="employeeTel">التليفون</label>
+                <input type="number" name='phone_number' [(ngModel)]='phone_number' class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="employeeFirstName"> الرقم القومي  </label>
+                <input type="number" required name='national_id' [(ngModel)]='national_id' class="form-control">
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="">   اختر الاداره   </label>
+                <ng-select name='department_id' [(ngModel)]='department_id'>
+                    <ng-option *ngFor="let item of departments" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+            </div>
+
+
+            <div class="form-group">
+                <label for="">اختر نوع المرتب</label>
+                <select name="" id=""  (change)="onSwap($event.target)" class="w-100">
+                    <option value="1">ثابت</option>
+                    <option value="2">عمولة</option>
+                    <option value="3"> ثابت/عمولة</option>
+                </select>
+             </div>
+          
+            <div class="form-group" *ngIf="salarySec">
+                <label for="salary">  المرتب </label>
+                <input type="text" name='salary' [(ngModel)]='salary' class="form-control">
+            </div>
+
+            <div class="form-group" *ngIf="commSec">
+                <label for="commission">  العموله </label>
+                <input type="text" name='commission' [(ngModel)]='commission' class="form-control">
+            </div>
+
+        
+
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="employeeSecondName"> الاسم الاول </label>
+                <input name='first_name' [(ngModel)]='first_name' type="text" class="form-control">
+            </div>
+
+
+            <div class="form-group">
+                <label for="employeeEmail"> الاسم الاخير </label>
+                <input type="text" name='last_name' [(ngModel)]='last_name' class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="employeeTel"> البريد الالكتروني </label>
+                <input type="email" name='email' [(ngModel)]='email' class="form-control">
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label for="">  اختر الوظيفة   </label>
+                <ng-select name='job_id' [(ngModel)]='job_id'>
+                    <ng-option *ngFor="let item of jobs" [value]="item.id" > {{item?.name}}</ng-option>
+                </ng-select>
+
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label for="">   اختر الفرع    </label>
+                <ng-select name='branch_id' [(ngModel)]='branch_id'>
+                    <ng-option *ngFor="let item of branches" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+
+            </div>
+
+            <!-- <div class="form-group">
+                
+                <input type="text" name='shipping' [(ngModel)]='is_shipping_representative' value="1" required class="form-control d-none">
+                
+            </div> <br>  -->
+
+             <div class="form-group"  *ngIf="Catchobj === '' " >
+                <label for="">  رقم سري     </label>
+                <input type="password" name='password' [(ngModel)]='password' required class="form-control ">
+                <i class="fa" [hidden]="!password?.value" [ngClass]="{'fa-eye-slash': !ShowPassord,'fa-eye': ShowPassord }" (click)="showPassword()"> </i>
+            </div> <br> 
+        </div>
+    </div>
+
+    <!-- imgs -->
+    <div class="row mx-auto">
+
+
+        <div class="col-md">
+            <div class="form-group">
+                <div class="cont_img">
+                    <img class="img-fluid rounded" style="width:200px; height:250px; margin-bottom:10px" [src]="resume_file">
+                </div>
+                <label for="employeeTel"> السيره الزاتية   </label> &nbsp;
+                <input type="file" #select_resum style="display: none;" (change)="selectResum($event)">
+                <button class="btn btn-success selc" (click)="select_resum.click()"> اختر </button>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="form-group">
+                <div class="cont_img">
+                    <img class="img-fluid rounded" style="width:200px; height:250px; margin-bottom:10px" [src]="profile_pic">
+                </div>
+                <label for="employeeTel"> صوره شخصية    </label> &nbsp;
+                <input type="file" #select_img style="display: none;" (change)=" selectImg($event)">
+                <button class="btn btn-success selc" (click)="select_img.click()"> اختر </button>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="form-group">
+                <div class="cont_img">
+                    <img class="img-fluid rounded" style="width:200px; height:250px; margin-bottom:10px" [src]="face_ID_card_pic">
+                </div>
+                <label for="employeeTel">  صورة وش البطاقة  </label> &nbsp;
+                <input type="file" #select_IdFace style="display: none;" (change)="selectIdFace($event)">
+                <button class="btn btn-success selc" (click)="select_IdFace.click()"> اختر </button>
+            </div>
+        </div> 
+
+      <div class="col-md">
+            <div class="form-group">
+                <div class="cont_img">
+                    <img class="img-fluid rounded" style="width:200px; height:250px; margin-bottom:10px" [src]="back_ID_card_pic ">
+                </div>
+                <label for="employeeTel">  صورة ظهر البطاقة    </label> &nbsp;
+                <input type="file" #select_IdBack style="display: none;" (change)="selectIdBack($event)">
+                <button class="btn btn-success selc" (click)="select_IdBack.click()"> اختر </button>
+            </div>
+        </div> 
+
+
+    </div>
+
+    <br> <br>
+    <div class="col-12">
+        <button class="btn btn-primary" (click)="onsubmit()"> {{Catchobj === "" ? 'اضافة' : 'تعديل'}} </button>
+    </div>
+</form>

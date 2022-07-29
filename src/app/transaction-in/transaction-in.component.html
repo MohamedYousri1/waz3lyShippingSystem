@@ -1,0 +1,76 @@
+<div class="page-content">
+    <div class="container">
+        <div class="page-content-inner">
+            <div class="form-horizontal">
+                <div class="panel panel-dark">
+                    <div class="panel-heading">
+                        <h3 style="    font-size: 1.3rem;
+  font-family: 'hanimation';" class="panel-title">تقارير بيانات الوارد للخزن المختلفة </h3>
+                    </div>
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" for="ddlEarningsReportExpensItem"></label>
+                                <div class="col-md-6 m-auto ">
+                                    <p-dropdown [options]="allTreasuries" (onChange)="onFlterChange($event.value)" optionValue="id" name="label" optionLabel="label" [filter]="true" filterBy="label" [showClear]="true" placeholder="إختر الخزنه">
+                                        <ng-template let-treasury pTemplate="item">
+                                            <div class="treasury-item">
+                                                <div> {{(treasury.label) ? treasury.label :''}}</div>
+                                            </div>
+                                        </ng-template>
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                            <div style="display : flex ; justify-content  : center  ; align-items :  center " class="form-group" dir="rtl">
+                                <div style="display : flex " class="col-md-6 col-md-offset-3 d-flex ">
+                                    <div class="col-md-6 m-auto">
+                                        <a (click)="searchAndFilter()" class="col-md-12 btn btn-primary" id="btnEarningsReportSearch"><i style="margin : 0 5px !important ;" class="fa fa-search"></i>بحث</a>
+                                    </div>
+
+                                    <div class="col-md-6 m-auto">
+                                        <button class="col-md-12 btn btn-danger" ngxPrint printSectionId="tablePrint" [useExistingCss]="true" styleSheetFile="../../../styles.css , ../../../node_modules/datatables.net-dt/css/jquery.dataTables.css"><i style="margin : 0 5px !important ;" class="fa fa-print"></i>طباعه</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="allTreasuriesIn.length > 0 " class="table-container">
+            <div class="form-group">
+                <div id="tablePrint" class="col-md-12">
+                    <p-table [value]="allTreasuriesIn" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="scroll" [rowsPerPageOptions]="[10,25,50]">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>تاريخ الإدراج</th>
+                                <th>الخزنه</th>
+                                <th>المبلغ</th>
+                                <th>الملاحظه</th>
+                                <th>البند</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-discount let-income>
+                            <tr>
+                                <td>{{income.created_at | date:'short'}}</td>
+                                <td>{{income.treasury?.label}}</td>
+                                <td>{{income.amount}}</td>
+                                <td>{{income.notes}}</td>
+                                <td>{{income.income.label}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="allTreasuriesIn.length == 0 " class="table-container">
+            <h3 class="text-center " style="color : #666 ; margin-top : 60px ">No Data Exist</h3>
+        </div>
+
+
+    </div>
+</div>

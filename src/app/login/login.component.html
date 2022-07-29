@@ -1,0 +1,53 @@
+<div class="row  login-screen pl-2">
+    <div class="col-md-9  wrapper_img">
+
+    </div>
+
+    <div class="col-md-3 wrapper-login">
+        <div class="content py-5">
+            <div class="img-user d-flex justify-content-center my-4">
+                <!-- <img class="rounded-circle user_image img-fluid" src="../../assets/images/logo.jfif" alt=""> -->
+            </div>
+            <h2 class="text-center text-capitalize main-header">
+                <span class="text-danger">تسجيل الدخول</span>
+            </h2>
+            <form [formGroup]="loginForm" class="w-75 m-auto py-3" (ngSubmit)="submitForm(loginForm)">
+                <label class="breed">البريد الالكتروني  </label>
+                <div class="form-group my-2">
+                    <input [class.is-valid]="loginForm.get('email').errors != null && loginForm.get('email').touched " class="form-control" formControlName="email" type="email">
+
+                    <div class="alert alert-danger" *ngIf="loginForm.get('email').errors != null && loginForm.get('email').touched " role="alert">
+                        <h4 class="alert-heading"></h4>
+                        <p>enter valid email</p>
+                        <p class="mb-0"></p>
+                    </div>
+
+                </div>
+
+                <div class="form-group my-2">
+                    <label class="breed">كلمه السر</label>
+                    <input [class.is-valid]="loginForm.get('password').errors != null && loginForm.get('password').touched " class="form-control" formControlName="password" type="password">
+
+                    <div class="alert alert-danger" *ngIf="loginForm.get('password').errors != null && loginForm.get('password').touched " role="alert">
+                        <h4 class="alert-heading"></h4>
+                        <p>enter valid password</p>
+                        <p class="mb-0"></p>
+                    </div>
+
+                    <!-- <p class="text-danger py-2 ml-1">enter valid password</p> -->
+
+                </div>
+                <button [disabled]='loginForm.invalid' data-toggle="modal" type="submit" class="btn btn-warning float-right text-center btn-block my-2">دخول</button>
+
+                <div class="clearfix"></div>
+            </form>
+
+            <div class="alert alert-danger" *ngIf="errMsg !='' ">
+                <p>{{errMsg}}</p>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

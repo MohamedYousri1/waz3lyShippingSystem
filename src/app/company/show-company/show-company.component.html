@@ -1,0 +1,436 @@
+<!--********************    start header  ********************************-->
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<p-toast position="bottom-center" key="myKey5"></p-toast>
+<p-toast position="top-left" key="pass"></p-toast>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '25vw'}"></p-confirmDialog>
+
+
+<p-toast position="top-center" key="Key1"></p-toast>
+<p-toast position="top-center" key="Key2"></p-toast>
+<p-toast position="top-center" key="Key3"></p-toast>
+
+
+<div class="width-85">
+    <div class="row bg-dark">
+        <div class="col-md-12 d-flex flex-row">
+            <div class="pt-3">
+                <button *ngIf="createclients" type="button" (click)="add_edit(AE_modal, '')" class="adding-btn">
+              اضافة
+          </button>
+                <!-- <button disabled *ngIf="!createclients" type="button" class="btn btn-danger">
+            غير مسموح
+        </button> -->
+            </div>
+            <p class="h5 text-light py-3 ml-auto"> (التجار) الشركات </p>
+        </div>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="companyLists" [globalFilterFields]="['name'  , 'email'  , 'address' , 'user.phone_number' , 'branch.name' ]" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+          </button>
+                <span class="p-input-icon-left p-ml-auto">
+              <i class="pi pi-search"></i>
+              <input class="search-textbox" pInputText type="text"
+              (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+          </span>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <th> حالة الحساب</th>
+            <th> تاريخ الإضافه</th>
+            <th> التليفون</th>
+            <th> الرصيد</th>
+            <th> قيمه الشحنات </th>
+            <th>الشحنات الحاليه</th>
+            <th> حاله العضو</th>
+            <th> فرع</th>
+            <th> الإسم</th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <!--edit here-->
+                <a *ngIf="updateclients" data-toggle="modal" (click)="add_edit(AE_modal, obj)" title="تعديل" class="edit-emp-btn btn btn-outline-primary btn-sm m-1">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a *ngIf="updateclients" data-toggle="modal" (click)="editingareas(editingAreas, obj)" title="التحكم بالمناطق" class="edit-emp-btn btn btn-outline-danger btn-sm m-1">
+                    <i class="fas fa-info-circle"></i>
+                </a>
+                <a *ngIf="updateclients" data-toggle="modal" (click)="addWeight(editArea, obj)" title="إضافه وزن خاص بالشركه" class="edit-emp-btn btn btn-outline-secondary btn-sm m-1">
+                    <i class="fas fa-weight"></i>
+                </a>
+                <a *ngIf="updateclients" data-toggle="modal" (click)="addAreas(companyAreas, obj)" title="إضافه مناطق للشركه" class="edit-emp-btn btn btn-outline-success btn-sm m-1">
+                    <i class="fas fa-plus"></i>
+                </a>
+                <a data-toggle="modal" (click)="add_edit(turnClients, obj)" title="  تغيير كلمة السر " class="edit-emp-btn btn btn-primary btn-sm mx-2">
+                    <i class="fas fa-key"></i></a>
+                <!-- storp here -->
+                <a data-toggle="modal" *ngIf="obj.is_active == 1" (click)="stopReflect(obj)" title="ايقاف" class="edit-emp-btn btn-danger   btn-sm mx-2">
+                    <i class="fas fa-ban"></i>
+                </a>
+                <a data-toggle="modal" *ngIf="obj.is_active == 0" (click)="stopReflect(obj)" title="تشغيل" class="edit-emp-btn btn-success   btn-sm mx-2">
+                    <i class="fas fa-power-off"></i>
+                </a>
+                <button disabled *ngIf="!createclients" class="btn-outline-danger">غير مسموح لك</button>
+            </td>
+            <td>
+                <div class="custom-control custom-switch">
+                    <input [checked]="obj.user?.is_active" (click)="toggleButton(obj)" type="checkbox" class="custom-control-input" id="customSwitches_{{obj.id}}">
+                    <label class="custom-control-label" for="customSwitches_{{obj.id}}"></label>
+                </div>
+            </td>
+            <td> {{ obj.created_at | date:'short' }} </td>
+            <td> {{ obj.user?.phone_number }} </td>
+            <td>{{(obj.balance) ? obj.balance : '0'}}</td>
+            <td>{{(obj.value_of_shipment) ? obj.value_of_shipment : '0'}}</td>
+            <td>{{(obj.current_shipment) ? obj.current_shipment : '0'}}</td>
+            <td>{{(obj.user.is_active == 1 ) ? 'فعال' : 'غير فعال'}}</td>
+            <td> {{ (obj.branch?.name) ? obj.branch?.name : '' }} </td>
+            <td class="text-primary" (click)="moreDetailsFun(details, obj)"><a class="btn btn-outline-info  ">{{ (obj.name) ? obj.name : '' }}</a></td>
+        </tr>
+
+
+    </ng-template>
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-company [CatchObj]='catch_obj' (newData)="update($event)"> </app-edit-add-company>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->
+
+
+<ng-template #details let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title">More Details</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <table [width]="100" class="w-100 table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <!-- <th>طريقه الدفع</th> -->
+                    <th style="text-align : center !important">نوع المنتجات</th>
+                    <th style="text-align : center !important"> الحد الأدني لشحنات البيك اب </th>
+                    <th style="text-align : center !important"> رسوم البيك اب</th>
+                    <!-- <th style="text-align : center !important"> الوزن المسموح (بالكجم)</th> -->
+                    <th style="text-align : center !important"> رصيد الفلايرز</th>
+                    <th style="text-align : center !important">العنوان</th>
+                    <th style="text-align : center !important">المنطقه</th>
+                    <th style="text-align : center !important">البريد الإلكتروني</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <!-- <td>{{(moreDetails) ? moreDetails : '' }}</td> -->
+                    <td style="text-align : center !important">{{(moreDetails?.shipment_type) ? moreDetails?.shipment_type : '' }}</td>
+                    <td style="text-align : center !important">{{(moreDetails?.minimum_sunday_pick_up) ? moreDetails?.minimum_sunday_pick_up : '' }}</td>
+                    <td style="text-align : center !important">{{(moreDetails?.pick_up_fee) ? moreDetails?.pick_up_fee : '' }}</td>
+                    <!-- <td style="text-align : center !important">{{(moreDetails?.allowed_weight) ? moreDetails?.allowed_weight : '' }}</td> -->
+                    <td style="text-align : center !important">{{(moreDetails?.flyer_stock) ? moreDetails?.flyer_stock : '' }}</td>
+                    <td style="text-align : center !important">{{(moreDetails?.address) ? moreDetails?.address : '' }}</td>
+                    <td style="text-align : center !important">{{(moreDetails?.citie?.city_name_ar) ? moreDetails?.citie?.city_name_ar : '' }}</td>
+                    <td style="text-align : center !important">{{(moreDetails?.user?.email) ? moreDetails?.user?.email : '' }}</td>
+
+
+                </tr>
+            </tbody>
+
+        </table>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+
+
+<ng-template #weight let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title">Weight Limit </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+  <span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="weightForm" class="my-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="price">السعر(بالجنيه المصري)</label>
+                    <input type="number" name="price" formControlName="price" id="price" class="form-control" placeholder="جنيه">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="limit">الحد المسموح به(بالكجم)</label>
+                    <input type="number" id="limit" name="limit" formControlName="limit" class="form-control" placeholder="كجم">
+                </div>
+            </div>
+
+            <button [disabled]="weightForm.invalid" (click)="saveWeight()" class="btn btn-outline-success my-2">{{(companyWeight_details.length >  0 ) ? 'تعديل' : 'إضافه'}}</button>
+        </form>
+        <!-- render form here -->
+        <table *ngIf="companyWeight_details.length > 0 " [width]="100" class="w-100 table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th style="text-align : center !important">السعر(بالجنيه المصري)</th>
+                    <th style="text-align : center !important">الوزن المسموح به (بالكجم)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align : center !important">{{(companyWeight_details[0]?.price) ? companyWeight_details[0]?.price : '' }}</td>
+                    <td style="text-align : center !important">{{(companyWeight_details[0]?.limit) ? companyWeight_details[0]?.limit : 'كجم' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+
+
+
+<ng-template #editArea let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title">Weight Limit </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="weightForm" class="my-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="price">السعر(بالجنيه المصري)</label>
+                    <input type="number" name="price" formControlName="price" id="price" class="form-control" placeholder="جنيه">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="limit">الحد المسموح به(بالكجم)</label>
+                    <input type="number" id="limit" name="limit" formControlName="limit" class="form-control" placeholder="كجم">
+                </div>
+            </div>
+
+            <button [disabled]="weightForm.invalid" (click)="saveWeight()" class="btn btn-outline-success my-2">{{(companyWeight_details.length >  0 ) ? 'تعديل' : 'إضافه'}}</button>
+        </form>
+        <!-- render form here -->
+        <table *ngIf="companyWeight_details.length > 0 " [width]="100" class="w-100 table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th style="text-align : center !important">السعر(بالجنيه المصري)</th>
+                    <th style="text-align : center !important">الوزن المسموح به (بالكجم)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align : center !important">{{(companyWeight_details[0]?.price) ? companyWeight_details[0]?.price : '' }}</td>
+                    <td style="text-align : center !important">{{(companyWeight_details[0]?.limit) ? companyWeight_details[0]?.limit : 'كجم' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+
+<ng-template #editingAreas let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title">تعديل علي المناطق </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <table [width]="100" class="w-100 table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th> ألاجراءات </th>
+                    <th> تاريخ الإضافه</th>
+                    <th> زمن الإرجاع (ساعه)</th>
+                    <th>زمن التوصيل (ساعه)</th>
+                    <th> تكلفه الشحن</th>
+                    <th> محافظه</th>
+                    <th> المنطقه</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let obj of areaDetails">
+                    <td>
+                        <a class="edit-emp-btn btn btn-outline-warning btn-sm mx-2" (click)="confirm(obj)">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                        <!--edit here-->
+                        <a data-toggle="modal" (click)="editFormArea(editingAreaForm, obj)" title="تعديل  " class="edit-emp-btn btn btn-outline-primary btn-sm mx-2">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <!-- <button disabled *ngIf="!updateshipment_places" class="btn-outline-danger">غير مسموح لك</button> -->
+                    </td>
+                    <td>{{obj.created_at | date:'short'}}</td>
+                    <td style="direction: rtl;"> <span>{{obj.returned_time}}</span> <span *ngIf="obj.returned_time" style="color : #aaa" class="mx-2">ساعه</span></td>
+                    <td style="direction: rtl;"> <span>{{obj.delivery_time}}</span> <span *ngIf="obj.delivery_time" style="color : #aaa" class="mx-2">ساعه</span></td>
+                    <td style="direction: rtl;"> <span>{{obj.transportation_price}}</span> <span style="color : #aaa" class="mx-2">جنيه</span></td>
+                    <td>{{obj.area?.province?.name}}</td>
+                    <td>{{obj.area?.name}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
+
+<ng-template #editingAreaForm let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title">تعديل </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]='myform' (submit)='onsubmit()'>
+
+            <!-- <div class="form-group">
+          <label for=""> من منطقه </label>
+          <ng-select formControlName="from_area_id"  [ngClass]="{'is-invalid' : submited && f.from_area_id.errors}">
+              <ng-option *ngFor="let item of areas" [value]="item.id"> {{item?.name}}</ng-option>
+          </ng-select>
+      </div> -->
+
+            <div class="from-group">
+                <label for="">   سعر الشحن للمنطقه      </label>
+                <input type="number" name='transportation_price' formControlName='transportation_price' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.transportation_price.errors}">
+                <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.transportation_price.errors'> * يرجي تحديد سعر الشحن</div>
+            </div> <br>
+
+            <div class="from-group">
+                <label for="">التسليم خلال (ساعه)</label>
+                <input type="number" name='delivery_time' formControlName='delivery_time' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.delivery_time.errors}">
+                <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.delivery_time.errors'> * هذا الحقل مطلوب</div>
+
+            </div> <br>
+
+            <div class="from-group">
+                <label for="">الإسترجاع خلال (ساعه)</label>
+                <input type="number" name='returned_time' formControlName='returned_time' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.returned_time.errors}">
+                <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.returned_time.errors'> * هذا الحقل مطلوب</div>
+
+            </div> <br>
+
+
+
+            <div style="display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: row-reverse;" class="field-checkbox">
+                <p-checkbox name="save_for_all" [binary]="true" inputId="binary" formControlName="save_for_all"></p-checkbox>
+                <label class="mx-2" for="binary">تطبيق ألسعر علي جميع المناطق في المحافظه</label>
+            </div>
+
+
+            <button class='btn btn-outline-dark' type="submit"> {{itmeId === "" ?  'اضافة': 'تعديل'}}  </button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #companyAreas let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title">إضافه مناطق شحن للشركه</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <!-- <h5>المناطق </h5>
+        <p-multiSelect [options]="allAreas" [(ngModel)]="selectedAreas" defaultLabel="" optionValue="id" optionLabel="area.name" display="chip"></p-multiSelect> -->
+        <!-- <h5>المناطق</h5>
+        <p-multiSelect [options]="allAreas" [group]="true" [(ngModel)]="selectedAreas" defaultLabel="إختر المناطق" scrollHeight="250px" display="chip">
+            <ng-template let-group pTemplate="group">
+                <div class="flex align-items-center">
+                    <span>{{group.area?.name}}</span> _
+                    <span>{{group.transportation_price +  'جنيه'}}</span>
+
+                </div>
+            </ng-template>
+        </p-multiSelect> -->
+
+        <p-multiSelect [options]="allAreas" optionValue="id" [(ngModel)]="selectedAreas" defaultLabel="إختر المناطق" optionLabel="area.name" class="multiselect-custom">
+            <ng-template let-value pTemplate="selectedAreas">
+                <div class="country-item country-item-value" *ngFor="let option of selectedAreas">
+                    <div>{{option.area?.name}}</div>
+                </div>
+                <div *ngIf="!selectedAreas || selectedAreas.length === 0" class="country-placeholder">
+                    إختر المناطق
+                </div>
+            </ng-template>
+            <ng-template let-item pTemplate="item">
+                <div class="item-item">
+                    <div><span dir="rtl" style="display: inline-flex;flex-direction: row-reverse;"><span class="text-danger mx-1">جنيه</span> <span>{{item.transportation_price }}</span></span> _ {{item.area?.name}}</div>
+                </div>
+            </ng-template>
+        </p-multiSelect>
+
+
+        <button class="btn btn-outline-primary my-2" (click)="saveAreas()">إضافه</button>
+    </div>
+
+
+
+</ng-template>
+
+<ng-template #turnClients let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> تغيير كلمة السر </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body " style="direction: rtl;">
+        <!-- Modal Form Start -->
+        <div class="border"></div>
+        <form [formGroup]="formData" (submit)="turnClient()" class="p-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="password">  كلمة السر الجديده</label>
+                    <div class="form-group">
+                        <input type="password" class="form-control" formControlName="password" name="password">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="password_confirmation"> تأكيد كلمة السر </label>
+                    <div class="form-group">
+                        <input type="password" class="form-control" formControlName="password_confirmation" name="password_confirmation">
+                    </div>
+                </div>
+                <div class="bg-light p-2 w-100">
+                    <button class="btn btn-primary btn-block text-center"> موافق </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>

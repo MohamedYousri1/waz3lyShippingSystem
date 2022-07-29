@@ -1,0 +1,126 @@
+<!--********************    start header  ********************************-->
+<p-toast position="top-right" key="Key1"></p-toast>
+<p-toast position="top-right" key="Key2"></p-toast>
+
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}"></p-confirmDialog>
+
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+        <div class="pt-3">
+            <button *ngIf="createcoupons" type="button" (click)="add_edit(AE_modal, '')" class="btn btn-primary" data-toggle="modal" data-target="#jobs">
+
+                اضافة
+            </button>
+            <button disabled *ngIf="!createcoupons" type="button" class="btn btn-danger">
+
+              غير مسموح
+          </button>
+
+        </div>
+        <p class="h5 text-light py-3 ml-auto"> كوبونات الخصم </p>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="selectedMembers" [globalFilterFields]="['name' , 'start_date' , 'end_date' , 'discount' , 'uses_per_coupon' , 'status']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8"
+    [scrollable]="true" scrollHeight="350px">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+            </button>
+                <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input class="search-textbox" pInputText type="text"
+                (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+            </span>
+            </div>
+        </div>
+
+        
+        <div class="searching-box py-2 bx-5">
+            <button class="btn btn-info" (click)=" getDate(start,end)">بحث</button>
+           
+
+
+            
+            <input type="date"  [(ngModel)]="end" class="search-textbox">
+            <label for="">  ادخل تاريخ النهاية </label>
+
+
+                 <input type="date"  [(ngModel)]="start" class="search-textbox"> 
+                 <label for="">  ادخل تاريخ البداية </label>  
+           
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <th pSortableColumn="uses_per_coupon"> عدد مرات الاستخدام
+                <p-sortIcon field="uses_per_coupon"></p-sortIcon>
+            </th>
+            <th pSortableColumn="is_percentage"> نسبة مئوية
+                <p-sortIcon field="is_percentage"></p-sortIcon>
+            </th>
+            <th pSortableColumn="discount"> خصومات
+                <p-sortIcon field="discount"></p-sortIcon>
+            </th>
+            <th pSortableColumn="end_date"> تاريخ الانتهاء
+                <p-sortIcon field="end_date"></p-sortIcon>
+            </th>
+            <th pSortableColumn="start_date"> تاريخ البدء
+                <p-sortIcon field="start_date"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name"> الاسم
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <!-- edit here -->
+                <a *ngIf="updatecoupons" data-toggle="modal" (click)="add_edit(AE_modal, obj)" title="تعديل  " class="edit-emp-btn btn btn-primary btn-sm mx-2">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="edit-emp-btn btn btn-primary btn-sm mx-2" (click)="confirm(obj)"> 
+                    <i class="fa fa-trash" aria-hidden="true" ></i>
+                </a>
+                <button disabled *ngIf="!updatecoupons" class="btn-outline-danger">غير مسموح لك</button>
+            </td>
+            <td>{{obj.uses_per_coupon}}</td>
+            <td>{{obj.is_percentage === 0 ? 'لا' :'نعم'}}</td>
+            <td>{{(obj.is_percentage != 0 ) ? ('%' + obj.discount) : obj.discount }}</td>
+            <td>{{obj.end_date}}</td>
+            <td>{{obj.start_date}}</td>
+            <td>{{obj.name}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-coupon [obj]="catch_obj" (newData)="after($event)"> </app-edit-add-coupon>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->

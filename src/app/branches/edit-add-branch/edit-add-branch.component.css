@@ -1,0 +1,19 @@
+.cont_img{
+    width:485px;
+    height:150px;
+    overflow: hidden;
+    position: relative;
+    right: -22px;
+    border:1px solid #999;
+    background-color: #9993;
+}
+.cont_img img{
+    width: 100%;
+    height: 100%;
+}
+.selc{
+    padding: 0 12px;
+    margin-top: 20px;
+    background-color: #999 !important;
+    border:none
+}

@@ -1,0 +1,11 @@
+
+<form [formGroup]="myform" (submit)="onsubmit(id)">
+    <div class="form-group">
+        <input type="text" name="grade" formControlName="grade" [ngClass]="{'is-invalid' : submited && f.grade.errors}"  class="form-control">
+        <div *ngIf="submited && f.grade.errors"> 
+            <div *ngIf="submited && f.grade.errors.required" style="color: red;"> مطلوب  </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary">  {{id === "" ? 'اضافة' : 'تعديل'}}</button>
+</form>

@@ -1,0 +1,69 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form [formGroup]='myform' (submit)='onsubmit(itmeId)'>
+
+    <!-- <div class="form-group">
+        <label for=""> من منطقه </label>
+        <ng-select formControlName="from_area_id"  [ngClass]="{'is-invalid' : submited && f.from_area_id.errors}">
+            <ng-option *ngFor="let item of areas" [value]="item.id"> {{item?.name}}</ng-option>
+        </ng-select>
+    </div> -->
+
+
+
+    <div *ngIf="this.itmeId ==''" class="form-group">
+        <label for="">المحافظه</label>
+        <ng-select (change)="onProvinceChange($event)">
+            <ng-option *ngFor="let item of provinces" [value]="item.id"> {{item?.name}} </ng-option>
+        </ng-select>
+    </div>
+
+
+
+    <div *ngIf="this.itmeId ==''" class="form-group">
+        <ng-container *ngIf="areas.length > 0 ">
+            <label for="">المنطقه</label>
+            <ng-select formControlName="area_id" [ngClass]="{'is-invalid' : submited && f.area_id.errors}">
+                <ng-option *ngFor="let item of areas" [value]="item.id"> {{item?.name}} </ng-option>
+            </ng-select>
+            <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.area_id.errors'> * يرجي تحديد المنطقه </div>
+        </ng-container>
+
+    </div>
+
+
+
+
+    <div class="from-group">
+        <label for="">   سعر الشحن للمنطقه      </label>
+        <input type="number" name='transportation_price' formControlName='transportation_price' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.transportation_price.errors}">
+        <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.transportation_price.errors'> * يرجي تحديد سعر الشحن</div>
+    </div> <br>
+
+    <div class="from-group">
+        <label for="">التسليم خلال (ساعه)</label>
+        <input type="number" name='delivery_time' formControlName='delivery_time' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.delivery_time.errors}">
+        <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.delivery_time.errors'> * هذا الحقل مطلوب</div>
+
+    </div> <br>
+
+    <div class="from-group">
+        <label for="">الإسترجاع خلال (ساعه)</label>
+        <input type="number" name='returned_time' formControlName='returned_time' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.returned_time.errors}">
+        <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.returned_time.errors'> * هذا الحقل مطلوب</div>
+
+    </div> <br>
+
+
+
+    <div *ngIf="this.itmeId !=''" style="    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row-reverse;" class="field-checkbox">
+        <p-checkbox name="save_for_all" [binary]="true" inputId="binary" formControlName="save_for_all"></p-checkbox>
+        <label class="mx-2" for="binary">تطبيق ألسعر علي جميع المناطق في المحافظه</label>
+    </div>
+
+
+    <button class='btn btn-outline-dark' type="submit"> {{itmeId === "" ?  'اضافة': 'تعديل'}}  </button>
+</form>

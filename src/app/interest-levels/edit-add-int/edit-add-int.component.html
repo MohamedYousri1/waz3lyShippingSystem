@@ -1,0 +1,13 @@
+<p-toast position="top-right" key="myKey2">
+</p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+<form [formGroup]='myform' (submit)='onsubmit(CatchId)'>
+    <div class="from-group">
+        <label for=""> مستوي الاهتمام </label>
+        <input type="text" name='level' formControlName='level' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.level.errors}">
+        <div *ngIf='submited && f.level.errors' class="invalid-feedback">
+            <div *ngIf='f.level.errors.required'> مطلوب </div>
+        </div>
+    </div> <br>
+    <button class='btn btn-primary' type="submit"> {{CatchId === "" ?  'اضافة': 'تعديل'}}  </button>
+</form>

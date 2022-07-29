@@ -1,0 +1,179 @@
+<!--********************    start header  ********************************-->
+<!-- <p class="top_p flex-row"> الحسابات الصادرة </p> -->
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+        <div class="pt-3">
+            <!-- <button  type="button" (click)="add_edit(AE_modal, '')" class="btn btn-primary" data-toggle="modal" data-target="#jobs">
+                
+                اضافة معاملة
+            </button> -->
+            <!-- <button disabled *ngIf="!createout_categories" type="button" class="btn btn-danger">
+              
+              غير مسموح
+          </button> -->
+        </div>
+        <p class="h5 text-light py-3 ml-auto">    تسجيل المعاملات المالية </p>
+    </div>
+</div>
+
+
+
+
+<!--*******************    start tabel  body   *********************-->
+<!-- <p-table #depTbl [value]="categories" [globalFilterFields]="['name']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px"> -->
+    <p-table #depTbl [rows]="10" [rowsPerPageOptions]="[10,25,50]"  [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex px-5">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+            </button>
+                <span class="p-input-icon-left p-ml-auto">
+                 <select name="" id="" class="form-control">
+                     <option value="1">الهدى</option>
+                     <option value="2">مصنع خالد للملابس</option>
+                     <option value="3">ايراد/مصروف</option>
+                 </select>
+                <!-- <input class="search-textbox" pInputText type="text"
+                (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" /> -->
+
+              
+            </span>
+            </div>
+        </div>
+
+        <div class="searching-box py-2 px-5">
+
+            <button class="btn btn-info" (click)=" getDate(start,end)">بحث</button>
+           
+            <input type="date"  [(ngModel)]="end" class="search-textbox">
+            <label for="">  ادخل تاريخ النهاية </label>
+
+
+                 <input type="date" placeholder="من تاريخ"  [(ngModel)]="start" class="search-textbox"> 
+                 <label for="">  ادخل تاريخ البداية </label>  
+           
+        </div>
+
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <th pSortableColumn="name">   بيان 
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="name">   بيان وملاحظات  
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            
+            <th pSortableColumn="name"> التاريخ
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="name">  المتبقي   
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="name">    المحصل 
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name">  عمولات المندوب     
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="name">   الأجمالي
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name">  سعر الشحنات 
+ 
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+
+          
+            <th pSortableColumn="name">  عدد الشحنات   
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+
+            
+            <th pSortableColumn="name"> المناطق    
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name">  التليفون  
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name"> اسم المندوب   
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+         
+
+        
+           
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body">
+        <tr>
+            <td>PM 12:32 1-1-2021  </td>
+            <td>1000 جنية </td>
+            <td>عمولات عمولات تخزين بضاعة لمدة يوم </td>
+            <td>عمولات</td>
+            <td>أيراد</td>
+            <td>PM 12:32 1-1-2021  </td>
+            <td>1000 جنية </td>
+            <td>عمولات عمولات تخزين بضاعة لمدة يوم
+            </td>
+            <td>عمولات</td>
+            <td>أيراد</td>
+            <td>PM 12:32 1-1-2021  </td>
+            <td>1000 جنية </td>
+            <td>عمولات عمولات تخزين بضاعة لمدة يوم
+            </td>
+            <td>عمولات</td>
+            <td>أيراد</td>
+            
+        </tr>
+    </ng-template>
+
+
+<ng-template pTemplate="footer">
+
+    <div class="container py-5 ">
+        <div class="row">
+            <div class="col-md-12 my-auto">
+                <div class="shadow bg-light p-2 d-flex  total">
+                    <p>  أجمالي الشحنات                     </p> 
+                    <span class="mx-2">200000جنية</span>
+                    
+                </div>          
+             </div>
+            <div class="col-md-6 ">
+                        <div class="shadow bg-light p-2 d-flex text-right total">
+                            <p>  أجمالي متحصلات المندوب عن كل الشحنات   </p>
+                            <span class="mx-2">500000جنية</span>
+                        </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="shadow bg-light p-2 d-flex text-right total">
+                    <p>  أجمالي عمولات المندوب عن كل الشحنات   </p>
+                 <span class="mx-2">900000جنية</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</ng-template>
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+
+
+
+
+
+
+
+

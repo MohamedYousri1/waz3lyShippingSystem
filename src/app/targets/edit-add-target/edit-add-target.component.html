@@ -1,0 +1,33 @@
+<form [formGroup]='myform' (submit)='onsubmit(itmeId)'>
+
+    <div class="from-group">
+        <label for="">  من     </label>
+        <input type="date" name='province_id' formControlName='from' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.from.errors}">
+        <div *ngIf='submited && f.from.errors' class="invalid-feedback">
+            <div *ngIf='f.from.errors.required'> مطلوب </div>
+        </div>
+    </div><br>
+
+    <div class="from-group">
+        <label for="">   الي   </label>
+        <input type="date" name='to' formControlName='to' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.to.errors}">
+        <div *ngIf='submited && f.to.errors' class="invalid-feedback">
+            <div *ngIf='f.to.errors.required'> مطلوب </div>
+        </div>
+    </div><br>
+
+    <div class="from-group">
+        <label for="">  المبلغ  </label>
+        <input type="number" name='amount' formControlName='amount' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.amount.errors}">
+        <div *ngIf='submited && f.amount.errors' class="invalid-feedback">
+            <div *ngIf='f.amount.errors.required'> مطلوب </div>
+        </div>
+    </div><br>
+
+    <div class="from-group">
+        <label for="">  قسمه تلقائي   </label> <br>
+        <input type="radio" name="auto_division" formControlName="auto_division" value="0"> <label for=""> لا </label> &nbsp; &nbsp;
+        <input type="radio" name="auto_division" formControlName="auto_division" value="1"> <label for=""> نعم   </label>
+    </div>
+    <button class='btn btn-primary' type="submit"> {{itmeId === "" ?  'اضافة': 'تعديل'}}  </button>
+</form>

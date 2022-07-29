@@ -1,0 +1,158 @@
+<p-tabView class="wrapper_tab">
+    <p-tabPanel header="تقارير بيانات الموظفين">
+        <div class="col-md-10" s>
+            <!-- <button class="btn btn-info" printSectionId = "representDetails" ngxPrint></button> -->
+            <p-table id="empData" #depTbl [value]="allEmps" [globalFilterFields]="[
+        'user.first_name',
+        'user.last_name',
+        'user.phone_number',
+        'user.email',
+        'user.national_id'
+      ]" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+                <ng-template pTemplate="caption">
+                    <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+              <i class="pi pi-search"></i>
+              <input
+                class="search-textbox"
+                pInputText
+                type="text"
+                (input)="depTbl.filterGlobal($event.target.value, 'contains')"
+                placeholder="بحث"
+              />
+            </span>
+                        </div>
+                        <div class="print">
+                            <button [useExistingCss]="true" ngxPrint printSectionId="empData" class="pritnBtn btn mx-2 text-white-50">طباعه <i class="fas fa-print ml-2 text-primary"></i></button>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>الصوره</th>
+                        <th pSortableColumn="user.email" class="user.email">
+                            الايميل
+                            <p-sortIcon field="user.email"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="user.address" class="user.address">
+                            العنوان
+                            <p-sortIcon field="user.address"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="user.phone_number" class="user.phone_number">
+                            التليفون
+                            <p-sortIcon field="user.phone_number"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="user.first_name">
+                            اسم الموظف
+                            <p-sortIcon field="user.first_name"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-emp>
+                    <tr>
+                        <td>
+                            <img class="profile_pic" [src]="emp?.user?.profile_pic_url" />
+                        </td>
+                        <td>{{ emp?.user?.email }}</td>
+                        <td>
+                            {{ emp?.user?.address ? emp?.user?.address : "لا يوجد" }}
+                        </td>
+                        <td>{{ emp?.user?.phone_number }}</td>
+                        <td class="d-flex justify-content-around align-items-center">
+                            <span>{{ emp.user?.first_name }}
+              {{ emp.user?.second_name }}
+              {{ emp.luser?.ast_name }}
+            </span>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="تقارير بمرتبات الموظفين">
+        <div class="col-md-10" s>
+            <!-- <button class="btn btn-info" printSectionId = "representDetails" ngxPrint></button> -->
+            <p-table id="empSalary" #depTbl [value]="allEmps" [globalFilterFields]="[
+      'user.first_name',
+      'user.last_name',
+      'user.phone_number',
+      'user.email',
+      'salary'
+    ]" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+                <ng-template pTemplate="caption">
+                    <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input
+              class="search-textbox"
+              pInputText
+              type="text"
+              (input)="depTbl.filterGlobal($event.target.value, 'contains')"
+              placeholder="بحث"
+            />
+          </span>
+                        </div>
+                        <div class="print">
+                            <button [useExistingCss]="true" ngxPrint printSectionId="empSalary" class="pritnBtn btn mx-2 text-white-50">طباعه <i class="fas fa-print ml-2 text-primary"></i></button>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>الصوره</th>
+                        <th pSortableColumn="salary" class="salary">
+                            المرتب
+                            <p-sortIcon field="salary"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="user.email" class="user.email">
+                            الايميل
+                            <p-sortIcon field="user.email"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="user.address" class="user.address">
+                            العنوان
+                            <p-sortIcon field="user.address"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="user.phone_number" class="user.phone_number">
+                            التليفون
+                            <p-sortIcon field="user.phone_number"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="user.first_name">
+                            اسم الموظف
+                            <p-sortIcon field="user.first_name"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-emp>
+                    <tr>
+                        <td>
+                            <img class="profile_pic" [src]="emp?.user?.profile_pic_url" />
+                        </td>
+                        <td class="mark">{{ emp?.salary }}</td>
+                        <td>{{ emp?.user?.email }}</td>
+                        <td>
+                            {{ emp?.user?.address ? emp?.user?.address : "لا يوجد" }}
+                        </td>
+                        <td>{{ emp?.user?.phone_number }}</td>
+                        <td class="d-flex justify-content-around align-items-center">
+                            <span>{{ emp.user?.first_name }}
+            {{ emp.user?.second_name }}
+            {{ emp.luser?.ast_name }}
+          </span>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>
+</p-tabView>

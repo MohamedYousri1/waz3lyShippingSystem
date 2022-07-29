@@ -1,0 +1,62 @@
+<div class="container-fluid">
+    <a class="back" routerLink="/branches"> العودة للفروع <i class="fas fa-arrow-alt-circle-right"></i> </a>
+
+
+    <div class="row bg-dark mt-3">
+        <div class="col-md-12 d-flex flex-row">
+            <div class="pt-3">
+
+            </div>
+
+            <p class=" h5 text-light py-3 ml-auto">
+                مخازن فرع &nbsp; <span style="color:#1DA1F2"> {{catch_name}}  </span>
+            </p>
+        </div>
+    </div>
+    <!--*******************    end  header  *****************************-->
+
+    <!--*******************    start tabel  body   *********************-->
+    <p-table #depTbl [value]="stroages" [globalFilterFields]="['name' , 'address' , 'phone' , 'user?.first_name']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+        <!-- table caption  -->
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+                <div class="search-warpper">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+                </button>
+                    <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input class="search-textbox" pInputText type="text"
+                    (input)="depTbl.filterGlobal($event.target.value, 'contains')"  placeholder="بحث باسم المخزن" />
+                </span>
+                </div>
+            </div>
+        </ng-template>
+        <!--********  table header  *****-->
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="user.first_name"> اسم الموظف
+                    <p-sortIcon field="user.first_name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="phone"> التليفون
+                    <p-sortIcon field="phone"></p-sortIcon>
+                </th>
+                <th pSortableColumn="addess"> العنوان
+                    <p-sortIcon field="addess"></p-sortIcon>
+                </th>
+                <th pSortableColumn="name"> الاسم
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <!--*******  table body  ******-->
+        <ng-template pTemplate="body" let-obj>
+            <tr>
+                <td> {{obj.employee?.user?.first_name}} {{obj.employee?.user?.second_name}} {{obj.employee?.user?.last_name}} </td>
+                <td>{{obj.phone}}</td>
+                <td>{{obj.address}}</td>
+                <td>{{obj.name}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <!--********************    end  tabel  body   ********************************-->
+</div>

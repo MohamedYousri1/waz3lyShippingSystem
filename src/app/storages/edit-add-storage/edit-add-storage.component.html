@@ -1,0 +1,72 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form [formGroup]='myfrom' (submit)='onsubmit(id)'>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="from-group">
+                <label for="">  العنوان    </label>
+                <input type="text" name='address' formControlName='address' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.address.errors}">
+                <div *ngIf='submited && f.address.errors' class="invalid-feedback">
+                    <div *ngIf='f.address.errors.required'> مطلوب </div>
+                </div>
+            </div> <br>
+
+            <div class="from-group">
+                <label for="">  التليفون    </label>
+                <input type="tel" name='phone' formControlName='phone' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.phone.errors}">
+                <div *ngIf='submited && f.phone.errors' class="invalid-feedback">
+                    <div *ngIf='f.phone.errors.required'> مطلوب </div>
+                    <div *ngIf='f.phone.errors.pattern'> رقم التليفون غير صالح </div>
+
+                </div>
+            </div> <br>
+
+            <!-- <div class="form-group">
+                <label for="">   اختر المنطقة        </label>
+                <ng-select formControlName="area_id" [ngClass]="{'is-invalid' : submited && f.area_id.errors}">
+                    <ng-option *ngFor="let item of areas" [value]="item.id"> {{item?.name}} </ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.area_id.errors'>
+                    <div *ngIf="submited && f.area_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div> -->
+
+        </div>
+
+
+
+
+        <div class="col-md-6">
+
+            <div class="from-group">
+                <label for="">  الاسم    </label>
+                <input type="text" name='name' formControlName='name' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.name.errors}">
+                <div *ngIf='submited && f.name.errors' class="invalid-feedback">
+                    <div *ngIf='f.name.errors.required'> مطلوب </div>
+                </div>
+            </div> <br>
+
+            <div class="form-group">
+                <label for="">  اختر الموظف    </label>
+                <ng-select formControlName="employee_id" [ngClass]="{'is-invalid' : submited && f.employee_id.errors}">
+                    <ng-option *ngFor="let emp of employees" [value]="emp.id"> {{emp?.name}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.employee_id.errors'>
+                    <div *ngIf="submited && f.employee_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="">  اختر الفرع   </label>
+                <ng-select formControlName="branche_id" [ngClass]="{'is-invalid' : submited && f.branche_id.errors}">
+                    <ng-option *ngFor="let branch of branches" [value]="branch.id"> {{branch?.name}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.branche_id.errors'>
+                    <div *ngIf="submited && f.branche_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--- -->
+    <button class='btn btn-outline-dark' type="submit"> {{id === "" ?  'اضافة': 'تعديل'}}  </button>
+</form>

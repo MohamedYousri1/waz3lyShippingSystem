@@ -1,0 +1,21 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form [formGroup]='myform' (submit)='onsubmit(itmeId)'>
+    <div class="from-group">
+        <label for="">إسم الخدمه الاضافيه</label>
+        <input type="text" name='type' formControlName='type' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.type.errors}">
+        <div *ngIf='submited && f.type.errors' class="invalid-feedback">
+            <div *ngIf='f.type.errors.required'> مطلوب </div>
+        </div>
+    </div> <br>
+
+    <div class="from-group">
+        <label for="">  السعر   </label>
+        <input type="number" name='price' formControlName='price' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.price.errors}">
+        <div *ngIf='submited && f.price.errors' class="invalid-feedback">
+            <div *ngIf='f.price.errors.required'> مطلوب </div>
+        </div>
+    </div><br>
+
+    <button class='btn btn-outline-dark' type="submit"> {{itmeId === "" ?  'اضافة': 'تعديل'}}  </button>
+</form>

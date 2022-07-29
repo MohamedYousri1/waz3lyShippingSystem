@@ -1,0 +1,22 @@
+<p-toast position="top-center" key="myKey2">
+</p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form [formGroup]="myform" (submit)="onsubmit(id)">
+    <div class="form-group">
+        <label for=""> الاسم </label>
+        <input type="text" name="type" formControlName="type" class="form-control" [ngClass]="{'is-invalid' : submited && f.type.errors}">
+        <div *ngIf='submited && f.type.errors'>
+            <div *ngIf='submited && f.type.errors.required'> هذا الحقل مطلوب </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for=""> الوصف </label>
+        <input type="text" name="description" formControlName="description" class="form-control" [ngClass]="{'is-invalid' : submited && f.description.errors}">
+        <div *ngIf='submited && f.description.errors'>
+            <div *ngIf='submited && f.description.errors.required' style="color: red;"> هذا الحقل مطلوب </div>
+        </div>
+    </div>
+
+    <button class="btn btn-outline-dark"> {{id===""? 'اضافة':'تعديل'}} </button>
+</form>

@@ -1,0 +1,162 @@
+<p-toast position="top-right" key="Key1"></p-toast>
+<p-toast position="top-right" key="Key2"></p-toast>
+<!--********************    start header  ********************************-->
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+
+        <div class="pt-3">
+            <button type="button" (click)="add_edit(AE_modal,'')" class="btn btn-primary" data-toggle="modal" data-target="#NewResModal">
+                <i class="fas fa-user-plus"></i>
+                اضافة فريق المبيعات
+            </button>
+            <button disabled *ngIf="!createSales" type="button" class="btn btn-danger">
+
+              غير مسموح
+          </button>
+        </div>
+
+        <p class="h5 text-light py-3 ml-auto"> فريق المبيعات </p>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="all_sales" [globalFilterFields]="['salary' , 'user.phone_number' , 'user.address' , 'user.email' , 'userName']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8"
+    [scrollable]="true" scrollHeight="350px">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+            </button>
+                <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input class="search-textbox" pInputText type="text"
+                (input)="depTbl.filterGlobal($event.target.value, 'contains')"  placeholder="بحث " />
+            </span>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th>الاجراءات</th>
+            <!-- <th pSortableColumn="user.number_of_shipments"> عدد الشحنات
+                <p-sortIcon field="user.number_of_shipments"></p-sortIcon>
+            </th> -->
+            <th pSortableColumn="salary"> المرتب
+                <p-sortIcon field="salary"></p-sortIcon>
+            </th>
+            <th pSortableColumn="allSal"> العمولة
+                <p-sortIcon field="allSal"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="user.phone_number"> التليفون
+                <p-sortIcon field="user.phone_number"></p-sortIcon>
+            </th>
+            <th pSortableColumn="user.address"> العنوان
+                <p-sortIcon field="user.address"></p-sortIcon>
+            </th>
+            <th pSortableColumn="user.email"> الايميل
+                <p-sortIcon field="user.email"></p-sortIcon>
+            </th>
+            <th pSortableColumn="user.first_name"> الاسم
+                <p-sortIcon field="user.first_name"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <a data-toggle="modal" [routerLink]="['/sales' , obj.id]" title="عرض العملاء " class="edit-emp-btn btn btn-primary btn-sm mx-2">
+                    <i class="fas user fa-user-friends"></i>
+                </a>
+
+                <a data-toggle="modal" (click)="add_edit(AE_modal, obj )" data-target="#NewResModal" title="تعديل بيانات " class="edit-emp-btn btn btn-primary btn-sm "><i class="fas fa-user-edit"></i></a> &nbsp;
+
+                <a data-toggle="modal" (click)="add_edit(turnClients, obj)" title="  تغيير كلمة السر " class="edit-emp-btn btn btn-primary btn-sm mx-2">
+                    <i class="fas fa-key"></i></a>
+
+            </td>
+
+            <td>{{obj.salary}}</td>
+
+            <td>{{(obj.commission) ? obj.commission :''}}</td>
+            <td>{{obj.user?.phone_number}}</td>
+            <td>{{(obj.user?.address) ? obj.user?.address : 'لايوجد'}}</td>
+            <td>{{obj.user?.email}}</td>
+            <td>{{(obj.user?.first_name) ? obj.user?.first_name : ''}} {{(obj.user?.second_name) ? obj.user?.second_name : ''}} {{(obj.user?.last_name) ? obj.user?.last_name : ''}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss" class="modal-lg">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-sales [Catchobj]='catch_obj' (newData)="after($event)"> </app-edit-add-sales>
+
+
+
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->
+<ng-template #turnClients let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> تغيير كلمة السر </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body " style="direction: rtl;">
+        <!-- Modal Form Start -->
+        <div class="border"></div>
+
+        <form [formGroup]="formData" (submit)="turnClient()" class="p-2">
+            <div class="row">
+
+
+                <div class="col-md-12">
+                    <label for="password"> كلمة السر</label>
+                    <div class="form-group">
+                        <input type="password" class="form-control" formControlName="password" name="password">
+                        <!-- <div *ngIf='submited && f.branch_id.errors'>
+                    <div *ngIf="submited && f.branch_id.errors.required" style="color: red;"> * مطلوب </div>
+                </div> -->
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <label for="password_confirmation"> تأكيد كلمة السر </label>
+                    <div class="form-group">
+                        <input type="password" class="form-control" formControlName="password_confirmation" name="password_confirmation">
+                        <!-- <div *ngIf='submited && f.branch_id.errors'>
+                    <div *ngIf="submited && f.branch_id.errors.required" style="color: red;"> * مطلوب </div>
+                </div> -->
+                    </div>
+                </div>
+
+
+
+                <div class="bg-light p-2 w-100">
+                    <button class="btn btn-primary btn-block text-center"> موافق </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</ng-template>

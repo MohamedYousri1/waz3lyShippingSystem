@@ -1,0 +1,45 @@
+.total {
+    direction: rtl;
+    text-align: right;
+}
+
+.com-wrap {
+    margin-top: -30px;
+    position: absolute;
+    top: 95px;
+    width: 231px;
+    left: 33px;
+}
+
+.products li {
+    background-color: #DDD;
+    text-align: center !important;
+}
+
+.shipment-status li.back {
+    background-color: #ca0b00;
+    text-align: center !important;
+    color: #fff;
+    border-radius: 5px;
+    padding: 0.45rem 1.25rem !important;
+}
+
+.shipment-status li.reaccieved {
+    background-color: #37AD2A;
+    color: #FFF;
+    text-align: center !important;
+    border-radius: 5px;
+    padding: 0.45rem 1.25rem !important;
+}
+
+.shipment-status li.waiting {
+    background-color: yellow;
+    color: #000;
+    text-align: center !important;
+    border-radius: 5px;
+    padding: 0.45rem 1.25rem !important;
+}
+
+.p-datatable-scrollable-body {
+    height: auto !important;
+}

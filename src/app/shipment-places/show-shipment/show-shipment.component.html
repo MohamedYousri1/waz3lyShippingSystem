@@ -1,0 +1,125 @@
+<!--********************    start header  ********************************-->
+<p-toast position="top-center" key="Key1"></p-toast>
+<p-toast position="top-center" key="Key2"></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}"></p-confirmDialog>
+<div class="width-85">
+    <div class="row bg-dark">
+        <div class="col-md-12 d-flex flex-row">
+            <div class="pt-3">
+                <button *ngIf="createshipment_places" type="button" (click)="add_edit(AE_modal,'')" class="adding-btn" data-toggle="modal" data-target="#jobs">
+                إضافه سعر شحن
+            </button>
+                <!-- <button disabled *ngIf="!createshipment_places" type="button" class="btn btn-danger">
+              غير مسموح
+          </button> -->
+            </div>
+            <p class="h5 text-light py-3 ml-auto"> تكلفه الشحن لجميع المناطق </p>
+        </div>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="target_List" [globalFilterFields]="['area.name' ,'area.province.name'  , 'transportation_price' , 'delivery_time' , 'returned_time']" [paginator]="true" [rows]="7" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber"
+    [pageLinks]="8">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+            </button>
+                <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input class="search-textbox" pInputText type="text"
+                (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+            </span>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <th pSortableColumn="created_at"> تاريخ الإضافه
+                <p-sortIcon field="created_at"></p-sortIcon>
+            </th>
+            <th pSortableColumn="to.name"> زمن الإرجاع (ساعه)
+                <p-sortIcon field="to.name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="delivery_time">زمن التوصيل (ساعه)
+                <p-sortIcon field="delivery_time"></p-sortIcon>
+            </th>
+            <th pSortableColumn="transportation_price"> تكلفه الشحن
+                <p-sortIcon field="transportation_price"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="area.province.name"> محافظه
+                <p-sortIcon field="area.province.name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="area.name"> المنطقه
+                <p-sortIcon field="area.name"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <a class="edit-emp-btn btn btn-outline-warning btn-sm mx-2" (click)="confirm(obj)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+                <!--edit here-->
+                <a *ngIf="updateshipment_places" data-toggle="modal" (click)="add_edit(AE_modal, obj)" title="تعديل  " class="edit-emp-btn btn btn-outline-primary btn-sm mx-2">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <button disabled *ngIf="!updateshipment_places" class="btn-outline-danger">غير مسموح لك</button>
+            </td>
+            <td>{{obj.created_at | date:'short'}}</td>
+            <td style="direction: rtl;"> <span>{{obj.returned_time}}</span> <span *ngIf="obj.returned_time" style="color : #aaa" class="mx-2">ساعه</span></td>
+            <td style="direction: rtl;"> <span>{{obj.delivery_time}}</span> <span *ngIf="obj.delivery_time" style="color : #aaa" class="mx-2">ساعه</span></td>
+            <td style="direction: rtl;"> <span>{{obj.transportation_price}}</span> <span style="color : #aaa" class="mx-2">جنيه</span></td>
+            <td>{{obj.area?.province?.name}}</td>
+            <td>{{obj.area?.name}}</td>
+
+        </tr>
+    </ng-template>
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+<!-- <div class="row bg-light shadow">
+    <div class="col-lg-2 col-md-4 mx-auto  py-3">
+        <div class="pagination mt-5 d-flex justify-content-between">
+            <button (click)="prePage()" class="btn btn-primary" *ngIf="preButton">
+            <a>
+                السابق
+            </a>
+           </button>
+            <button (click)="nextPage()" class="btn btn-danger" *ngIf="nextButtontton">
+            <a>
+                التالي
+               </a>
+           </button>
+        </div>
+
+        <button  class="btn btn-white mt-2" (click)="goToPage(last_page)">
+            <a>last page{{last_page}}</a>
+        </button>
+    </div>
+</div> -->
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> سعر الشحن </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-shipment [Catchobj]='catch_obj' (items)="update($event)"> </app-edit-add-shipment>
+        <!-- /render form here -->
+    </div>
+</ng-template>

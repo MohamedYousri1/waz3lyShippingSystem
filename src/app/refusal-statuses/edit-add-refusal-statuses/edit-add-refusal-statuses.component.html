@@ -1,0 +1,13 @@
+<p-toast position="top-right" key="myKey2"></p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+<form [formGroup]="myform" (submit)="onsubmit(id)">
+    <div class="form-group">
+        <label for="">  الحالةالرفض </label>
+        <input type="text" name="status" formControlName="status" class="form-control" [ngClass]="{'is-invalid' : submited && f.status.errors}">
+        <div *ngIf='submited && f.status.errors'>
+            <div *ngIf='submited && f.status.errors.required' style="color: red;"> هذا الحقل مطلوب </div>
+        </div>
+    </div>
+
+    <button class="btn btn-primary"> {{id===""? 'اضافة':'تعديل'}} </button>
+</form>

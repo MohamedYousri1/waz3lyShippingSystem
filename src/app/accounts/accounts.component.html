@@ -1,0 +1,223 @@
+
+<p-tabView class="wrapper_tab">
+    <!-- الايرادات -->
+
+
+    <p-tabPanel header=" تقارير الايرادات والتحصيلات">
+        <div class="col-md-10" id="mytodosItemsId">
+            <!-- <button printSectionId="mytodosItemsId" ngxPrint styleSheetFile="../../styles.css">print</button> -->
+            <h2>  تقرير بأجمالي الايرادات والتحصيلات </h2>
+
+            <table class="table">
+                <tr>
+                    <th>اجمالي اليومي</th>
+                    <th>اجمالي الشهري</th>
+                    <th>اجمالي السنويه</th>
+                </tr>
+                <tr>
+                    <td>{{allInOuts?.daily_total}}</td>
+                    <td>{{allInOuts?.monthly_total}}</td>
+                    <td>{{allInOuts?.yearly_total}}</td>
+
+                </tr>
+
+                <button printTitle="الايرادات والتحصيلات" [useExistingCss]="true" ngxPrint printSectionId="mytodosItemsId" class="btn btn-primar singeBtnPrint">طباعه<i class="fas fa-print ml-2 text-primary"></i> </button>
+            </table>
+        </div>
+
+    </p-tabPanel>
+
+    <p-tabPanel header="تقارير المصروفات">
+        <div class="col-10">
+            <h2> تقرير بأجمالي المصروفات   </h2>
+
+            <table id="masrofat" class="table">
+                <tr>
+                    <th>اجمالي المصروفات اليومي</th>
+                    <th>اجمالي المصروفات الشهري</th>
+                    <th>اجمالي المصروفات السنويه</th>
+                </tr>
+                <tr>
+                    <td>{{allOut?.daily_total}}</td>
+                    <td>{{allOut?.monthly_total}}</td>
+                    <td>{{allOut?.yearly_total}}</td>
+
+                </tr>
+                <button c printTitle="الايرادات والتحصيلات" [useExistingCss]="true" ngxPrint printSectionId="masrofat" class="btn btn-primar singeBtnPrint">طباعه<i class="fas fa-print ml-2 text-primary"></i> </button>
+            </table>
+        </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="تقارير الايرادات">
+        <div id="eradat" class="col-md-10">
+            <h2>تقارير الايرادات</h2>
+            <table class="table">
+                <tr>
+                    <th>اجمالي الايرادات اليومي</th>
+                    <th>اجمالي الايرادات الشهري</th>
+                    <th>اجمالي الايرادات السنويه</th>
+                </tr>
+                <tr>
+                    <td>{{allIn?.daily_total}}</td>
+                    <td>{{allIn?.monthly_total}}</td>
+                    <td>{{allIn?.yearly_total}}</td>
+
+                </tr>
+                <button c printTitle="الايرادات والتحصيلات" [useExistingCss]="true" ngxPrint printSectionId="eradat" class="btn btn-primar singeBtnPrint">طباعه<i class="fas fa-print ml-2 text-primary"></i> </button>
+
+            </table>
+        </div>
+    </p-tabPanel>
+    <!-- get categories  -->
+    <!-- <p-tabPanel header="الأيرادات لكل نوع">
+      
+
+        <div class="col-md-10">
+            <h2>الايرادات لكل نوع</h2>
+            <p-table id="tableId" #depTbl [value]="allCategoriesIns" [globalFilterFields]="['name' , 'sum' ]" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+
+                <ng-template pTemplate="caption">
+                    <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+      <i class="pi pi-search"></i>
+      <input class="search-textbox" pInputText type="text"
+        (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+    </span>
+                        </div>
+                        <div class="print">
+                            <button printTitle="الايرادات والتحصيلات" [useExistingCss]="true" ngxPrint printSectionId="tableId" class="pritnBtn btn mx-2 text-white-50">طباعه <i class="fas fa-print ml-2 text-primary"></i></button>
+
+
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+              
+
+
+                        <th pSortableColumn="sum" class="sum">الاجمالي
+                            <p-sortIcon field="sum"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="name"> اسم القسم
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="body" let-categoriesIns>
+                    <tr>
+
+
+                        <td>{{ categoriesIns.sum}}</td>
+                        <td>{{categoriesIns.name}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+  
+
+    </p-tabPanel> -->
+
+    <!-- get categories  -->
+    <p-tabPanel header="تقارير  التحصيلات لكل نوع">
+        <!-- انواع التحصيلات  -->
+        <!-- انواع التحصيلات  -->
+        <!-- انواع التحصيلات  -->
+
+        <div class="col-md-10">
+            <!-- <h2>تقارير التحصيلات لكل نوع</h2> -->
+            <p-table id="eradatId" #depTbl [value]="allCategoriesOuts" [globalFilterFields]="['name' , 'sum' ]" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+
+                <ng-template pTemplate="caption">
+                    <div class="d-flex flex-row-reverse justify-content-between align-items-center">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+      <i class="pi pi-search"></i>
+      <input class="search-textbox" pInputText type="text"
+        (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+    </span>
+                        </div>
+                        <div class="print">
+                            <button printTitle="الايرادات والتحصيلات" [useExistingCss]="true" ngxPrint printSectionId="eradatId" class="pritnBtn btn mx-2 text-white-50">طباعه <i class="fas fa-print ml-2 text-primary"></i></button>
+
+                        </div>
+
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <!-- <th> ألاجراءات </th> -->
+
+
+                        <th pSortableColumn="sum" class="sum">الاجمالي
+                            <p-sortIcon field="sum"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="name"> اسم القسم
+                            <p-sortIcon field="name"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="body" let-categoriesOuts>
+                    <tr>
+
+
+                        <td>{{ categoriesOuts?.sum}}</td>
+                        <td>{{categoriesOuts?.name}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <!-- نهايه انواع التحصيلات -->
+        <!-- نهايه انواع التحصيلات -->
+        <!-- نهايه انواع التحصيلات -->
+        <!-- نهايه انواع التحصيلات -->
+
+    </p-tabPanel>
+
+    <!-- الايرادات -->
+    <p-tabPanel header="  اجمالي الربح ">
+        <div class="col-md-10">
+            <h2>أجمالي الارباح  </h2>
+            <form class="formres w-25 m-auto " [formGroup]="myform" (submit)="onsubmit(id)">
+                <div class="form-group">
+                    <label for="start">من</label>
+                    <input type="date" name="start" formControlName='start' class="form-control" [ngClass]="{'is-invalid' : submited && f?.start.errors}">
+                    <div *ngIf='submited && f?.start.errors'>
+                        <div *ngIf='f?.start.errors.required' style="color:red"> مطلوب * </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="end">الي</label>
+                    <input type="date" name="end" formControlName='end' class="form-control" [ngClass]="{'is-invalid' : submited && f?.end.errors}">
+                    <div *ngIf='submited && f?.end.errors'>
+                        <div *ngIf='f?.end.errors.required' style="color:red"> مطلوب * </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-outline-primary btn-block text-center">عرض </button>
+            </form>
+
+            <div class="show-profit d-flex justify-content-around pt-5  w-50 ">
+                <h4 class="text-cenetr d-flex flex-row-reverse">{{(totalProfit) ? totalProfit : '0'}} <span class="mx-1">  جنيه فقط لا غير </span> </h4>
+                <!-- <i class="fas fa-arrow-alt-circle-left"></i> -->
+                <h4 class="text-center">اجمالي الربح</h4>
+
+            </div>
+
+
+        </div>
+
+
+    </p-tabPanel>
+
+</p-tabView>

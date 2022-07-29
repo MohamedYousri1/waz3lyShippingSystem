@@ -1,0 +1,78 @@
+.alert,
+.badge,
+.btn-group>.btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all),
+.btn.btn-link:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all):hover,
+.btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all),
+.icon-btn,
+.label:not(.md-skip),
+.md-shadow-z-1,
+.note,
+.panel,
+.social-icons.social-icons-color>li>a,
+.social-icons li>a,
+.well {
+    box-shadow: 0 1px 3px rgb(0 0 0/10%), 0 1px 2px rgb(0 0 0/18%)!important;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+    box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+}
+
+.panel-dark>.panel-heading {
+    color: #fff;
+    background-color: #444d58;
+    border-color: #444d58;
+}
+
+.panel-heading {
+    background: #eee;
+}
+
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+}
+
+.panel-dark>.panel-heading {
+    color: #fff;
+    background-color: #444d58;
+    border-color: #444d58;
+}
+
+.panel-heading {
+    background: #eee;
+}
+
+.input-group-addon {
+    padding: 11px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center !important;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input-group-addon,
+.input-group-btn {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.input-group .form-control,
+.input-group-addon,
+.input-group-btn {
+    display: table-cell;
+}
+
+.main-wrapper>div {
+    display: flex;
+    flex-direction: row-reverse !important;
+}

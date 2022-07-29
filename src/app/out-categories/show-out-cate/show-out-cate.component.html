@@ -1,0 +1,107 @@
+<!--********************    start header  ********************************-->
+<!-- <p class="top_p flex-row"> الحسابات الصادرة </p> -->
+<p-toast position="top-right" key="Key1"></p-toast>
+<p-toast position="top-right" key="Key2"></p-toast>
+
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}"></p-confirmDialog>
+
+
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+        <div class="pt-3">
+            <button *ngIf="createout_categories" type="button" (click)="add_edit(AE_modal, '')" class="btn btn-primary" data-toggle="modal" data-target="#jobs">
+                
+                اضافة بند مصروفات
+            </button>
+            <button disabled *ngIf="!createout_categories" type="button" class="btn btn-danger">
+              
+              غير مسموح
+          </button>
+        </div>
+        <p class="h5 text-light py-3 ml-auto">  تعريف بنود المصروفات </p>
+    </div>
+</div>
+
+<!-- <div class="row mt-3  main_title" (click)="All()">
+    <div class="col-md-12 d-flex flex-row">
+        <div class="pt-3">
+
+        </div>
+        <p class="h5 py-3 ml-auto "> عرض كل الاقسام الرئيسية </p>
+    </div>
+</div> -->
+<!--*******************    end  header  *****************************-->
+
+
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="categories" [globalFilterFields]="['title']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+            </button>
+                <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input class="search-textbox" pInputText type="text"
+                (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+            </span>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <th pSortableColumn="title"> الأسم 
+                <p-sortIcon field="title"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <!--edit here-->
+                <!-- <a class="edit-emp-btn btn btn-primary btn-sm mx-2" title="حذف" (click)="delete(obj)">
+                    <i class="fas fa-times-circle"></i>
+
+                </a> -->
+
+                <a class="edit-emp-btn btn btn-primary btn-sm mx-2" (click)="confirm(obj)"> 
+                    <i class="fa fa-trash" aria-hidden="true" ></i>
+                </a>
+
+
+                <a *ngIf="updateout_categories" data-toggle="modal" (click)="add_edit(AE_modal, obj)" title="تعديل بيانات " class="edit-emp-btn btn btn-primary btn-sm mx-2">
+                    <i class="fas fa-edit"></i>
+                </a>
+                
+                <button disabled *ngIf="!updateout_categories" class="btn-outline-danger">غير مسموح لك</button>
+            </td>
+            <td><a> {{obj.title}} </a></td>
+        </tr>
+    </ng-template>
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-cate [Catchobj]='catchobj' (newData)="after($event)"> </app-edit-add-cate>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->

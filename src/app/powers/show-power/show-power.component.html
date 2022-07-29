@@ -1,0 +1,119 @@
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+        <!-- New job Modal Button  -->
+        <div class="pt-3">
+            <button *ngIf="createusers" type="button" (click)="edit_add(AE_modal , '')" class="btn btn-primary" data-toggle="modal" data-target="#jobs">
+جديد
+  </button>
+            <button disabled *ngIf="!createusers" type="button" class="btn btn-danger">
+
+    غير مسموح
+</button>
+        </div>
+        <p class="h5 text-light py-3 ml-auto">ادارة الصلاحيات</p>
+    </div>
+</div>
+<p-table #depTbl [value]="powerLists" [globalFilterFields]="['user.email' , 'phone_number' , 'user.first_name']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)"></button>
+                <span class="p-input-icon-left p-ml-auto">
+      <i class="pi pi-search"></i>
+      <input class="search-textbox" pInputText type="text"
+        (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث " />
+    </span>
+            </div>
+
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th>الاجراءات</th>
+            <!-- <th>hhh</th> -->
+            <th> الصلاحيات
+            </th>
+            <th pSortableColumn="user.email"> الايميل
+                <p-sortIcon field="user.email"></p-sortIcon>
+            </th>
+            <th pSortableColumn="phone_number"> رقم التليفون
+                <p-sortIcon field="phone_number"></p-sortIcon>
+            </th>
+            <th pSortableColumn="user.first_name"> الموظف
+                <p-sortIcon field="user.first_name"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-user>
+        <tr>
+            <td>
+                <a data-toggle="modal" (click)="edit_add(AE_modal, user)" title="تعديل  "
+                    class="edit-emp-btn btn btn-primary btn-sm mx-2">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td>
+                <button (click)="permissions_details(permission_details , user)" class="btn btn-primary ">عرض</button>
+            </td>
+
+            <!-- <td>{{user.user?.permissions.length}}</td> -->
+            <td>{{user.email}}</td>
+            <td>{{user.phone_number}}</td>
+            <td>{{user.first_name}} {{user.second_name}} {{user.last_name}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+  <span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-power [Catchobj]='catch_obj' (sent_new)='after($event)'> </app-edit-add-power>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!-- ******************** end add-edit modal ********************* -->
+
+
+
+<ng-template #permission_details let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> صلاحيات الموظف </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <div class="profile_pic mb-5 d-flex justify-content-center align-items-center ">
+            <img [src]="spec_user.profile_pic_url" alt="">
+        </div>
+        <div>
+            <p>اسم الموظف : 
+                <span>{{spec_user.first_name}} {{spec_user.last_name}}</span>
+            </p>
+        </div>
+        <div class="content-perm">
+            <h3 class="text-center">الصلاحيات</h3>
+            <ul class="list-unstyled text-center" *ngIf="spec_user">
+                <li class="text-center" class="permission" *ngFor="let permission of spec_user.permissions">
+                    {{permission.name}}
+                    <!-- <a class="edit-emp-btn btn btn-primary btn-sm mx-2" (click)="delete(permission.user?.id)">
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </a> -->
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</ng-template>

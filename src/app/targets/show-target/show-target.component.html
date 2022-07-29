@@ -1,0 +1,181 @@
+<!--********************    start header  ********************************-->
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+        <div class="pt-3">
+            <button type="button" (click)="add_edit(AE_modal, '')" class="btn btn-primary" data-toggle="modal" data-target="#jobs">
+
+                اضافة
+            </button>
+        </div>
+        <p class="h5 text-light py-3 ml-auto"> الاهداف المالية </p>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="selectedMembers" [globalFilterFields]="['amount' , 'to' , 'from']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+            </button>
+                <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input class="search-textbox" pInputText type="text"
+                (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+            </span>
+            
+            </div>
+
+
+
+        </div>
+
+
+        <div class="searching-box py-2 bx-5">
+            <button class="btn btn-info" (click)=" getDate(start,end)">بحث</button>
+           
+
+
+            
+            <input type="date"  [(ngModel)]="end" class="search-textbox">
+            <label for="">  ادخل تاريخ النهاية </label>
+
+
+                 <input type="date"  [(ngModel)]="start" class="search-textbox"> 
+                 <label for="">  ادخل تاريخ البداية </label>  
+           
+        </div>
+
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <th pSortableColumn="amount"> المبلغ
+                <p-sortIcon field="amount"></p-sortIcon>
+            </th>
+            <th pSortableColumn="to"> الي
+                <p-sortIcon field="to"></p-sortIcon>
+            </th>
+            <th pSortableColumn="from"> من
+                <p-sortIcon field="from"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <!--edit here-->
+                <a data-toggle="modal" (click)="add_edit(AE_modal, obj)" title="تعديل  " class="edit-emp-btn btn btn-primary btn-sm mx-2">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <i class="fas user fa-user-friends" (click)="get_one(ET_modal, obj.id)"></i>
+            </td>
+
+            <td>{{obj.amount}}</td>
+            <td>{{obj.to}}</td>
+            <td>{{obj.from}}</td>
+        </tr>
+
+        
+    </ng-template>
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-target [Catchobj]='catch_obj' (items)="update($event)"> </app-edit-add-target>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->
+
+
+
+
+<!--********************   start employee target  modal   *********************-->
+<ng-template #ET_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <p-table #depTbl [value]="employee_target_list" [globalFilterFields]="['name']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+            <!-- table caption  -->
+            <ng-template pTemplate="caption">
+                <form [formGroup]='myform' (submit)='onsubmit(itmeId)'>
+                    <div class="form-group">
+                        <label for="">  اختر الموظف    </label>
+                        <select formControlName="employee_id" class="form-control">
+                                <!-- <option>select department</option> -->
+                                <option *ngFor="let item of employees" [value]="item.id" >
+                                    {{item?.user?.first_name}} {{item?.user?.second_name}} {{item?.user?.last_name}}
+                                </option>
+                            </select>
+                       
+                    </div>
+
+                    <div class="row" *ngIf="auto_division === 0">
+                        <div class="col">
+                            <div class="from-group">
+                                <label for="">  نسبة مئوية   </label>
+                                <input type="text" value="{{(emp_amount >= main_amount) ? (main_amount / main_amount * 100 ) : (emp_amount / main_amount * 100 )  }}" name='percentage' class="form-control">
+                              
+
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div>
+                                <label for="">  مبلغ  </label>
+                                <input type="number" id="amount" formControlName='money' class="form-control" [(ngModel)]="emp_amount" name='money' class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <button [disabled]="myform.invalid" class='btn btn-primary' type="submit"> اضافة   </button>
+                </form>
+            </ng-template>
+            <!--********  table header  *****-->
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name"> النسبة
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="name"> المبلغ
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="name"> اسم الموظف
+                        <p-sortIcon></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <!--*******  table body  ******-->
+            <ng-template pTemplate="body" let-obj>
+                <tr>
+                    <td> {{obj.percentage /100 | percent}}</td>
+                    <td> {{obj.amount}}</td>
+                    <td> {{obj.employee?.user?.first_name}} {{obj.employee?.user?.second_name}} {{obj.employee?.user?.last_name}} </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</ng-template>
+<!--********************   end employee target modal   *********************-->

@@ -1,0 +1,50 @@
+<!-- <div class="container">
+  <div class="row">
+      <div  class="col-md-6 col-lg-4 my-3 shadow-lg">
+          <div class="post position-relative  overflow-hidden rounded-sm">
+              <img class="img-fluid" src="{{slider.image_path}}" alt="">
+              <div class="info  d-flex justify-content-center align-items-center flex-row text-center">
+                  <button disabled  class="visit btn btn-outline-dark  mx-1 text-primary font-weight-bold">تعديل </button>
+                  <button  data-toggle="modal"  title="تعديل " class=" visit btn btn-outline-dark  mx-1 text-primary font-weight-bold">تعديل</button>
+                  <button  disabled class=" visit btn btn-outline-dark mx-1  text-danger font-weight-bold">حذف</button>
+                  <button  data-toggle="modal"  title="حذف " class=" visit btn btn-outline-dark mx-1  text-danger font-weight-bold">حذف</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div> -->
+
+<div *ngIf="this.showAds == true " class="ads" style="width : 85% !important ; height : 100vh ; display : flex ; justify-content: center ; align-items: center;">
+    <!-- <span class="close-ads bg-danger"><i (click) = "hideAds()" class="fas fa-times"></i></span> -->
+
+    <span (click)="hideAds()" style="position  :absolute ; top : 20px ; left : 20px ">
+    <!-- <button pButton pRipple label="Save" icon="pi pi-check"></button>
+    <button pButton pRipple label="Delete" icon="pi pi-trash"></button> -->
+    <button pButton pRipple label="إلغاء الاعلان" icon="pi pi-times"></button>
+
+</span>
+    <p-carousel [value]="sliderLists" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+        <!-- <ng-template pTemplate="header">
+            <h5>Circular, AutoPlay, 3 Items per Page and Scroll by 1</h5>
+        </ng-template> -->
+        <ng-template let-slider pTemplate="item">
+            <div class="slider-item">
+                <div class="slider-item-content">
+                    <div>
+                        <img src="{{slider.image_path}}" class="slider-image" />
+                    </div>
+                    <!-- <div>
+                    <h4 class="mb-1">{{product.name}}</h4>
+                    <h6 class="mt-0 mb-3">${{product.price}}</h6>
+                    <span [class]="'product-badge status-'+product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                    <div class="car-buttons mt-5">
+                        <p-button type="button" styleClass="p-button p-button-rounded mr-2" icon="pi pi-search"></p-button>
+                        <p-button type="button" styleClass="p-button-success p-button-rounded mr-2" icon="pi pi-star-fill"></p-button>
+                        <p-button type="button" styleClass="p-button-help p-button-rounded" icon="pi pi-cog"></p-button>
+                    </div>
+                </div> -->
+                </div>
+            </div>
+        </ng-template>
+    </p-carousel>
+</div>

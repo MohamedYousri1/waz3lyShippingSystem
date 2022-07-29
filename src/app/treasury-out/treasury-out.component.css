@@ -1,0 +1,109 @@
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #FFF;
+    font-size: 3rem;
+    transition: all .5s;
+    z-index: 99999999999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px!important;
+}
+
+.pull-left {
+    float: left!important;
+}
+
+.btn-group,
+.btn-group-vertical {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.alert,
+.badge,
+.btn-group>.btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all),
+.btn.btn-link:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all):hover,
+.btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all),
+.icon-btn,
+.label:not(.md-skip),
+.md-shadow-z-1,
+.note,
+.panel,
+.social-icons.social-icons-color>li>a,
+.social-icons li>a,
+.well {
+    box-shadow: 0 1px 3px rgb(0 0 0/10%), 0 1px 2px rgb(0 0 0/18%)!important;
+}
+
+.btn.dark:not(.btn-outline) {
+    color: #FFF;
+    background-color: #2f353b;
+    border-color: #2f353b;
+}
+
+.btn:not(.btn-sm):not(.btn-lg) {
+    line-height: 1.44;
+}
+
+.btn-group .btn+.btn,
+.btn-group .btn+.btn-group,
+.btn-group .btn-group+.btn,
+.btn-group .btn-group+.btn-group {
+    margin-left: -1px;
+}
+
+.btn-group-vertical>.btn,
+.btn-group>.btn {
+    position: relative;
+    float: left;
+}
+
+.btn.green:not(.btn-outline) {
+    color: #FFF;
+    background-color: #32c5d2;
+    border-color: #32c5d2;
+}
+
+
+/* .panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+  box-shadow: 0 1px 1px rgb(0 0 0 / 5%);
+} */
+
+.col-md-4 {
+    float: left;
+}

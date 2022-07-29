@@ -1,0 +1,105 @@
+<p-toast position="top-right" key="myKey2"></p-toast>
+<p-toast position="bottom-left" key="myKey1"></p-toast>
+<form [formGroup]='myform' (submit)='onsubmit(itmeId)'>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="from-group">
+                <label for="">   تاريخ التسليم        </label>
+                <input type="date" name='date_of_delivery' formControlName='date_of_delivery' [ngClass]="{ 'is-invalid' : submited && f.date_of_delivery.errors}">
+                <div *ngIf='submited && f.date_of_delivery.errors' class="invalid-feedback">
+                    <div *ngIf='f.date_of_delivery.errors.required'> مطلوب </div>
+                </div>
+            </div> <br>
+
+            <div class="form-group">
+                <label for="">  اختر الفرع المستقبل  </label>
+                <ng-select   (change)="getBranchIdTo(f.to_branch_id)" formControlName="to_branch_id" [ngClass]="{'is-invalid' : submited && f.to_branch_id.errors}">
+                    <ng-option *ngFor="let item of branches" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.to_branch_id.errors'>
+                    <div *ngIf="submited && f.to_branch_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group" *ngIf="showToStorage">
+                <label for="">  اختر المخزن المستقبل   </label>
+                <ng-select  formControlName="to_storage_id" [ngClass]="{'is-invalid' : submited && f.to_storage_id.errors}" >
+                    <ng-option *ngFor="let item of storages" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+            </div>
+         
+
+
+           
+            <div class="form-group">
+                <label for="">  اختر حالة الاستلام     </label>
+                <ng-select formControlName="receive_status_id" [ngClass]="{'is-invalid' : submited && f.receive_status_id.errors}">
+                    <ng-option *ngFor="let item of recives" [value]="item.id"> {{item?.status}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.receive_status_id.errors'>
+                    <div *ngIf="submited && f.receive_status_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- second col -->
+        <div class="col-md-6">
+            <div class="from-group">
+                <label for="">  تاريخ الشحن      </label>
+                <input type="date" name='date_of_receipt' formControlName='date_of_receipt' [ngClass]="{ 'is-invalid' : submited && f.date_of_receipt.errors}">
+                <div *ngIf='submited && f.date_of_receipt.errors' class="invalid-feedback">
+                    <div *ngIf='f.date_of_receipt.errors.required'> مطلوب </div>
+                </div>
+            </div><br>
+
+
+
+
+
+            <div class="form-group">
+                <label for="">  اختر الفرع المرسل  </label>
+                <ng-select  (change)="getBranchId(f.from_branch_id)" formControlName="from_branch_id" [ngClass]="{'is-invalid' : submited && f.from_branch_id.errors}">
+                    <ng-option *ngFor="let item of branches" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.from_branch_id.errors'>
+                    <div *ngIf="submited && f.from_branch_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+            <div class="form-group"  *ngIf="showStorage">
+                <label for="">  اختر المخزن المرسل   </label>
+                <ng-select  (change)="getShipmentId(f.from_storage_id)" formControlName="from_storage_id" [ngClass]="{'is-invalid' : submited && f.from_storage_id.errors}" >
+                    <ng-option *ngFor="let item of storages" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+            </div>
+
+            <div class="form-group" *ngIf="showShipmnets">
+                <label for="">  اختر اسم الشحنة    </label>
+                <ng-select formControlName="shipment_id" [ngClass]="{'is-invalid' : submited && f.shipment_id.errors}">
+                    <ng-option *ngFor="let item of shipments" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.shipment_id.errors'>
+                    <div *ngIf="submited && f.shipment_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="">  اختر الموظف    </label>
+                <ng-select formControlName="employee_id" [ngClass]="{'is-invalid' : submited && f.employee_id.errors}">
+                    <ng-option *ngFor="let item of employees" [value]="item.id"> {{item?.user?.first_name}} {{item?.user?.second_name}} {{item?.user?.last_name}}</ng-option>
+                </ng-select>
+                <div *ngIf='submited && f.employee_id.errors'>
+                    <div *ngIf="submited && f.employee_id.errors.required" style="color: red;"> * هذا الحقل مطلوب </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+    <button class='btn btn-primary' type="submit"> {{itmeId === "" ?  'اضافة': 'تعديل'}}  </button>
+</form>

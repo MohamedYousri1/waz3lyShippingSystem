@@ -1,0 +1,104 @@
+<!--********************    start header  ********************************-->
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+        <div class="pt-3">
+            <button *ngIf="createtransactions" type="button" (click)="add_edit(AE_modal, '')" class="btn btn-primary" data-toggle="modal" data-target="#jobs">
+
+                اضافة
+            </button>
+            <button disabled *ngIf="!createtransactions" type="button" class="btn btn-danger">
+
+              غير مسموح
+          </button>
+        </div>
+        <p class="h5 text-light py-3 ml-auto"> تحويل شحنات بين الأفرع  </p>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="List" [globalFilterFields]="['shipment.name' , 'from_branch.name' , 'to_branch.name' , 'employee.user.first_name' , 'employee.user.second_name' , 'employee.user.last_name' , 'date_of_delivery' ,'date_of_receipt' , 'recieve_status']"
+    [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+            </button>
+                <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input class="search-textbox" pInputText type="text"
+                (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث عن اسم الشحنة" />
+            </span>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <th pSortableColumn="recieve_status"> حالة الاستلام
+                <p-sortIcon field="recieve_status"></p-sortIcon>
+            </th>
+            <th pSortableColumn="date_of_receipt"> تاريخ الاستلام
+                <p-sortIcon field="date_of_receipt"></p-sortIcon>
+            </th>
+            <th pSortableColumn="date_of_delivery"> تاريخ الشحن
+                <p-sortIcon field="date_of_delivery"></p-sortIcon>
+            </th>
+            <th pSortableColumn="employee.user.first_name"> اسم الموظف
+                <p-sortIcon field="employee.user.first_name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="to_branch.name"> الفرع المستقبل
+                <p-sortIcon field="to_branch.name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="from_branch.name"> الفرع المرسل
+                <p-sortIcon field="from_branch.name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="shipment.name"> اسم الشحنة
+                <p-sortIcon field="shipment.name"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <!--edit here-->
+                <a *ngIf="updatetransactions" data-toggle="modal" (click)="add_edit(AE_modal, obj)" title="تعديل  " class="edit-emp-btn btn btn-primary btn-sm mx-2">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <button disabled *ngIf="!updatetransactions" class="btn-outline-danger">غير مسموح لك</button>
+            </td>
+            <td>{{obj.recieve_status?.status }}</td>
+            <td>{{obj.date_of_receipt}}</td>
+            <td>{{obj.date_of_delivery}}</td>
+            <td> {{obj.employee?.user?.first_name}} {{obj.employee?.user?.second_name}} {{obj.employee?.user?.last_name}} </td>
+            <td>{{obj.to_branch?.name}}</td>
+            <td>{{obj.from_branch?.name}}</td>
+            <td>{{obj.shipment?.name}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-transaction [Catchobj]='catch_obj' (items)="update($event)"> </app-edit-add-transaction>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->

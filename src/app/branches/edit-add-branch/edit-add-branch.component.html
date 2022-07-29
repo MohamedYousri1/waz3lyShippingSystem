@@ -1,0 +1,72 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="employeeSecondName"> عنوان </label>
+                <input name='address' [(ngModel)]='address' type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="employeeEmail">البريد الالكتروني</label>
+                <input type="email" name='email' [(ngModel)]='email' class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="">  اختر المنطقة التابعة للفرع  </label>
+                <ng-select name='area_id' [(ngModel)]='area_id'>
+                    <ng-option *ngFor="let item of areas" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+            </div>
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="employeeFirstName"> اسم الفرع  </label>
+                <input type="text" name='name' [(ngModel)]='name' class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="employeeTel">التليفون</label>
+                <input type="text" name='phone' [(ngModel)]='phone' class="form-control">
+            </div>
+
+            <!--<div class="form-group">
+                <label for="">  اختر الموظف  </label>
+                <ng-select name='employee_id' [(ngModel)]='employee_id'>
+                    <ng-option *ngFor="let item of employees" [value]="item.id"> {{item?.user?.first_name}} {{item?.user?.second_name}} {{item?.user?.last_name}}</ng-option>
+                </ng-select>
+            </div>-->
+
+            <div class="form-group">
+                <label for="employeeAddress">اللوكيشن</label>
+                <textarea rows="5" name='location' [(ngModel)]='google_location' class="form-control"></textarea>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="form-group">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3455.4411670124123!2d31.228988114442018!3d29.995486327840112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14584709aab2b413%3A0xabe5d4200a2d3360!2sEl-Zahraa!5e0!3m2!1sen!2seg!4v1622035464119!5m2!1sen!2seg" width="350" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <label for="employeeAddress">موقع </label>
+                <input type="text" name='google_location' [(ngModel)]='google_location' class="form-control">
+            </div>
+        </div>
+        -->
+
+        <!--<div class="row">
+            <div class="form-group">
+                <label for="employeeTel"> صوره الفرع   </label>
+                <div class="cont_img">
+                    <img class="img-fluid rounded" [src]="profile_pic">
+                </div>
+                <input type="file" #select_img style="display: none;" (change)="selectImg($event)">
+                <button class="btn btn-primary selc" (click)="select_img.click()"> اختر </button>
+            </div>
+        </div>-->
+        <div class="col-12">
+            <button class="btn btn-primary" (click)="onsubmit()"> {{Catchobj === "" ? 'اضافة' : 'تعديل'}} </button>
+        </div>
+    </div>
+</form>

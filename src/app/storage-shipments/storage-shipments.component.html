@@ -1,0 +1,164 @@
+<div class="container-fluid">
+
+    <a class="back" routerLink="/storage"> العودة للمخازن <i class="fas fa-arrow-alt-circle-right"></i> </a>
+
+
+    <div class="row bg-dark mt-3">
+        <div class="col-md-12 d-flex flex-row">
+            <div class="pt-3">
+
+            </div>
+
+            
+            <p class=" h5 text-light py-3 ml-auto">
+                شحنات مخزن &nbsp; <span style="color:#1DA1F2"> {{storage_name}}  </span>
+            </p>
+        </div>
+    </div>
+    <!--*******************    end  header  *****************************-->
+
+    <!--*******************    start tabel  body   *********************-->
+    <p-table #depTbl [value]="shipments" [globalFilterFields]="['name' ,'receiver.first_name', 'shipment_type.type' , 'receiver.phone_number' , 'receiver?.address' , 'received_representative' ,    'user.first_name' , 'transport_type.name']" [paginator]="true" [rows]="10"
+        [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+        <!-- table caption  -->
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+                <div class="search-warpper">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+                </button>
+                    <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input class="search-textbox" pInputText type="text"
+                    (input)="depTbl.filterGlobal($event.target.value, 'contains')"  placeholder="بحث باسم " />
+                </span>
+                </div>
+            </div>
+        </ng-template>
+        <!--********  table header  *****-->
+        <ng-template pTemplate="header">
+            <tr>
+                <th> مفعل </th>
+                <th pSortableColumn="receiver.address">  عنوان المستلم
+                    <p-sortIcon field="receiver.address"></p-sortIcon>
+                </th>
+                <th pSortableColumn="receiver.phone_number">  تليفون المستلم
+                    <p-sortIcon field="receiver.phone_number"></p-sortIcon>
+                </th>
+                <th pSortableColumn="receiver.first_name">  اسم المستلم
+                    <p-sortIcon field="receiver.first_name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="employee.user.first_name"> مندوب التوصيل
+                    <p-sortIcon field="employee.user.first_name"></p-sortIcon>
+                </th>
+
+                <th pSortableColumn="employee.received_representative"> مستلم من الراسل
+                    <p-sortIcon field="employee.received_representative"></p-sortIcon>
+                </th>
+
+                <!-- <th pSortableColumn="storage.name"> اسم المخزن
+                    <p-sortIcon field="storage.name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="employee.branch.name"> اسم الفرع
+                    <p-sortIcon field="employee.branch.name"></p-sortIcon>
+                </th> -->
+                <th pSortableColumn="shipment_type.type"> نوع الشحنة
+                    <p-sortIcon field="shipment_type.type"></p-sortIcon>
+                </th>
+                <th pSortableColumn="name"> اسم الشحنة
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+
+
+
+                <th pSortableColumn="shipments.user.first_name"> اسم الراسل
+                    <p-sortIcon field="shipments.user.first_name"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <!--*******  table body  ******-->
+        <ng-template pTemplate="body" let-obj>
+            <tr>
+                <td>
+
+                    <a *ngIf="obj.pending_approve == 1 && obj.complete_status_id == 3 &&  obj.delivery_date == null  " data-toggle="modal " (click)="add_edit(addrepresentative, obj) " title="تفعيل " class="edit-emp-btn btn btn-danger  btn-sm mx-2 ">
+                        <i class="fas fa-times-circle "></i>
+                    </a>
+
+                    <button class="btn btn-info " *ngIf="obj.pending_approve == 1  && obj.complete_status_id < 3 " disabled>..جاري الاستلام </button>
+
+
+                    <a data-toggle="modal " *ngIf="obj.pending_approve==1 && obj.delivery_date !== null " title="مفعل" class="edit-emp-btn btn btn-primary btn-sm mx-2 ">
+                        <i class="fas fa-check-circle "></i>
+                    </a>
+                </td>
+
+                <td> {{obj.receiver?.address}} </td>
+                <td> {{obj.receiver?.phone_number}} </td>
+                <td> {{obj.receiver?.first_name}} {{obj.receiver?.second_name }} {{obj.receiver?.last_name}} </td>
+
+                <td> {{obj.transport_type?.name}} </td>
+                <td> {{obj.employee?.user?.first_name}} {{obj.employee?.user?.second_name}} {{obj.employee?.user?.last_name}} </td>
+                <td>{{obj.received_representative}}</td>
+             
+                <td> {{obj.shipment_type?.type}} </td>
+                <td [routerLink]="['/shipments' , obj.id]" class="text-primary" style="cursor: pointer;"> {{obj.name}} </td>
+                <td>{{obj.user?.first_name}} {{obj.user?.second_name }} {{obj.user?.last_name}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <!--********************    end  tabel  body   ********************************-->
+</div>
+
+
+
+
+
+
+
+
+<ng-template #addrepresentative let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> شحنه معلقه </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body " style="direction: rtl;">
+        <!-- Modal Form Start -->
+        <div class="border"></div>
+
+        <form [formGroup]="myForm" (submit)="addRepresentative()" class="p-2">
+            <div class="row">
+                <!-- اسم شركه النقل   -->
+                <div class="col-md-6">
+                    <label for="employee_id">اختر المندوب</label>
+                    <div class="form-group">
+                        <select class="form-control" formControlName="employee_id" name="employee_id" id="employee_id">
+                          <option *ngFor="let employee of allRepresentatives" [value]="employee.id">{{employee.user?.first_name}} {{employee.user?.second_name}} {{employee.user?.last_name}}</option>
+                      </select>
+                        <!-- <div *ngIf='submited && f.employee_id.errors'>
+                    <div *ngIf="submited && f.employee_id.errors.required" style="color: red;"> * مطلوب </div>
+                </div> -->
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="delivery_date">تاريخ التسليم</label>
+                    <div class="form-group">
+                        <input type="date" class="form-control" formControlName="delivery_date" name="delivery_date" id="delivery_date">
+                        <!-- <div *ngIf='submited && f.delivery_date.errors'>
+                  <div *ngIf="submited && f.delivery_date.errors.required" style="color: red;"> * مطلوب </div>
+              </div> -->
+                    </div>
+                </div>
+
+
+                <div class="bg-light p-2 w-100">
+                    <button [disabled]="myForm.invalid" class="btn btn-primary btn-block text-center"> اضافه </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</ng-template>

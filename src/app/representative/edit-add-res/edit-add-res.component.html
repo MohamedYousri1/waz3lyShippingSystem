@@ -1,0 +1,196 @@
+<p-toast position="top-center" key="myKeys1"></p-toast>
+<form [formGroup]="mainForm">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="employeeTel"> البريد الالكتروني </label>
+                <input type="email" name='email' formControlName='email' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.email.errors }">
+                <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.email.errors'> * البريد الالكتروني غير صالح</div>
+            </div>
+
+            <div class="form-group">
+                <label for="employeeTel" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span> العنوان </label>
+                <input type="address" name='address' formControlName='address' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.address.errors }">
+                <!-- <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.address.errors'> * يرجي إدخال العنوان</div> -->
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="employeeTel" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span> المرتب </label>
+                        <input type="number" name='salary' formControlName='salary' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.salary.errors }">
+                        <!-- <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.salary.errors'> * يرجي إدخال المرتب </div> -->
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="employeeTel" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span> العموله </label>
+                        <input type="number" name='commission' formControlName='commission' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.commission.errors }">
+                        <!-- <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.commission.errors'> * يرجي إدخال المرتب </div> -->
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group" *ngIf="Catchobj === '' ">
+                <label for="">تاكيد كلمه السر     </label>
+                <input type="password" name='password_confirmation' formControlName='password_confirmation' required class="form-control " [ngClass]="{ 'is-invalid' : submited && f.password_confirmation.errors }">
+                <!-- <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.password_confirmation.errors'> * برجاء تاكيد كلمه السر </div> -->
+            </div> <br>
+
+            <!-- <div class="form-group">
+                <label for="">   اختر الفرع    </label>
+                <ng-select name='branch_id' formControlName='branch_id' [ngClass]="{ 'is-invalid' : submited && f.branch_id.errors }">
+                    <ng-option *ngFor="let item of branches" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+            </div> -->
+
+            <div class="form-group">
+                <label for="" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span>   اختر المنطقه    </label>
+                <ng-select name='city_id' formControlName='city_id' [ngClass]="{ 'is-invalid' : submited && f.city_id.errors }">
+                    <ng-option *ngFor="let item of allAreas" [value]="item.id"> {{item?.city_name_ar}}</ng-option>
+                </ng-select>
+                <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.city_id.errors'> * يرجي تحديد المنطقه </div>
+            </div>
+
+
+            <!-- <div class="form-group">
+            <label for="">  اختر الوظيفة   </label>
+            <ng-select name='job_id' formControlName='job_id'>
+                <ng-option *ngFor="let item of jobs" [value]="item.id"> {{item?.name}}</ng-option>
+            </ng-select>
+
+        </div> -->
+
+            <!-- <div class="form-group">
+            <input type="text" name='shipping' formControlName = 'is_shipping_representative' value="1" required class="form-control d-none">
+        </div> <br>  -->
+
+
+
+        </div>
+
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label for="name" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span> الاسم  </label>
+                <input type="text" name='name' formControlName='name' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.name.errors }">
+                <!-- <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.name.errors'> * يرجي إدخال الاسم</div> -->
+            </div>
+
+            <div class="form-group">
+                <label for="employeeTel" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span>التليفون</label>
+                <input type="tel" name='phone_number' formControlName='phone_number' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.phone_number.errors }">
+                <div *ngIf='submited && f.phone_number.errors' style="color : #F00 " class="alert alert-light">
+                    <!-- <div *ngIf='f.phone_number.errors.required'> * يرجي إدخال التليفون </div> -->
+                    <div *ngIf='f.phone_number.errors.pattern'> رقم التليفون غير صالح </div>
+                </div>
+
+
+            </div>
+
+            <div class="form-group">
+                <label for="employeeFirstName" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span> الرقم القومي  </label>
+                <input type="number" required name='national_id' formControlName='national_id' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.phone_number.errors }">
+                <!-- <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.national_id.errors'> * يرجي إدخال الرقم القومي</div> -->
+            </div>
+
+
+
+            <div class="form-group" *ngIf="Catchobj === '' ">
+                <label for=""> كلمه السر     </label>
+                <input type="password" name='password' formControlName='password' required class="form-control" [ngClass]="{ 'is-invalid' : submited && f.password.errors }">
+                <!-- <div style="color : #F00 " class="alert alert-light" *ngIf='submited && f.password.errors'> * يرجي إدخال كلمه السر</div> -->
+            </div> <br>
+            <!--
+            <div class="form-group">
+                <label for="">   اختر الاداره   </label>
+                <ng-select name='department_id' formControlName='department_id'>
+                    <ng-option *ngFor="let item of departments" [value]="item.id"> {{item?.name}}</ng-option>
+                </ng-select>
+            </div> -->
+
+            <div class="form-group">
+                <label for="" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span>المحافظه</label>
+                <ng-select (change)="onProvinceChange($event)">
+                    <ng-option *ngFor="let item of provinces" [value]="item.id"> {{item?.governorate_name_ar}} </ng-option>
+                </ng-select>
+            </div>
+
+            <!-- <div class="form-group">
+                <label for="">اختر نوع المرتب</label>
+                <select name="" id="" (change)="onSwap($event.target)" class="w-100 form-control">
+                    <option value="1">ثابت</option>
+                    <option value="2">عمولة</option>
+                    <option value="3"> ثابت/عمولة</option>
+                </select>
+            </div> -->
+
+            <!-- <div class="form-group" *ngIf="salarySec">
+                <label for="salary">  المرتب </label>
+                <input type="text" name='salary' formControlName='salary' class="form-control">
+            </div>
+
+            <div class="form-group" *ngIf="commSec">
+                <label for="commission">  العموله </label>
+                <input type="text" name='commission' formControlName='commission' class="form-control">
+            </div> -->
+        </div>
+    </div>
+    <!-- imgs -->
+    <div class="row mx-auto">
+        <div class="col-md-3">
+            <div class="form-group">
+                <div style="min-height: 250px;display: flex;max-width: 200px;background-color: #ddd;justify-content: center;align-items: center;" class="cont_img">
+                    <p class="cv-name">{{selectedResum?.name}}</p>
+                </div>
+                <label for="employeeTel"> السيره الزاتية   </label> &nbsp;
+                <input type="file" #select_resum style="display: none;" (change)="selectResum($event)">
+                <button class="btn btn-outline-dark  selc" (click)="select_resum.click()"> <i class="fa fa-upload"></i> </button>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="cont_img">
+                    <img class="img-fluid rounded" style="width:200px; height:250px; margin-bottom:10px" [src]="profile_pic">
+                </div>
+                <label for="employeeTel"> صوره شخصية    </label> &nbsp;
+                <input type="file" #select_img style="display: none;" (change)=" selectImg($event)">
+                <button class="btn btn-outline-dark selc" (click)="select_img.click()"> <i class="fa fa-upload"></i> </button>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="cont_img">
+                    <img class="img-fluid rounded" style="width:200px; height:250px; margin-bottom:10px" [src]="fish_photo">
+                </div>
+                <label for="employeeTel"> صوره الفيش الجنائي  </label> &nbsp;
+                <input type="file" #select_IdFace style="display: none;" (change)="selectIdFace($event)">
+                <button class="btn btn-outline-dark selc" (click)="select_IdFace.click()"> <i class="fa fa-upload"></i> </button>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <div class="cont_img">
+                    <img class="img-fluid rounded" style="width:200px; height:250px; margin-bottom:10px" [src]="license_photo ">
+                </div>
+                <label for="employeeTel">  صورة الرخصه    </label> &nbsp;
+                <input type="file" #select_IdBack style="display: none;" (change)="selectIdBack($event)">
+                <button class="btn btn-outline-dark selc" (click)="select_IdBack.click()"> <i class="fa fa-upload"></i> </button>
+            </div>
+        </div>
+    </div>
+
+    <br> <br>
+    <div class="col-12">
+        <button class="btn btn-primary" (click)="onsubmit()"> {{Catchobj === "" ? 'اضافة' : 'تعديل'}} </button>
+    </div>
+</form>

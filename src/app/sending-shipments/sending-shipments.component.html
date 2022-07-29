@@ -1,0 +1,217 @@
+<div class="full-screen">
+    <div class="content-section implementation">
+        <div class="card">
+            <div class="container">
+                <div style="width : 75%  ; margin :30px  auto " class="search shadow-sm p-3">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="fromdate">من تاريخ</label>
+                            <input type="date" [(ngModel)]="fromDate" class="form-control" name="fromdate" id="fromdate">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="fromdate">إالي تاريخ</label>
+                            <input type="date" [(ngModel)]="toDate" class="form-control" name="todate">
+                        </div>
+
+                        <div class="col-md-6 searchCompany">
+                            <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <label for="searchWord">بحث يرقم البوليصه </label>
+                        <input  [(ngModel)] = "bolisaNumber" type="number" class="form-control"  pInputText placeholder="بحث برقم البوليصه"/>
+                      </span>
+                        </div>
+
+                        <div class="col-md-12 pt-3 d-flex justify-content-center ">
+                            <button (click)="searchingFun()" class="w-50 btn btn-outline-secondary">بحث</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="filteredData?.length  > 0  ">
+                    <div class="col-md-6 my-4" *ngFor="let item of allData">
+                        <div class="image-gallery">
+                            <!-- <img src="assets/showcase/images/demo/nature/nature{{first + 1}}.jpg" /> -->
+                            <p-card header="" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
+                                <ng-container [ngSwitch]="item.shipment_status_id">
+                                    <p-steps *ngSwitchCase="1" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index1" [readonly]="true">
+                                    </p-steps>
+
+
+                                    <p-steps *ngSwitchCase="2" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index2" [readonly]="true">
+                                    </p-steps>
+
+
+                                    <p-steps *ngSwitchCase="3" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index3" [readonly]="true">
+                                    </p-steps>
+
+
+                                    <p-steps *ngSwitchCase="4" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index4" [readonly]="true">
+                                    </p-steps>
+
+                                    <p-steps *ngSwitchCase="5" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index5" [readonly]="true">
+                                    </p-steps>
+
+                                    <p-steps *ngSwitchCase="6" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index6" [readonly]="true">
+                                    </p-steps>
+
+                                    <p-steps *ngSwitchCase="7" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index7" [readonly]="true">
+                                    </p-steps>
+
+                                    <p-steps *ngSwitchCase="8" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index8" [readonly]="true">
+                                    </p-steps>
+
+                                    <p-steps *ngSwitchCase="9" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index9" [readonly]="true">
+                                    </p-steps>
+
+                                    <p-steps *ngSwitchCase="10" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index10" [readonly]="true">
+                                    </p-steps>
+
+                                    <p-steps *ngSwitchCase="11" [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index11" [readonly]="true">
+                                    </p-steps>
+
+
+
+
+                                    <p-steps *ngSwitchDefault [model]="[
+                          { label: 'طلب جديد' },
+                          { label: 'الإستلام من المندوب' },
+                          { label: 'التغليف' },
+                          { label: 'في الطريق للعميل' } ,
+                          { label: 'تم الأستلام' }
+                        ]" [(activeIndex)]="index1" [readonly]="true">
+                                    </p-steps>
+                                </ng-container>
+
+                                <br />
+                                <ul class="list-unstyled shipping-ul position-relative">
+                                    <img class="cover" src="../../assets/images/login2.jpg" alt="">
+                                    <li class="shipping-item">
+                                        <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{(item.id) ? item.id : ''}}</span> :</span>
+                                        <span style="display  : inline-block ;  width : 30%">رقم بوليصة الشحن</span>
+                                        <i class="fa fa-check"></i>
+                                    </li>
+
+                                    <li class="shipping-item">
+                                        <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{(item.name_shipment) ? item.name_shipment : ''}}</span> :</span>
+                                        <span style="display  : inline-block ;  width : 30%">إسم الشحنه</span>
+                                        <i class="fa fa-check"></i>
+                                    </li>
+
+                                    <li class="shipping-item">
+                                        <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{(item.product_price) ? item.product_price  : ''}} جنية </span> :</span>
+                                        <span style="display  : inline-block ;  width : 30%">السعر الاجمالي
+                                  </span> <i class="fa fa-check"></i>
+                                    </li>
+
+                                    <!-- <li class="shipping-item">
+                                    <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">8X8X 8</span> :</span>
+                                    <span style="display  : inline-block ;  width : 30%"> أبعاد الشحنة
+                                   </span> <i class="fa fa-check"></i>
+                                </li> -->
+
+                                    <li class="shipping-item">
+                                        <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{(item.shipmentstatu?.name)  ? item.shipmentstatu?.name  : ''}}</span> :</span>
+                                        <span style="display  : inline-block ;  width : 30%"> حالة الشحنة
+                                 </span> <i class="fa fa-check"></i>
+                                    </li>
+
+                                    <li class="shipping-item">
+                                        <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{item.created_at | date:'short'}}</span> :</span>
+                                        <span style="display  : inline-block ;  width : 30%"> تاريخ طلب الشحنة
+                               </span> <i class="fa fa-check"></i>
+                                    </li>
+
+                                    <li class="shipping-item">
+                                        <span style="display  : inline-block ;  width : 60%"><span class="px-2 text-info ">{{(item.delivery_date) ? (item.delivery_date | date:'short') : ''}}</span> :</span>
+                                        <span style="display  : inline-block ;  width : 30%"> تاريخ توصيل الشحنة
+                             </span> <i class="fa fa-check"></i>
+                                    </li>
+                                </ul>
+
+                            </p-card>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div *ngIf="filteredData.length == 0 " style="min-height : 400px !important  ; display: flex ; justify-content: center ; align-items: center ;" class="heightDefault">
+                <p class="font-weight-bold lead ">لا يوجد شحنات </p>
+            </div>
+            <ul *ngIf="filteredData.length > 0 " class="controlers">
+                <li title="First Page" (click)="firstPage()"><i class="pi pi-chevron-left"></i><i class="pi pi-chevron-left"></i></li>
+                <li title="Previus Page" (click)="previusPage()"><i class="pi pi-chevron-left"></i></li>
+                <li title="Next Page" (click)="nextPage()"><i class="pi pi-chevron-right"></i></li>
+                <li title="Last Page" (click)="lastPage()"><i class="pi pi-chevron-right"></i> <i class="pi pi-chevron-right"></i></li>
+
+            </ul>
+        </div>
+    </div>
+</div>

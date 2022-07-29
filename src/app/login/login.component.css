@@ -1,0 +1,35 @@
+.img-user img {
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 50%;
+}
+
+h2 span {
+    /* color: #3d494b !important; */
+    color: #fff !important
+}
+
+p {
+    padding: 0 !important;
+}
+
+.mat-body,
+.mat-body-1,
+.mat-typography {
+    padding: 0 !important;
+}
+
+.wrapper_img {
+    background-image: url(../../assets/images/introPhoto.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.wrapper-login {
+    color: #000 !important;
+}

@@ -1,0 +1,81 @@
+<!--********************    start header  ********************************-->
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+        <div class="pt-3">
+            <button type="button" (click)="add_edit(AE_modal, '')" class="btn btn-primary" data-toggle="modal" data-target="#jobs">
+
+                اضافة
+            </button>
+        </div>
+        <p class="h5 text-light py-3 ml-auto"> اداره التحركات </p>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="moveList" [globalFilterFields]="['sub_state.state' , 'employee.user.first_name' , 'employee.client.first_name']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber" [pageLinks]="8"
+    [scrollable]="true" scrollHeight="350px">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+            </button>
+                <span class="p-input-icon-left p-ml-auto">
+                <i class="pi pi-search"></i>
+                <input class="search-textbox" pInputText type="text"
+                (input)="depTbl.filterGlobal($event.target.value, 'contains')"  placeholder="بحث" />
+            </span>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <th pSortableColumn="sub_state.state"> الحالة الفرعية
+                <p-sortIcon field="sub_state.state"></p-sortIcon>
+            </th>
+            <!-- <th pSortableColumn="employee.client.first_name"> اسم العميل
+                <p-sortIcon field="employee.client.first_name"></p-sortIcon>
+            </th> -->
+            <th pSortableColumn="employee.user.first_name"> اسم الموظف
+                <p-sortIcon field="employee.user.first_name"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <!--edit here-->
+                <a data-toggle="modal" (click)="add_edit(AE_modal , obj)" title="تعديل " class="edit-emp-btn btn btn-primary btn-sm mx-2">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </td>
+            <td> {{obj.sub_state?.state}}</td>
+            <!-- <td> {{obj.client?.first_name}} {{obj.client?.second_name}} {{obj.client?.last_name}} </td> -->
+            <td> {{obj.client?.first_name}} {{obj.client?.second_name}} {{obj.client?.last_name}} </td>
+        </tr>
+    </ng-template>
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" style="color:#fff"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <app-edit-add-movement [obj]="catch_obj" (newData)='after($event)'></app-edit-add-movement>
+    </div>
+</ng-template>
+
+<!--********************  end add-edit modal  ********************************-->

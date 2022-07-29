@@ -1,0 +1,284 @@
+<div style="width : 82% !important  ; margin-right  :auto  ">
+    <div class="heading">
+        <h2 class="text-center">Logistics Dashboard With Fleet And Delivery Status</h2>
+    </div>
+    <!-- time period  -->
+    <div class="time-period">
+
+        <!-- <div class="wrapper w-75 m-auto shadow-sm">
+          <div class="row">
+              <div class="col-md-12 bg">
+                  <div class="mt-3">
+                      <h2 style="text-align: center !important ;">Time Period : Last Month</h2>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-3">
+                          <div class="item">
+                              <div class="icon">
+                                  <img src="../../assets/Icons/noun-shipping-3484992.svg" style="width : 50px;  height : 50px ;display: block !important;margin: 0 auto 10px !important;" alt="">
+                                  <h3 style="text-align: center !important;font-size: 1.2rem;letter-spacing: 2px;">Revenue</h3>
+                                  <h3 class="text-info">$ 1,652,251 (-71%)</h3>
+                              </div>
+                          </div>
+                      </div>
+
+
+                      <div class="col-md-3">
+                          <div class="item">
+                              <div class="icon">
+                                  <img src="../../assets/Icons/noun-cod-3282485.svg" style="width : 50px;  height : 50px ;display: block !important;margin: 0 auto 10px !important;" alt="">
+                                  <h3 style="text-align: center !important;font-size: 1.2rem;letter-spacing: 2px;">Costs</h3>
+                                  <h3 class="text-info">$ 1,652,251 (-71%)</h3>
+                              </div>
+                          </div>
+                      </div>
+
+
+                      <div class="col-md-3">
+                          <div class="item">
+                              <div class="icon">
+                                  <img src="../../assets/Icons/order.svg" style="width : 50px;  height : 50px ;display: block !important;margin: 0 auto 10px !important;" alt="">
+                                  <h3 style="text-align: center !important;font-size: 1.2rem;letter-spacing: 2px;">Profits</h3>
+                                  <h3 class="text-info">$ 1,652,251 (-71%)</h3>
+                              </div>
+                          </div>
+                      </div>
+
+
+
+                      <div class="col-md-3">
+                          <div class="item">
+                              <div class="icon">
+                                  <img src="../../assets/Icons/return.svg" style="width : 50px;  height : 50px ;display: block !important;margin: 0 auto 10px !important;" alt="">
+                                  <h3 style="text-align: center !important;font-size: 1.2rem;letter-spacing: 2px;">Shipments</h3>
+                                  <h3 class="text-info">$ 1,652,251 (-71%)</h3>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div> -->
+
+
+        <div class="wrapping-chart1">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="wrapping p-4 shadow-sm">
+                        <div id="divChart">
+                            <canvas id="myChart1"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-8">
+                    <div class="wrapping p-4 shadow-sm">
+                        <div class="divChart">
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="wrapping p-4 shadow-sm">
+                        <div class="divChart">
+                            <canvas id="myChart3"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="col-md-6">
+                  <div class="wrapping p-4 shadow-sm">
+                      <div class="divChart">
+                          <canvas id="myChart4"></canvas>
+                      </div>
+                  </div>
+              </div> -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="wrapper">
+    <section class="services">
+        <div class="container">
+            <div class="row text-center">
+                <!-- <p style="text-align: center !important ;">
+                  جميع الإحصايات في السيستم
+              </p> -->
+            </div>
+            <div class="row">
+                <!-- - احصائية باجمالي المتحصلات النقدية  -->
+                <div class="col-md-4">
+                    <div class="box-a">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../../assets/Icons/money-svgrepo-com.svg" style="width : 90px;  height : 90px ;display: block !important;margin: 0 auto 10px !important;" alt=""> </div>
+                            <div class="col-md-9">
+                                <h3> اجمالي المتحصلات النقدية بالجنيه المصري </h3>
+                                <h2 style="text-align : center !important ;font-size: 2.4rem;font-weight: 700;" id="count1"></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .Box ends here -->
+                </div>
+
+                <!-- احصائية بعدد الشحنات المطلوب تسليمها  -->
+                <div class="col-md-4">
+                    <div class="box-a">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../../assets/Icons/boxes-svgrepo-com.svg" style="width : 90px;  height : 90px ;display: block !important;margin: 0 auto 10px !important;" alt=""> </div>
+                            <div class="col-md-9">
+                                <h3>عدد الشحنات المطلوب تسليمها </h3>
+                                <h2 style="text-align : center !important ;font-size: 2.4rem;font-weight: 700;" id="count2"></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- بأجمالي ال COD   -->
+                <div class="col-md-4">
+                    <div class="box-a">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../../assets/Icons/profits-svgrepo-com.svg" style="width : 90px;  height : 90px ;display: block !important;margin: 0 auto 10px !important;" alt=""> </div>
+                            <div class="col-md-9">
+                                <h3> لكل العملاء COD بأجمالي ال </h3>
+                                <h2 style="text-align : center !important ;font-size: 2.4rem;font-weight: 700;" id="count3"></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بأجمالي المستحقات للمناديب    -->
+                <div class="col-md-4">
+                    <div class="box-a">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../../assets/Icons/delivery-man.svg" style="width : 90px;  height : 90px ;display: block !important;margin: 0 auto 10px !important;" alt=""> </div>
+                            <div class="col-md-9">
+                                <h3>إجمالي مستحقات المناديب</h3>
+                                <h2 style="text-align : center !important ;font-size: 2.4rem;font-weight: 700;" id="count4"></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بأجمالي عدد العملاء لدي PNG    -->
+                <div class="col-md-4">
+                    <div class="box-a">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../../assets/Icons/customer-svgrepo-com.svg" style="width : 90px;  height : 90px ;display: block !important;margin: 0 auto 10px !important;" alt=""> </div>
+                            <div class="col-md-9">
+                                <h3>إجمالي عدد العملاء لدينا</h3>
+                                <h2 style="text-align : center !important ;font-size: 2.4rem;font-weight: 700;" id="count5"></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="box-a">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../../assets/Icons/client-svgrepo-com.svg" style="width : 90px;  height : 90px ;display: block !important;margin: 0 auto 10px !important;" alt=""> </div>
+                            <div class="col-md-9">
+                                <h3>إجمالي عدد العملاء الجدد </h3>
+                                <h2 style="text-align : center !important ;font-size: 2.4rem;font-weight: 700;" id="count6"></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="box-a">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../../assets/Icons/expired.svg" style="width : 90px;  height : 90px ;display: block !important;margin: 0 auto 10px !important;" alt=""> </div>
+                            <div class="col-md-9">
+                                <h3>إجمالي بعدد المرتجعات </h3>
+                                <h2 style="text-align : center !important ;font-size: 2.4rem;font-weight: 700;" id="count7"></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="box-a">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../../assets/Icons/tick-success-svgrepo-com.svg" style="width : 90px;  height : 90px ;display: block !important;margin: 0 auto 10px !important;" alt=""> </div>
+                            <div class="col-md-9">
+                                <h3>متوسط التسليمات </h3>
+                                <h2 style="text-align : center !important ;font-size: 2.4rem;font-weight: 700;" id="count8"></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-md-4">
+                    <div class="box-a">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img src="../../assets/Icons/tick-success-svgrepo-com.svg" style="width : 90px;  height : 90px ;display: block !important;margin: 0 auto 10px !important;" alt=""> </div>
+                            <div class="col-md-9">
+                                <h3>متوسط عدد الشحنات التي تم تسليمها فى الموعد </h3>
+                                <h2 style="text-align : center !important ;font-size: 2.4rem;font-weight: 700;" id="count11"></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="box-a">
+                        <h3>اكثر المناطق طلب شحن </h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="list-unstyled">
+                                    <li *ngFor="let item of max_shipping_area" style="display: flex;flex-direction: row-reverse;">
+                                        <h3 style="text-align: right !important;direction: rtl;">
+                                            <i class="fas fa-check"></i> {{item.name}}
+                                        </h3>
+                                        <h2>{{item.shipment_count}}</h2>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="box-a">
+                        <h3>اقل المناطق طلب شحن </h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="list-unstyled">
+                                    <li *ngFor="let item of min_shipping_area" style="display: flex;flex-direction: row-reverse;">
+                                        <h3 style="text-align: right !important;direction: rtl;">
+                                            <i class="fas fa-times"></i> {{item.name}}
+                                        </h3>
+                                        <h2>{{item.shipment_count}} </h2>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- .Row ends here -->
+        </div>
+        <!-- .Container ends here -->
+    </section>
+    <!-- .Section ends here -->
+</div>
+<!-- #wrapper ends here -->

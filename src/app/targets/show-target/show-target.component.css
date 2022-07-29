@@ -1,0 +1,14 @@
+.user{
+    color: #007bff;
+    position: relative;
+    top: 3px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.search-textbox{
+    margin: 0 10px;
+}
+.searching-box div{
+    direction: ltr;
+}

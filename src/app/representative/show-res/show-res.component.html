@@ -1,0 +1,260 @@
+<p-toast position="top-center" key="Key2"></p-toast>
+<p-toast position="top-center" key="Key1"></p-toast>
+<p-toast position="top-left" key="pass"></p-toast>
+
+
+<!--********************    start header  ********************************-->
+<div class="width-85">
+    <div class="row bg-dark">
+        <div class="col-md-12 d-flex flex-row">
+            <div class="pt-3">
+                <button type="button" (click)="add_edit(AE_modal, '')" class="adding-btn" data-toggle="modal" data-target="#NewResModal">
+            <i class="fas fa-user-plus"></i>
+            اضافة مندوب
+        </button>
+                <!-- <button disabled *ngIf="!createemployee" type="button" class="btn btn-danger">
+          <i class="fas fa-user-plus"></i>
+          غير مسموح
+      </button> -->
+            </div>
+
+            <p class="h5 text-light py-3 ml-auto"> المناديب </p>
+        </div>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="allRepresentatives" [globalFilterFields]="['name' , 'user.email' , 'user.phone_number' ,'salary' ,'commission' ,'branch.name' , 'address']" [paginator]="true" [rows]="7" [rowsPerPageOptions]="[10,25,50]" [pageLinks]="7">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+                </button>
+                <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input class="search-textbox" pInputText type="text"
+                        (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+                </span>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> الاجراءات </th>
+            <th> حالة الحساب </th>
+            <!-- <th pSortableColumn="branch.name" class="branch.name">الفرع
+                <p-sortIcon field="branch.name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="salary" class="salary">المرتب
+                <p-sortIcon field="salary"></p-sortIcon>
+            </th>
+            <th pSortableColumn="commission" class="commission">العمولة
+                <p-sortIcon field="commission"></p-sortIcon>
+            </th> -->
+            <th>الرصيد</th>
+            <th>قيمه الشحنات</th>
+            <th>الشحنات الحاليه</th>
+            <th>العنوان</th>
+            <th>الايميل</th>
+            <th>التليفون</th>
+            <!-- <th pSortableColumn="branch.name" class="branch.name">الفرع
+                <p-sortIcon field="branch.name"></p-sortIcon>
+            </th> -->
+            <th pSortableColumn="name"> اسم المندوب
+                <p-sortIcon field="name"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-representative>
+        <tr>
+            <td>
+                <a data-toggle="modal" (click)="add_edit(AE_modal, representative )" data-target="#NewResModal" title="تعديل بيانات " class="edit-emp-btn btn btn-outline-primary btn-sm my-1"><i class="fas fa-user-edit"></i></a> &nbsp;
+                <a data-toggle="modal" (click)="add_edit(turnClients, representative)" title="  تغيير كلمة السر " class="edit-emp-btn btn btn-outline-danger btn-sm mx-2">
+                    <i class="fas fa-key"></i>
+                </a>
+                <a *ngIf="representative.cv != null" href="{{representative.cv_path}}" target="_blank" title="عرض السيره الذاتيه" class="edit-emp-btn btn btn-outline-info btn-sm mx-2 my-1">
+                  CV
+              </a>
+                <a *ngIf="representative.photo != null" href="{{representative.image_path}}" target="_blank" title="رؤيه الصوره بشكل أوضح" class="edit-emp-btn btn btn-outline-success btn-sm mx-2 my-1">
+                  photo
+                </a>
+
+                <a data-toggle="modal" (click)="representativeAreas(areasPop, representative)" class="edit-emp-btn btn btn-outline-danger btn-sm mx-2 my-1">
+                  أماكن العمل
+                </a>
+                <!-- <a class="edit-emp-btn btn btn-primary btn-sm mx-2" (click)="delete(obj)">
+                    <i class="fa fa-trash" aria-hidden="true" ></i>
+                </a>
+                <!-- <button disabled *ngIf="!updateemployee" class="btn-outline-danger">غير مسموح لك</button> -->
+            </td>
+            <td>
+                <div class="custom-control custom-switch">
+                    <input [checked]="representative.user?.is_active" (click)="toggleButton(representative)" type="checkbox" class="custom-control-input" id="customSwitches_{{representative.id}}">
+                    <label class="custom-control-label" for="customSwitches_{{representative.id}}"></label>
+                </div>
+            </td>
+            <!-- <td>{{representative.branch?.name}}</td>
+            <td>{{representative.salary}}</td>
+            <td>{{(representative.commission) ? representative.commission :''}}</td> -->
+            <!-- <td> <span class="mx-2">جنيه</span> {{(representative.commission) ? representative.commission : '0'}}</td> -->
+            <td rowspan="1">{{(representative.balance) ? representative.balance : '0'}}</td>
+            <td rowspan="1" style="word-break: break-all !important "> {{(representative.value_of_shipment) ? representative.value_of_shipment : '0'}}</td>
+            <td rowspan="1" style="word-break: break-all !important "> {{(representative.current_shipment) ? representative.current_shipment : '0'}}</td>
+            <td rowspan="1" style="word-break: break-all !important "> {{(representative.address) ? representative.address : ''}}</td>
+            <td rowspan="1" style="word-break: break-all !important "> {{ (representative.user?.email) ? representative.user?.email : ''}}</td>
+            <td rowspan="1" style="word-break: break-all !important "> {{ (representative.user?.phone_number) ? representative.user?.phone_number : ''}}</td>
+            <td rowspan="1" style="word-break: break-all !important ">
+                <!-- style="display : flex !important  ; justify-content : space-between !important  ; align-items : center !important " -->
+                <span> {{(representative.name)}}</span>
+                <!-- <img *ngIf="representative.photo != null" style="width : 40px ;  height : 40px ; border-radius : 50% ; margin-left : 10px ;  " src="{{representative.image_path}}" alt="">
+                <img *ngIf="representative.photo == null" style="width : 40px ;  height : 40px ; border-radius : 50% ; margin-left : 10px ;  " src="../../../assets/images/emp-placeholder.jpg" alt=""> -->
+            </td>
+            <!-- <td class="d-flex justify-content-around align-items-center"> <span>{{ representative.user?.first_name }} {{
+                    representative?.user?.second_name }} {{ representative?.user?.last_name }} </span> <span><img
+                        class="profile_pic mx-1" src={{representative?.user?.profile_pic_url}} alt=""></span></td> -->
+        </tr>
+    </ng-template>
+</p-table>
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss" class="modal-lg">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+        <app-edit-add-res [Catchobj]='Catch_obj' (newData)="after($event)"> </app-edit-add-res>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+
+
+
+<ng-template #turnClients let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> تغيير كلمة السر </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body " style="direction: rtl;">
+        <!-- Modal Form Start -->
+        <div class="border"></div>
+        <form [formGroup]="formData" (submit)="turnClient()" class="p-2">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <label for="password">  كلمة السر الجديده</label>
+                    <div class="form-group">
+                        <input type="password" class="form-control" formControlName="password" name="password">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="password_confirmation"> تأكيد كلمة السر </label>
+                    <div class="form-group">
+                        <input type="password" class="form-control" formControlName="password_confirmation" name="password_confirmation">
+                        <!-- <div *ngIf='submited && f.branch_id.errors'>
+                  <div *ngIf="submited && f.branch_id.errors.required" style="color: red;"> * مطلوب </div>
+              </div> -->
+                    </div>
+                </div>
+                <div class="bg-light p-2 w-100">
+                    <button class="btn btn-primary btn-block text-center"> موافق </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</ng-template>
+
+
+
+<ng-template #areasPop let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title">أماكن العمل</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body " style="direction: rtl;">
+        <!-- Modal Form Start -->
+
+
+        <form [formGroup]="myform3" class="p-2">
+            <ng-container formArrayName="date_representative_area">
+                <ng-container *ngFor="let product of date_representative_area.controls; let x=index">
+                    <div class="row" [formGroupName]="x">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="" dir="ltr"> <span style="font-size: 1.2rem; color : #F00 "> * </span>المحافظه</label>
+                                <ng-select formControlName="province_id" name="province_id" (change)="onProvinceChange($event)">
+                                    <ng-option *ngFor="let item of provinces" [value]="item.id"> {{item?.name}} </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="">   اختر المنطقه    </label>
+                                <ng-select formControlName="area_id" name='area_id'>
+                                    <ng-option *ngFor="let item of allAreas" [value]="item.id"> {{item?.name}}</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2-1">
+                            <div style="margin-left : 5px ;" class="form-group">
+                                <label for="name='receipt_commission'">عموله التسليم</label>
+                                <input class="form-control" min="0" type="number" formControlName="receipt_commission" name='receipt_commission' id="name='receipt_commission'">
+                            </div>
+                        </div>
+                        <div class="col-md-2-1">
+                            <div style="margin-right : 5px ;" class="form-group">
+                                <label for="name='return_commission'">عموله الإرتجاع</label>
+                                <input class="form-control" min="0" type="number" formControlName="return_commission" name='return_commission' id="name='return_commission'">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for=""> نوع الخدمه </label>
+                                <ng-select formControlName="service_type_id" name="service_type_id">
+                                    <ng-option *ngFor="let item of serviceTypes" [value]="item.id"> {{item?.type}} </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="close-icons">
+                            <button (click)="remove_comp_product(x)" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
+
+                        </div>
+                    </div>
+                </ng-container>
+
+
+            </ng-container>
+
+            <!-- <div class="bg-outline-light p-2 w-100">
+                <button class="btn btn-outline-dark btn-block text-center"> موافق </button>
+            </div> -->
+
+        </form>
+
+        <div style="min-height  : 300px "></div>
+
+        <!-- <div class="border"></div> -->
+        <span class="p-buttonset">
+          <button (click) = "saveAreas()" pButton pRipple label="حفظ التغييرات" icon="pi pi-check"></button>
+          <button  (click)="add_comp_products()" style="margin-right : 10px ;" pButton pRipple label="إضافه مكان جديد" icon="pi pi-plus"></button>
+      </span>
+    </div>
+
+</ng-template>

@@ -1,0 +1,138 @@
+<!--********************    start header  ********************************-->
+<div class="row bg-dark mt-3">
+    <div class="col-md-12 d-flex flex-row">
+
+        <p class="h5 text-light py-3 ml-auto"> الشحنات المرتجعه </p>
+    </div>
+</div>
+<!--*******************    end  header  *****************************-->
+
+
+
+<!--*******************    start tabel  body   *********************-->
+<p-table #depTbl [value]="List" [globalFilterFields]="['price' , 'name' , 'weight' ,'height' , 'date_of_receipt' , 'user.first_name' ,  'delivery_date']" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]" [totalRecords]="this.recourdNumber"
+    [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+    <!-- table caption  -->
+    <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+            <div class="search-warpper">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)">
+        </button>
+                <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input class="search-textbox" pInputText type="text"
+            (input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+        </span>
+            </div>
+        </div>
+    </ng-template>
+    <!--********  table header  *****-->
+    <ng-template pTemplate="header">
+        <tr>
+            <th> ألاجراءات </th>
+            <!-- <th pSortableColumn="delivery_date"> تاريخ وصول
+                <p-sortIcon field="delivery_date"></p-sortIcon>
+
+            </th>
+            <th pSortableColumn="date_of_receipt"> تاريخ استلام
+                <p-sortIcon field="date_of_receipt"></p-sortIcon>
+            </th> -->
+            <th pSortableColumn="refusal.status">سبب الرفض
+                <p-sortIcon field="refusal.status"></p-sortIcon>
+            </th>
+            <th pSortableColumn="price"> السعر
+                <p-sortIcon field="price"></p-sortIcon>
+
+            </th>
+            <th pSortableColumn="weight"> الوزن
+                <p-sortIcon field="weight"></p-sortIcon>
+
+            </th>
+            <th pSortableColumn="height"> الطول
+                <p-sortIcon field="height"></p-sortIcon>
+
+            </th>
+            <th pSortableColumn="description"> نوع الشحنة
+                <p-sortIcon field="description"></p-sortIcon>
+
+            </th>
+            <th pSortableColumn="name"> اسم الشحنة
+                <p-sortIcon field="name"></p-sortIcon>
+
+            </th>
+            <!-- <th pSortableColumn="user.first_name"> اسم العميل
+            <p-sortIcon field="user.first_name"></p-sortIcon>
+        </th> -->
+
+            <th pSortableColumn="user.first_name"> اسم الراسل
+                <p-sortIcon field="user.first_name"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+    <!--*******  table body  ******-->
+    <ng-template pTemplate="body" let-obj>
+        <tr>
+            <td>
+                <a data-toggle="modal" *ngIf="obj.sender_representative == null " (click)="add_edit(shipDetails, obj )" title="اضافه  " class="edit-emp-btn btn btn-primary btn-sm "><i class="fas fa-plus"></i></a> &nbsp;
+                <button disabled title="تم تحديد المندوب" *ngIf="obj.sender_representative !== null  &&   obj.complete_status_id == 7 " class="edit-emp-btn btn btn-primary btn-sm p-1">تم تسكين المندوب</button>
+                <button disabled title="تم تحديد المندوب" *ngIf="obj.sender_representative !== null &&   obj.complete_status_id == 8 " class="edit-emp-btn btn btn-primary btn-sm p-1">{{obj.complete_status.status}}</button>
+                <button disabled title="تم تحديد المندوب" *ngIf="obj.sender_representative !== null &&   obj.complete_status_id == 9 " class="edit-emp-btn btn btn-primary btn-sm p-1">{{obj.complete_status.status}}</button>
+
+            </td>
+            <!-- <td> {{(obj.delivery_date) ? obj.delivery_date : 'لا يوجد'}} </td>
+            <td> {{(obj.date_of_receipt) ? obj.date_of_receipt : 'لا يوجد' }} </td> -->
+            <td> {{(obj.refusal.status) ? obj.refusal.status : 'لا يوجد'}} </td>
+            <td> {{(obj.price) ? obj.price : 'لا يوجد'}} </td>
+            <td> {{(obj.weight) ? obj.weight : 'لا يوجد'}} </td>
+            <td> {{(obj.height) ? obj.height : 'لا يوجد'}} </td>
+            <td> {{obj.description}} </td>
+            <td> {{obj.name}} </td>
+            <td> {{obj?.user?.first_name}} {{obj?.user?.second_name}} {{obj?.user?.last_name}} </td>
+        </tr>
+    </ng-template>
+</p-table>
+<!--********************    end  tabel  body   ********************************-->
+
+
+
+
+
+
+
+
+<ng-template #shipDetails let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> تحديد مندوب لتوصيل الشحنه المرتجعه </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+<span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body " style="direction: rtl;">
+        <!-- Modal Form Start -->
+        <div class="border"></div>
+
+        <form [formGroup]="myForm" (submit)="sendData()" class="p-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="employee_id">اختر المندوب</label>
+                    <div class="form-group">
+                        <select class="form-control" formControlName="employee_id" name="employee_id" id="employee_id">
+                      <option *ngFor="let employee of allRepresentatives" [value]="employee.id">{{employee.user?.first_name}} {{employee.user?.second_name}} {{employee.user?.last_name}}</option>
+                  </select>
+                        <!-- <div *ngIf='submited && f.employee_id.errors'>
+                <div *ngIf="submited && f.employee_id.errors.required" style="color: red;"> * مطلوب </div>
+            </div> -->
+                    </div>
+                </div>
+
+
+
+                <div class="bg-light p-2 w-100">
+                    <button [disabled]="myForm.invalid" class="btn btn-primary btn-block text-center"> موافق </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</ng-template>

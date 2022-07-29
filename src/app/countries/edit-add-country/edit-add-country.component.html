@@ -1,0 +1,14 @@
+<p-toast position="top-center" key="myKey2">
+</p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form [formGroup]='myform' (submit)='onsubmit(itmeId)'>
+    <div class="from-group">
+        <label for="">  اسم الدولة   </label>
+        <input type="text" name='name' formControlName='name' class="form-control" [ngClass]="{ 'is-invalid' : submited && f.name.errors}">
+        <div *ngIf='submited && f.name.errors' class="invalid-feedback">
+            <div *ngIf='f.name.errors.required'> مطلوب </div>
+        </div>
+    </div>
+    <br>
+    <button class="btn btn-outline-dark"> {{itmeId === "" ?  'اضافة': 'تعديل'}}  </button>
+</form>

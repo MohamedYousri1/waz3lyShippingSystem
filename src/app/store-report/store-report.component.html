@@ -1,0 +1,65 @@
+<p-tabView class="wrapper_tab">
+    <p-tabPanel header="تقارير بيانات العملاء المستلمه">
+        <div class="col-md-10">
+            <!-- <button class="btn btn-info" printSectionId = "representDetails" ngxPrint></button> -->
+            <p-table id="representDetails" #depTbl [value]="allStores" [globalFilterFields]="['first_name' , 'last_name' , 'phone_number' , 'email' , 'national_id' , 'city' , 'number_of_shipments' , 'rate'  ]" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,25,50]"
+                [totalRecords]="this.recourdNumber" [pageLinks]="8" [scrollable]="true" scrollHeight="350px">
+
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex">
+                        <div class="search-warpper">
+                            <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(depTbl)"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+<i class="pi pi-search"></i>
+<input class="search-textbox" pInputText type="text"
+(input)="depTbl.filterGlobal($event.target.value, 'contains')" placeholder="بحث" />
+</span>
+                        </div>
+
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="rate" class="rate">التقييم
+                            <p-sortIcon field="rate"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="number_of_shipments" class="number_of_shipments">عدد الشحنات
+                            <p-sortIcon field="number_of_shipments"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="city" class="city">منطقه العميل
+                            <p-sortIcon field="city"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="email" class="email">الايميل
+                            <p-sortIcon field="email"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="address" class="address">العنوان
+                            <p-sortIcon field="address"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="phone_number" class="phone_number">التليفون
+                            <p-sortIcon field="phone_number"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="first_name"> الاسم
+                            <p-sortIcon field="first_name"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+
+
+                <ng-template pTemplate="body" let-customer>
+                    <tr>
+                        <td>{{ (customer?.rate)? customer?.rate : 'لا يوجد'}}</td>
+                        <td>{{ customer?.number_of_shipments}}</td>
+                        <td>{{ customer?.city}}</td>
+                        <td>{{ customer?.email}}</td>
+                        <td>{{ (customer?.address)? customer?.address : 'لا يوجد'}}</td>
+                        <td>{{ customer?.phone_number}}</td>
+                        <td class="d-flex justify-content-around align-items-center"> <span>{{ customer.first_name }} {{ customer.second_name }} {{ customer.last_name }} </span> </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-tabPanel>
+
+</p-tabView>

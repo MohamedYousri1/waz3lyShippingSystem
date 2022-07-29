@@ -1,0 +1,129 @@
+<p-toast position="top-left" key="myKey1">
+</p-toast>
+<div class="notification">
+    <div class="msg-content position-relative">
+        <div class="single-img" *ngFor="let notify of allNotifications">
+
+            <div (click)="watchUsersNotify(AE_modal , notify)" class="row justify-content-center align-items-center notwatched" dir="rtl">
+
+                <div class="col-md-12">
+                    <h3>{{notify.body}}</h3>
+                </div>
+
+            </div>
+            <!-- if Notification is watched  -->
+            <div (click)="watchUsersNotify(AE_modal , notify)" *ngIf="notify.is_watch == 1" class="row justify-content-center align-items-center iswatched" dir="rtl">
+
+
+                <div class="col-md-12">
+                    <h3>{{notify.body}}</h3>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="position-relative bell">
+            <span class="not-number " *ngIf="isLogin == true && this.counter">{{(this.counter ) ? this.counter.length  : ''}}</span>
+            <i class="fas fa-bell fa-3x"></i>
+        </div>
+    </div>
+</div>
+
+
+
+
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> الاشعارات </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <!-- render form here -->
+
+        <div class="container">
+            <div class="row" *ngIf="fillData == true ">
+                <div class="col-md-12 ship-wrapping-img">
+                    <img class="img-fluid" src="../../assets/images/123.jpg" alt="">
+                </div>
+
+                <div class="col-md-12 ship-wrapping">
+
+                    <table *ngIf="fillData == true " class="table table-bordered table-wrapper">
+
+                        <tbody class="teble-details">
+                            <tr>
+                                <th><strong class="mx-2">{{allData?.shipments?.user?.first_name}} {{allData?.shipments?.user?.second_name}} {{allData?.shipments?.user?.last_name}}</strong> </th>
+                                <th><strong class="mx-2">الراسل</strong> </th>
+                            </tr>
+
+                            <tr>
+                                <th><strong class="mx-2">{{allData?.shipments?.name}}</strong> </th>
+                                <th><strong class="mx-2">اسم الشحنه</strong> </th>
+                            </tr>
+
+                            <tr>
+                                <th><strong class="mx-2"> {{allData?.shipments?.shipment_type?.type}}</strong> </th>
+                                <th><strong class="mx-2">نوع الشحنه </strong> </th>
+                            </tr>
+                            <tr>
+                                <th><strong class="mx-2"> {{allData?.shipments?.weight}} </strong> </th>
+                                <th><strong class="mx-2">وزن الشحنه</strong> </th>
+                            </tr>
+
+                            <tr>
+                                <th><strong class="mx-2">{{allData?.shipments?.employee?.user?.first_name}} {{allData?.shipments?.employee?.user?.second_name}} {{allData?.shipments?.employee?.user?.last_name}}</strong> </th>
+                                <th><strong class="mx-2">اسم المندوب</strong> </th>
+                            </tr>
+
+
+                            <tr>
+                                <th><strong class="mx-2">{{allData?.shipments?.receiver?.first_name}} {{allData?.shipments?.receiver?.second_name}} {{allData?.shipments?.receiver?.last_name}}</strong> </th>
+                                <th><strong class="mx-2">اسم المستلم</strong> </th>
+                            </tr>
+
+
+                            <tr>
+                                <th><strong class="mx-2">{{allData?.shipments?.date_of_receipt | date:'shortDate'}}</strong> </th>
+                                <th><strong class="mx-2">تاريخ الاستلام </strong> </th>
+                            </tr>
+
+
+                            <tr>
+                                <th><strong class="mx-2">{{allData?.shipments?.payment_type.name}}</strong> </th>
+                                <th><strong class="mx-2">طريقه الدفع </strong> </th>
+                            </tr>
+                            <tr>
+                                <th class="text-center shipment_statusHeading" *ngIf="allData?.shipments?.complete_status_id == 1 "> شحنه جديده </th>
+                                <th class="text-center shipment_statusHeading" *ngIf="allData?.shipments?.complete_status_id == 2 ">المندوب استلم الشحنه من المرسل </th>
+                                <th class="text-center shipment_statusHeading" dir="rtl" *ngIf="allData?.shipments?.complete_status_id == 3  ">المندوب وصل الشحنه ل<span>Notification</span></th>
+                                <th class="text-center shipment_statusHeading" dir="rtl" *ngIf="allData?.shipments?.complete_status_id == 4  ">المندوب استلم الشحنه من <span>Notification</span></th>
+                                <th class="text-center shipment_statusHeading" *ngIf="allData?.shipments?.complete_status_id == 5  ">المندوب وصل الشحنه للعميل بنجاح </th>
+                                <th class="text-center shipment_statusHeading" dir="rtl" *ngIf="allData?.shipments?.complete_status_id == 6  ">
+                                    <h3>العميل رفض استلام الشحنه</h3>
+                                    <h4>السبب : {{allData?.shipments?.refusal.status}}</h4>
+                                </th>
+                                <th class="text-center shipment_statusHeading" dir="rtl" *ngIf="allData?.shipments?.complete_status_id == 7  ">المندوب رجع الشحنه ل <span>Notification</span> بعد استرجاعها من العميل </th>
+                                <th class="text-center shipment_statusHeading" *ngIf="allData?.shipments?.complete_status_id == 9  ">المندوب وصل الشحنه للمرسل بعد استرجاعها</th>
+                                <th class="text-center shipment_statusHeading" dir="rtl" *ngIf="allData?.shipments?.complete_status_id == 8  ">المندوب استلم الشحنه من <span class="h3">Notification</span> بعد استرجاعها من العميل </th>
+                                <th><strong class="mx-2">حاله الشحنه </strong> </th>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+        <!-- /render form here -->
+    </div>
+</ng-template>
+
+<app-header *ngIf="isLogin == true"></app-header>
+<app-loader></app-loader>
+<router-outlet></router-outlet>

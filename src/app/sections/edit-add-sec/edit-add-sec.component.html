@@ -1,0 +1,12 @@
+<p-toast position="top-center" key="myKey2"></p-toast>
+<p-toast position="top-center" key="myKey1"></p-toast>
+<form [formGroup]="myform" (submit)="onsubmit(id)">
+    <div class="form-group">
+        <input type="text" name="name" formControlName='name' class="form-control" [ngClass]="{'is-invalid' : submited && f.name.errors}">
+        <div *ngIf='submited && f.name.errors'>
+            <div *ngIf='f.name.errors.required' style="color:red"> مطلوب * </div>
+        </div>
+    </div>
+    <button [disabled]="myform.invalid" class="btn btn-outline-dark"> {{ id === "" ? 'اضافة' : 'تعديل' }} </button>
+
+</form>

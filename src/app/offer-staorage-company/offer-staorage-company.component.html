@@ -1,0 +1,24 @@
+<p-toast position="top-center" key="Key1"></p-toast>
+<p-toast position="top-center" key="Key2"></p-toast>
+<div style="width : 85% !important">
+    <div class="page-content">
+        <div class="container">
+
+            <div class="row my-4">
+                <div class="col-md-4 my-2" *ngFor="let offer of allOffers">
+                    <p-card header="Waz3ly Shipping Offer " subheader="Let Your Shipment Fly" [style]="{width: '360px'}" styleClass="p-card-shadow">
+                        <p>
+                            {{(offer.title) ? offer.title : ''}}
+                        </p>
+                        <ng-template pTemplate="footer">
+                            <p-button *ngIf="offer.company?.length == 0 " (click)="subscribeOffers(offer)" label="إشتراك"></p-button>
+                            <p-button *ngIf="offer.company?.length > 0 " disabled="true" label="تم الإشتراك"></p-button>
+
+                        </ng-template>
+                    </p-card>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

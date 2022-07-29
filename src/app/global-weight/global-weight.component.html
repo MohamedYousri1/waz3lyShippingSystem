@@ -1,0 +1,71 @@
+<p-toast position="top-center" key="Key1"></p-toast>
+<p-toast position="bottom-center" key="myKey5"></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" [style]="{width: '50vw'}"></p-confirmDialog>
+
+<div class="width-85">
+    <div style="background-color: #31353D;" class="row">
+        <div class="col-md-12 d-flex flex-row">
+            <!-- New job Modal Button  -->
+            <div class="pt-3">
+                <!-- <button  type="button" (click)="edit_add(AE_modal , '')" class="adding-btn" data-toggle="modal" data-target="#jobs">
+        اضافة
+      </button> -->
+                <!-- <button disabled *ngIf="!createjob" type="button" class="btn btn-danger">
+        غير مسموح
+    </button> -->
+            </div>
+            <p class="h5 text-light py-3 ml-auto">الوزن المسموح (عام)</p>
+        </div>
+    </div>
+
+
+    <table style="margin : 50px auto ; width : 75% " class="w-100 table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th style="text-align : center !important">تعديل</th>
+                <th style="text-align : center !important">السعر(بالجنيه المصري)</th>
+                <th style="text-align : center !important">الوزن المسموح به (بالكجم)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <a (click)="edit_add(AE_modal , allWeights[0])" class="btn btn-outline-primary">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+                <td style="text-align : center !important">{{(allWeights[0]?.price) ? allWeights[0]?.price : '' }}</td>
+                <td style="text-align : center !important">{{(allWeights[0]?.limit) ? allWeights[0]?.limit : 'كجم' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
+<!--********************  start add-edit modal  ********************************-->
+<ng-template #AE_modal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" style="color:#f1f1f1 !important" id="modal-basic-title"> مرحبا </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+  </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="weightForm" class="my-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="price">السعر(بالجنيه المصري)</label>
+                    <input type="number" name="price" formControlName="price" id="price" class="form-control" placeholder="جنيه">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="limit">الحد المسموح به(بالكجم)</label>
+                    <input type="number" id="limit" name="limit" formControlName="limit" class="form-control" placeholder="كجم">
+                </div>
+            </div>
+
+            <button [disabled]="weightForm.invalid" (click)="saveWeight()" class="btn btn-outline-success my-2">تعديل</button>
+        </form>
+    </div>
+</ng-template>
+<!--********************   end add-edit modal   *********************-->

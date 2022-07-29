@@ -1,0 +1,542 @@
+<div style="position: fixed; z-index: 99999999999" class="page-wrapper chiller-theme toggled">
+    <a id="show-sidebar" class="btn btn-sm btn-dark">
+        <i class="fas fa-bars"></i>
+    </a>
+    <nav id="sidebar" class="sidebar-wrapper toggled">
+        <div class="sidebar-content">
+            <div class="sidebar-brand">
+                <a class="text-align:center !important">
+                    <img style="width: 100px" src="../../assets/images/Wasela_Logo.png" alt="" />
+                </a>
+                <!-- <div id="close-sidebar">
+                <i class="fas fa-times"></i>
+            </div> -->
+            </div>
+            <!-- sidebar-search  -->
+            <div class="sidebar-menu">
+                <ul>
+                    <li *ngIf="is_company == false && this.is_admin == true" routerLink="home">
+                        <a>الصفحه الرئيسيه<i class="fas fa-home ml-2"></i></a>
+                    </li>
+
+                    <li *ngIf="(is_company == false) && (is_admin == true)" class="sidebar-dropdown">
+                        <a style="
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row-reverse;
+              ">
+                            <i class="fas fa-briefcase fa-fw unchecked-icon"></i>
+                            <span>الإداره العامه</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li *ngIf="is_company == false" routerLink="/sections" routerLinkActive="active-nav-link">
+                                    <a>الإدارات<i class="fas fa-cog"></i></a>
+                                </li>
+
+                                <li routerLink="/jobs" routerLinkActive="active-nav-link">
+                                    <a>الوظائف<i class="fas fa-cog"></i></a>
+                                </li>
+
+                                <li routerLink="/employees-settings" routerLinkActive="active-nav-link">
+                                    <a>الموظفين<i class="fa fa-users"></i></a>
+                                </li>
+
+                                <li routerLink="/representative" routerLinkActive="active-nav-link">
+                                    <a>المناديب<i class="fa fa-users"></i></a>
+                                </li>
+
+                                <li routerLink="/branches" routerLinkActive="active-nav-link">
+                                    <a>الفروع<i class="fas fa-cog"></i></a>
+                                </li>
+
+                                <li routerLink="/storage" routerLinkActive="active-nav-link">
+                                    <a>المخازن<i class="fas fa-cog"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li *ngIf="(is_company == false) && (is_admin == true)" class="sidebar-dropdown">
+                        <a style="
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row-reverse;
+              ">
+                            <i class="fas fa-globe"></i>
+                            <span>المناطق</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li routerLink="/countries" routerLinkActive="active-nav-link">
+                                    <a>الدول<i class="fas fa-globe"></i></a>
+                                </li>
+
+                                <li routerLink="/provinces" routerLinkActive="active-nav-link">
+                                    <a>المحافظات<i class="fas fa-globe"></i></a>
+                                </li>
+
+                                <li routerLink="/areas" routerLinkActive="active-nav-link">
+                                    <a>المناطق<i class="fas fa-globe"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li *ngIf="(is_company == false) && (is_admin == true || is_customerService == true)" routerLink="companies">
+                        <a> الشركات (الفئات المرسله) <i class="fas fa-user-tag"></i></a>
+                    </li>
+                    <li *ngIf="(is_company == false) && (is_admin == true || is_customerService == true)" class="sidebar-dropdown">
+                        <a style="
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row-reverse;
+              ">
+                            <i class="fas fa-truck"></i>
+                            <span>الشحن</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li routerLink="payment_type">
+                                    <a>
+                    طرق الدفع في السسيستم <i class="fas fa-money-bill"></i
+                  ></a>
+                                </li>
+
+                                <li routerLink="transport_type">
+                                    <a>
+                    تكلفه التوصيل لكل وسيله نقل<i class="fas fa-truck"></i
+                  ></a>
+                                </li>
+
+                                <li routerLink="shipment_type">
+                                    <a> الخدمات <i class="fas fa-truck"></i></a>
+                                </li>
+                                <li routerLink="additional_services">
+                                    <a> الخدمات الإضافيه وأسعارها<i class="fas fa-truck"></i></a>
+                                </li>
+
+                                <li routerLink="global_weight">
+                                    <a>الوزن المسموح (عام)<i class="fas fa-weight"></i></a>
+                                </li>
+
+                                <li routerLink="shipment_place">
+                                    <a>تعريف المناطق وتكلفه الشحن<i class="fas fa-truck"></i></a>
+                                </li>
+
+                                <li routerLink="shipments">
+                                    <a>الشحنات <i class="fas fa-truck"></i></a>
+                                </li>
+                                <!--
+                            <li  routerLink="pending_shipments">
+                                <a>الشحنات المعلقه<i   class="fas fa-truck"></i></a>
+                            </li>
+                            <li  routerLink="shipment_back" routerLink="state">
+                                <a>الشحنات المرتجعه<i   class="fas fa-truck"></i></a>
+                            </li> -->
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li *ngIf="(is_company == false) && (is_admin == true || is_accountant == true)" class="sidebar-dropdown">
+                        <a style="
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row-reverse;
+              ">
+                            <i class="fas fa-truck"></i>
+                            <span>الحسابات</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+                                <li routerLink="representativeDetails">
+                                    <a> حسابات المناديب<i class="fas fa-money-bill"></i></a>
+                                </li>
+
+                                <li routerLink="companyAccounts">
+                                    <a> حسابات التجار<i class="fas fa-money-bill"></i></a>
+                                </li>
+
+                                <li routerLink="treasury">
+                                    <a>الخزن<i class="fas fa-money-bill"></i></a>
+                                </li>
+
+                                <li routerLink="income">
+                                    <a>بنود الإيرادات<i class="fas fa-money-bill"></i></a>
+                                </li>
+
+                                <li routerLink="expense">
+                                    <a>بنود المصروفات<i class="fas fa-money-bill"></i></a>
+                                </li>
+
+                                <li routerLink="IncomeExpenseManagement">
+                                    <a>المصروفات و الإيرادات<i class="fas fa-money-bill"></i></a>
+                                </li>
+
+                                <li routerLink="money-transfer">
+                                    <a>تحويلات الخزن
+                    <i class="fas fa-money-bill"></i>
+                  </a>
+                                </li>
+
+                                <!--
+                                <li routerLink="transaction-in" routerLinkActive="active-nav-link">
+                                    <a>المعاملات الوارده للخزن
+                                  <i class="fas fa-money-bill"></i></a>
+                                </li>
+
+                                <li routerLink="transaction-out" routerLinkActive="active-nav-link">
+                                    <a>المعاملات الصادره للخزن
+                                <i class="fas fa-money-bill"></i></a>
+                                </li> -->
+
+                                <li routerLink="daily_balance" routerLinkActive="active-nav-link">
+                                    <a>الحفطه اليوميه
+                                  <i class="fas fa-money-bill"></i></a>
+                                </li>
+
+                                <li routerLink="representative_treasury" routerLinkActive="active-nav-link">
+                                    <a>خزنه المندوب
+                                <i class="fas fa-money-bill"></i></a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li *ngIf="(is_company == false) && (is_admin == true || is_storeKeeper == true)" routerLink="shipmentDetails">
+                        <a>
+              البار كود
+              <img
+                style="
+                  width: 32px;
+                  margin-right: 8px;
+                  border-radius: 5px;
+                  margin-left: 5px;
+                  background-color: transparent;
+                "
+                class="img-fluid"
+                src="../../assets/images/barcode.png"
+                alt=""
+            /></a>
+                    </li>
+
+
+                    <!-- <li routerLink="">
+                      <a style="
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex-direction: row-reverse;">
+                          <i class="fas fa-truck mx-2"></i>
+                          <span>شحناتي</span>
+                      </a>
+                  </li>
+                   -->
+
+
+                    <!-- <li >
+                        <a><i class="fas fa-home ml-2"></i></a>
+                    </li> -->
+
+                    <li *ngIf="is_company == true" routerLink="home-companies">
+                        <a style="
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              flex-direction: row-reverse;
+              padding-right: 20px !important;
+            ">
+                            <img src="../../assets/Icons/home-svgrepo-com.svg" style="
+                width: 30px;
+                margin-left: 10px;
+                position: relative;
+                top: -3px;
+              " class="img-fluid" alt="" />
+                            <span style="font-size: 1.1rem">الصفحه الرئيسيه</span>
+                        </a>
+                    </li>
+
+                    <li *ngIf="this.is_company == true" routerLink="shipment_company">
+                        <a style="
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row-reverse;
+                padding-right: 20px !important;
+              ">
+                            <img src="../../assets/Icons/allShipmentssvg.svg" style="
+                  width: 30px;
+                  margin-left: 10px;
+                  position: relative;
+                  top: -3px;
+                " class="img-fluid" alt="" />
+                            <span style="font-size: 1.1rem">جميع الشحنات</span>
+                        </a>
+                    </li>
+
+                    <li *ngIf="this.is_company == true" routerLink="myShipments">
+                        <a style="
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row-reverse;
+                padding-right: 20px !important;
+              ">
+                            <img src="../../assets/Icons/going.svg" style="
+                  width: 30px;
+                  margin-left: 10px;
+                  position: relative;
+                  top: -3px;
+                " class="img-fluid" alt="" />
+                            <span style="font-size: 1.1rem"> الشحنات الحاليه</span>
+                        </a>
+                    </li>
+
+                    <li *ngIf="this.is_company == true" routerLink="sending-shipments">
+                        <a style="
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row-reverse;
+                padding-right: 20px !important;
+              ">
+                            <img src="../../assets/Icons/return.svg" style="
+                  width: 30px;
+                  margin-left: 10px;
+                  position: relative;
+                  top: -3px;
+                " class="img-fluid" alt="" />
+                            <span style="font-size: 1.1rem"> الشحنات المرسله</span>
+                        </a>
+                    </li>
+
+                    <li *ngIf="this.is_company == true" routerLink="finshed-shipments">
+                        <a style="
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row-reverse;
+                padding-right: 20px !important;
+              ">
+                            <img src="../../assets/Icons/expired.svg" style="
+                  width: 30px;
+                  margin-left: 10px;
+                  position: relative;
+                  top: -3px;
+                " class="img-fluid" alt="" />
+                            <span style="font-size: 1.1rem">الشحنات المنتهيه</span>
+                        </a>
+                    </li>
+
+                    <li *ngIf="this.is_company == true" routerLink="pick-up">
+                        <a style="
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-direction: row-reverse;
+                padding-right: 20px !important;
+              ">
+                            <img src="../../assets/Icons/order.svg" style="
+                  width: 30px;
+                  margin-left: 10px;
+                  position: relative;
+                  top: -3px;
+                " class="img-fluid" alt="" />
+                            <span style="font-size: 1.1rem">(بيك اب)إضافه طلب</span>
+                        </a>
+                    </li>
+
+
+                    <li *ngIf="this.is_company == true" routerLink="offer_company">
+                        <a style="
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              flex-direction: row-reverse;
+              padding-right: 20px !important;
+            ">
+                            <img src="../../assets/Icons/order.svg" style="
+                width: 30px;
+                margin-left: 10px;
+                position: relative;
+                top: -3px;
+              " class="img-fluid" alt="" />
+                            <span style="font-size: 1.1rem">العروض</span>
+                        </a>
+                    </li>
+
+                    <li *ngIf="this.is_company == true" routerLink="offer_storage">
+                        <a style="
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: row-reverse;
+            padding-right: 20px !important;
+          ">
+                            <img src="../../assets/Icons/order.svg" style="
+              width: 30px;
+              margin-left: 10px;
+              position: relative;
+              top: -3px;
+            " class="img-fluid" alt="" />
+                            <span style="font-size: 1.1rem">عروض المخازن</span>
+                        </a>
+                    </li>
+
+
+
+
+                    <li *ngIf="is_company == false">
+                        <a target="_blank" href="../../assets/apk/representitve.html">
+            تحميل نسخه المندوب
+            <img
+              style="
+                width: 32px;
+                margin-right: 8px;
+                border-radius: 5px;
+                margin-left: 5px;
+                position: relative;
+                background-color: transparent;
+                top: -6px;
+              "
+              class="img-fluid"
+              src="../../assets/Icons/download-svgrepo-com (1).svg"
+              alt=""
+          /></a>
+                    </li>
+
+                    <li routerLink="shipmentDetails">
+                        <a target="_blank" href="../../assets/apk/client.html">
+            تحميل نسخه التاجر
+            <img
+              style="
+                width: 32px;
+                margin-right: 8px;
+                border-radius: 5px;
+                margin-left: 5px;
+                position: relative;
+                background-color: transparent;
+                top: -6px;
+              "
+              class="img-fluid"
+              src="../../assets/Icons/download-svgrepo-com (1).svg"
+              alt=""
+          /></a>
+                    </li>
+
+
+                    <li *ngIf="(is_company == false) && (is_admin == true || is_customerService == true)" routerLink="advertisments">
+                        <a>
+                        إعلانات التجار
+          <img
+            style="
+              width: 30px;
+              margin-right: 8px;
+              border-radius: 5px;
+              margin-left: 5px;
+              position: relative;
+              background-color: transparent;
+              top: -6px;
+            "
+            class="img-fluid"
+            src="../../assets/Icons/marketing-svgrepo-com.svg"
+            alt=""
+        /></a>
+                    </li>
+
+                    <li *ngIf="(is_company == false) && (is_admin == true || is_customerService == true)" routerLink="offers">
+                        <a>
+                    عروض التجار
+        <img
+          style="
+            width: 30px;
+            margin-right: 8px;
+            border-radius: 5px;
+            margin-left: 5px;
+            position: relative;
+            background-color: transparent;
+            top: -6px;
+          "
+          class="img-fluid"
+          src="../../assets/Icons/black-friday-offer-sale-svgrepo-com.svg"
+          alt=""
+      /></a>
+                    </li>
+
+
+
+                    <li *ngIf="(is_company == false) && (is_admin == true || is_customerService == true)" routerLink="storageSystem">
+                        <a>
+                  عروض المخازن
+      <img
+        style="
+          width: 30px;
+          margin-right: 8px;
+          border-radius: 5px;
+          margin-left: 5px;
+          position: relative;
+          background-color: transparent;
+          top: -6px;
+        "
+        class="img-fluid"
+        src="../../assets/Icons/black-friday-offer-sale-svgrepo-com.svg"
+        alt=""
+    /></a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <a (click)="logOut()">
+                <i class="fa fa-power-off"></i>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<!--
+                <li  class="sidebar-dropdown">
+                    <a style="
+                  display: flex;
+                  justify-content: flex-start;
+                  align-items: center;
+                  flex-direction: row-reverse;">
+                        <i class="fas fa-money-bill "></i>
+                        <span>الحسابات </span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li  routerLink="out_categories">
+                                <a>بنود المصروفات <i  class="fas fa-money-bill"></i></a>
+                            </li>
+
+                            <li  routerLink="in_categories">
+                                <a>بنود الأيرادات  <i  class="fas fa-money-bill"></i></a>
+                            </li>
+
+                            <li  routerLink="financial-transact">
+                                <a>المعاملات المالية <i  class="fas fa-money-bill"></i></a>
+                            </li>
+
+                            <li  routerLink="daily-keeper">
+                                <a>المحفظه اليوميه  <i  class="fas fa-money-bill"></i></a>
+                            </li>
+
+                            <li  routerLink="client-transact">
+                                <a>معاملات العملاء <i  class="fas fa-money-bill"></i></a>
+                            </li>
+
+                            <li  routerLink="representativeDetails">
+                                <a>معاملات المناديب <i  class="fas fa-money-bill"></i></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li> -->

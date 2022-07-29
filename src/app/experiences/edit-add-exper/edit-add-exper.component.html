@@ -1,0 +1,43 @@
+<form [formGroup]="myform" (submit)="onsubmit(id)">
+    <div class="form-group">
+        <label for=""> من </label>
+        <input type="date" name="from" formControlName="from" [ngClass]="{'is-invalid' : submited && f.from.errors}"  class="form-control">
+        <div *ngIf="submited && f.from.errors"> 
+            <div *ngIf="submited && f.from.errors.required" style='color:red'> مطلوب  </div>
+        </div>
+    </div> 
+
+    <div class="form-group">
+        <label for=""> الي  </label>
+        <input type="date" name="to" formControlName="to" [ngClass]="{'is-invalid' : submited && f.to.errors}"  class="form-control">
+        <div *ngIf="submited && f.to.errors"> 
+            <div *ngIf="submited && f.to.errors.required" style='color:red'> مطلوب  </div>
+        </div>
+    </div> 
+
+    <div class="form-group">
+        <label for=""> المؤهل  </label>
+        <input type="text" name="qualification_id" formControlName="qualification_id" [ngClass]="{'is-invalid' : submited && f.qualification_id.errors}"  class="form-control">
+        <div *ngIf="submited && f.qualification_id.errors"> 
+            <div *ngIf="submited && f.qualification_id.errors.required" style='color:red'> مطلوب  </div>
+        </div>
+    </div> 
+
+    <div class="form-group">
+        <label for=""> الدرجة العلمية  </label>
+        <input type="text" name="education_grade_id" formControlName="education_grade_id" [ngClass]="{'is-invalid' : submited && f.education_grade_id.errors}"  class="form-control">
+        <div *ngIf="submited && f.education_grade_id.errors"> 
+            <div *ngIf="submited && f.education_grade_id.errors.required" style='color:red'> مطلوب  </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for=""> الراتب  </label>
+        <input type="text" name="salary" formControlName="salary" [ngClass]="{'is-invalid' : submited && f.salary.errors}"  class="form-control">
+        <div *ngIf="submited && f.salary.errors"> 
+            <div *ngIf="submited && f.salary.errors.required" style='color:red'> مطلوب  </div>
+        </div>
+    </div> 
+
+    <button class="btn btn-primary">  {{id === "" ? 'اضافة' : 'تعديل'}}</button>
+</form>
