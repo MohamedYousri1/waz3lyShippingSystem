@@ -198,6 +198,7 @@ const routes: Routes = [
 
   { path: 'refusal_statuses', canActivate:[AuthGuard] ,    component :RefusalStatusesComponent},
   { path: 'representativeDetails', canActivate:[AuthGuard] ,    component :RepresentativesDetailsComponent},
+  { path: 'representativeReport', canActivate:[AuthGuard] ,    component :RepresentativeReportComponent},
   { path: 'companyAccounts', canActivate:[AuthGuard] ,    component :CompanyAccountsDetailsComponent},
   { path: 'transaction-in', canActivate:[AuthGuard] ,    component :TreasuryInComponent},
   { path: 'transaction-out', canActivate:[AuthGuard] ,    component :TreasuryOutComponent},

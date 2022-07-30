@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -12,6 +13,9 @@ export class ReportsService {
   //get all
   get_allRepresentative(){
     return this.http.get<any>(`${this.base_url}/shipping_representatives`)
+  }
+  getShipments(representative_id : any ) {
+    return this.http.get(this.base_url + `/representative-totle/${representative_id}`);
   }
   get_allCustomers()
   {
