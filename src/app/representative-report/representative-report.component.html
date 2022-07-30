@@ -34,7 +34,7 @@
                                                     <a (click)="showResult()" class="col-md-12 btn btn-primary" id="btnEarningsReportSearch"><i style="margin : 0 5px !important ;" class="fa fa-search"></i>Show Report</a>
                                                 </div>
                                                 <div class="col-md-6 mx-auto my-2">
-                                                    <button style="font-size: 1.2rem;" class="col-md-12 btn btn-success" ngxPrint printSectionId="tablePrint2" [useExistingCss]="true" styleSheetFile="../../users/income-report/income-report.component.css"><i style="margin : 0 5px !important ;" class="fa fa-print"></i>Print Incomes</button>
+                                                    <button style="font-size: 1.2rem;" class="col-md-12 btn btn-success" ngxPrint printSectionId="tablePrint2" [useExistingCss]="true" styleSheetFile="../../users/income-report/income-report.component.css"><i style="margin : 0 5px !important ;" class="fa fa-print"></i>Print Report</button>
                                                 </div>
 
                                             </div>
@@ -62,7 +62,6 @@
                         <th>نوع الخدمه</th>
                         <th>اخر تغيير بالحاله</th>
                         <th style="text-align: center !important">العنوان</th>
-
                         <th style="text-align: center !important">الملاحظات</th>
                     </tr>
                 </thead>
@@ -80,11 +79,9 @@
                         <td>{{ ship.shipmentstatu?.name ? ship.shipmentstatu?.name : "" }}</td>
                         <td>{{ ship.service_type?.type ? ship.service_type?.type : "" }}</td>
                         <td>{{ ship.updated_at | date: "short" }}</td>
-
                         <td style="text-align: center !important">
                             {{ ship?.client?.address ? ship?.client?.address : "" }}
                         </td>
-
                         <td style="text-align: center !important">
                             {{ ship?.notes ? ship?.notes : "" }}
                         </td>

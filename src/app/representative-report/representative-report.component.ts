@@ -27,7 +27,6 @@ export class RepresentativeReportComponent implements OnInit {
       this.allRepresentatives = res.representative ;
     })
   }
-
   // showing Shipments
   results ;
   showResult()
@@ -36,9 +35,6 @@ export class RepresentativeReportComponent implements OnInit {
     this._representative.getShipments(2).subscribe((res : any ) =>  {
       this.results  = res.data?.shipment ;
     },err=> {
-      console.log(err);
-
-    })
+      console.log })
   }
-
 }
